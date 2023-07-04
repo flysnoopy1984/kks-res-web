@@ -15,6 +15,7 @@ import { NButton } from 'naive-ui'
 
 function doLogin(){
 
+  alert("111")
   // const message = useMessage();
   //  message.info("I don't know why nobody told you how to unfold your love");
 
