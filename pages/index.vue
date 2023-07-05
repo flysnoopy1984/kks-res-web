@@ -13,9 +13,13 @@
 import { NButton } from 'naive-ui'
 
 
-function doLogin(){
-
-  alert("111")
+async function doLogin(){
+  var options = {
+    baseURL : "http://wx.iqianba.cn",
+  }
+  const { data } = await useFetch("/login",options);
+  //https://open.weixin.qq.com/connect/qrconnect?appid=wxca2fce9912762fde&redirect_uri=wx.iqianba.cn/login&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect
+  alert(data);
   // const message = useMessage();
   //  message.info("I don't know why nobody told you how to unfold your love");
 
