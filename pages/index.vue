@@ -4,6 +4,7 @@
         <HomeSectionList></HomeSectionList>
         <div class="divIn">
           <n-button type="info" @click="doLogin">Login</n-button>
+          <n-button type="warning" @click="doTestServerApi">测试Server API</n-button>
         </div>
     </div>
 </template>
@@ -12,11 +13,11 @@
 // import { useMessage } from 'naive-ui'
 import { NButton } from 'naive-ui'
 
-
-async function doLogin(){
-
+async function doTestServerApi(){
+  var host = "";
   var options = {
-     baseURL : "http://api.iqianba.cn", 
+    //  baseURL : "http://api.iqianba.cn", 
+
      query: {"userId":1},
      server: true,
 
@@ -24,12 +25,37 @@ async function doLogin(){
     // baseURL: "http://192.168.197.75:9001"  
   
   };
-  var host = "";
+
   if (process.server) {
             host = "http://api.iqianba.cn/"
         } else {
             host = "/api/"
         }
+  console.log("host:"+host);
+  var url = "/api/user";
+  var {data} = await useFetch(url,options);
+  console.log(data.value);
+
+}
+async function doLogin(){
+
+  var options = {
+    //  baseURL : "http://api.iqianba.cn", 
+
+     query: {"userId":1},
+     server: true,
+
+    //  pick: ['data']
+     baseURL: "http://192.168.197.75:9001"  
+  
+  };
+  
+   var host = "";
+  // if (process.server) {
+  //           host = "http://api.iqianba.cn/"
+  //       } else {
+  //           host = "/api/"
+  //       }
        
   var url = host+"/user/getInfo";
   console.log(url);
