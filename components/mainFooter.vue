@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="footer-style">
         <footer class="ftco-footer">
 		<div class="container">
 			<div class="row mb-5 justify-content-between">
@@ -84,7 +84,7 @@
 </template>
 
 <script setup>
-import '~/assets/css/main.css'
+import '~/assets/css/footer.css'
 useHead({
    title: '祝福',
    meta:[
