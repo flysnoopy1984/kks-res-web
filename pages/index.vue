@@ -14,11 +14,10 @@
 // import { useMessage } from 'naive-ui'
 import { NButton } from 'naive-ui'
 
+//微信登陆测试
 async function doWxLogin(){
-  var redirect_uri =encodeURIComponent("http://api.iqianba.cn/wx/login");
+  var redirect_uri =encodeURIComponent("http://www.iqianba.cn/wx/login");
 
-
-  // var options = {
     var query = {
         "appid":"wxca2fce9912762fde",
         "redirect_uri":redirect_uri,
@@ -35,40 +34,16 @@ async function doWxLogin(){
     ).join("&");
 
     var url = "https://open.weixin.qq.com/connect/qrconnect?"+params;
-   // console.log(params);
-
-    //  var url= "https://open.weixin.qq.com/connect/qrconnect"+query;
+  
     navigateTo(url,{external:true})
 
-
-  // }
-
-  //  var data = await useFetch("https://open.weixin.qq.com/connect/qrconnect",options)
-  // navigateTo("/wx/login")
 }
-
+/* server API 测试 */
 async function doTestServerApi(){
-  var host = "";
-  // var options = {
-  //   //  baseURL : "http://api.iqianba.cn", 
-
-  //    query: {"userId":1},
-  //    server: true,
-
-  //   //  pick: ['data']
-  //   // baseURL: "http://192.168.197.75:9001"  
-  
-  // };
-
-  if (process.server) {
-            host = "http://api.iqianba.cn/"
-        } else {
-            host = "/api/"
-        }
-  console.log("host:"+host);
-  var url = "/api/user/getinfo";
-  var {data} = await useFetch(url);
-  console.log(data.value.msg);
+ 
+  var url = "/api/user/getInfo";
+   var data = await useFetch(url);
+   console.log(data);
 
 }
 async function doLogin(){
