@@ -5,7 +5,7 @@ created by JackySong@2023
     <div>
         <p>URL is: {{ url }}</p>
         <p>Path is: {{ url.pathname }}</p>
-        <p>Param is: {{ url.searchParams }}</p>
+        <p>Param is: {{ url.searchParams.get("code") }}</p>
 
     </div>
   
@@ -13,11 +13,27 @@ created by JackySong@2023
 
 <script setup>
 const url = useRequestURL()
-
-// import '~/assets/css/main.css'
 definePageMeta({
   layout: '',
 });
+
+var code =url.searchParams.get("code");
+var state = url.searchParams.get("state");
+console.log(code);
+console.log(state);
+
+if(code == null || state == null){
+  navigateTo({ 
+    path: '/error',
+    query: {
+      msg: "no way!",
+  } })
+}
+
+
+
+// import '~/assets/css/main.css'
+
 // useHead({
 //     script:
 //     [
