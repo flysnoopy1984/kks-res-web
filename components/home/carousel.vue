@@ -1,7 +1,9 @@
 <template>
     <div>
     
-    <n-carousel autoplay    
+    <n-carousel
+    :show-dots="false" 
+      autoplay    
       style="width: 100%; height: 240px"
     >
       <img

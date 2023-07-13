@@ -1,9 +1,10 @@
 <template>
     <div>
         <HomeCarousel></HomeCarousel>
-        <HomeSectionList></HomeSectionList>
+        <HomeItemPart></HomeItemPart>
+        <!-- <HomeSectionList></HomeSectionList> -->
         <div class="divIn">
-          <n-button type="warning" @click="doTestServerApi">测试Server API</n-button>
+          <!-- <n-button type="warning" @click="doTestServerApi">测试Server API</n-button> -->
           <n-button type="primary" @click="doWxLogin">WX Login</n-button>
         </div>
     </div>

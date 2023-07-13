@@ -4,3 +4,6 @@
         <div>Context</div>
     </div>
 </template>
+<style scrop>
+
+</style>

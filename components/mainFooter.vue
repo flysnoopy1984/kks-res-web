@@ -6,9 +6,9 @@
 				<div class="col-sm-12 col-md-5">
 					
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2 mb-4 logo"><a href="#">Monarch</a></h2>
-						<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-						<h2 class="ftco-heading-2 mb-4">Connect with us</h2>
+						<!-- <h2 class="ftco-heading-2 mb-4 logo"><a href="#">Monarch</a></h2> -->
+						<!-- <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p> -->
+						<h2 class="ftco-heading-2 mb-4">联系我们</h2>
 						<ul class="ftco-footer-social list-unstyled mt-2">
 
 							<li class="ftco-animate">
@@ -35,10 +35,10 @@
 							<div class="ftco-footer-widget">
 								<ul class="list-unstyled">
 									<li><a href="#">Home</a></li>
-									<li><a href="#">Services</a></li>
+									<!-- <li><a href="#">Services</a></li>
 									<li><a href="#">Work</a></li>
 									<li><a href="#">About</a></li>
-									<li><a href="#">Blog</a></li>
+									<li><a href="#">Blog</a></li> -->
 								</ul>
 							</div>
 						</div>
@@ -46,10 +46,10 @@
 							<div class="ftco-footer-widget">
 								<ul class="list-unstyled">
 									<li><a href="#">Press</a></li>
-									<li><a href="#">Blog</a></li>
+									<!-- <li><a href="#">Blog</a></li>
 									<li><a href="#">Contact</a></li>
 									<li><a href="#">Support</a></li>
-									<li><a href="#">Privacy</a></li>
+									<li><a href="#">Privacy</a></li> -->
 								</ul>
 							</div>
 						</div>
@@ -57,10 +57,10 @@
 							<div class="ftco-footer-widget">
 								<ul class="list-unstyled">
 									<li><a href="#">Privacy</a></li>
-									<li><a href="#">FAQ</a></li>
+									<!-- <li><a href="#">FAQ</a></li>
 									<li><a href="#">Careers</a></li>
 									<li><a href="#">Procedure</a></li>
-									<li><a href="#">Team</a></li>
+									<li><a href="#">Team</a></li> -->
 								</ul>
 							</div>
 						</div>
@@ -73,7 +73,7 @@
 				<div class="row">
 					<div class="col-md-12 text-center">
 						
-						<p class="mb-0">Copyright &copy; All rights reserved | This template is made with <i class="fa fa-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" rel="nofollow noopener">Colorlib</a>
+						<p class="mb-0">Copyright &copy; 2023 All rights reserved | 沪ICP备17005547号
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                     </div>
                 </div>

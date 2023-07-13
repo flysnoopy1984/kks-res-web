@@ -27,20 +27,20 @@
                         <nav class="site-nav site-nav-normal">
                             <ul>
                                 <li class="nav-item-original">
-                                    <a href="/?dcs=original-featured&amp;dcm=normal-nav">原创</a>
+                                    <a href="/?dcs=original-featured&amp;dcm=normal-nav">最新</a>
                                 </li>
                                 <li class="nav-item-chart">
                                     <a href="/charts?dcs=original-featured&amp;dcm=normal-nav" class="">排行</a>
                                 </li>
-                                <li class="nav-item-ebook">
+                                <!-- <li class="nav-item-ebook">
                                     <a href="/ebooks/?dcs=original-featured&amp;dcm=normal-nav" class="">出版</a>
-                                </li>
+                                </li> -->
                                 <li class="nav-item-membership">
                                     <a href="/membership/store/?dcs=original-featured&amp;dcm=normal-nav" class="">会员</a>
                                 </li>
-                                <li class="nav-item-app">
+                                <!-- <li class="nav-item-app">
                                     <a href="/app?dcs=original-featured&amp;dcm=normal-nav" class="">App</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </nav>
                         <nav class="site-nav site-nav-original">
@@ -90,10 +90,10 @@
                             </ul>
                         </nav>
                     </div>
-                    <div id="nav-submit" class="nav-submit">
-                        <!-- _performtips_ -->
+                    <!-- <div id="nav-submit" class="nav-submit">
+                      
                         <a href="/submit" target="_blank" class="lnk-start-publish fill-current-color">成为作者</a>
-                    </div>
+                    </div> -->
                     <nav class="site-nav-right">
                         <ul>
                             <li class="nav-cart">
@@ -127,10 +127,10 @@
                                 <img width="30" height="30" alt="Jacky" src="https://img2.doubanio.com/icon/up47115977-3.jpg">
                             </a>
                             <div class="drop-down-list">
-                                <a href="/people/47115977/">
+                                <a href="/person/47115977/">
                                     <span class="text">个人主页</span>
                                 </a>
-                                <a href="/reading_history">
+                                <!-- <a href="/reading_history">
                                     <span class="text">阅读记录</span>
                                 </a>
                                 <a href="/account/reading_time">
@@ -139,7 +139,7 @@
                                 <a href="/membership">
                                     <span class="text">会员中心</span>
                                 </a>
-                                <a href="/account">
+                                <a href="/account"> 
                                     <span class="text">账户</span>
                                 </a>
                                 <a href="/account/rec_vote">
@@ -150,7 +150,7 @@
                                 </a>
                                 <a href="/account/feedback">
                                     <span class="text">反馈</span>
-                                </a>
+                                </a> -->
                                 <a href="/account/setting">
                                     <span class="text">设置</span>
                                 </a>
