@@ -35,7 +35,16 @@ created by JackySong@2023
 </template>
 
 <script setup>
-const swiper = useSwiper()
+const slides = ref(
+  Array.from({ length: 10 }, () => {
+  const r = Math.floor(Math.random() * 256)
+  const g = Math.floor(Math.random() * 256)
+  const b = Math.floor(Math.random() * 256)
+  // Figure out contrast color for font
+  const contrast = r * 0.299 + g * 0.587 + b * 0.114 > 186 ? 'black' : 'white'
+
+  return { bg: `rgb(${r}, ${g}, ${b})`, color: contrast }
+}))
 </script>
 <style scoped>
 .swiper-slide {
@@ -49,8 +58,8 @@ const swiper = useSwiper()
   font-family: 'Roboto', sans-serif;
 }
 .swiper-wrapper {
-  min-width: 100vh;
-  width: 100vh;
+  min-width: 90vh;
+  width: 90vh;
 }
 .swiper-cards {
   width: 240px;
