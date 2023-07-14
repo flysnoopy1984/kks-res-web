@@ -8,8 +8,8 @@ created by JackySong@2023
        <p></p>
     </div>
     <div v-else>
-      <!-- <p>accessToken: {{ accessToken   }}</p>
-      <p>openId:{{ openId }}</p> -->
+      <p>accessToken: {{ accessToken   }}</p>
+     <!--  <p>openId:{{ openId }}</p> -->
       <div class="userInfoContainer">
           <p>
             <n-avatar

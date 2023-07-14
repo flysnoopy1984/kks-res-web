@@ -23,13 +23,17 @@ created by JackySong@2023
         }
       }"
     >
-      <SwiperSlide
+      <!-- <SwiperSlide
         v-for="(slide, idx) in slides"
         :key="idx"
         :style="`background-color: ${slide.bg}; color: ${slide.color}`"
       >
         {{ idx }}
-      </SwiperSlide>
+      </SwiperSlide> -->
+      
+      <SwiperSlide>1</SwiperSlide>
+       <SwiperSlide>2</SwiperSlide>
+        <SwiperSlide>3</SwiperSlide>
       </Swiper>
     </div>
 </template>
