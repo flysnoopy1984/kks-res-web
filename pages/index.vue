@@ -14,24 +14,21 @@
 // import { useMessage } from 'naive-ui'
 import { NButton } from 'naive-ui'
 
-//微信登陆测试
+const appConfig = useAppConfig();
+
+//微信登陆
 async function doWxLogin(){
-  var redirect_uri =encodeURIComponent("http://www.iqianba.cn/wx/login");
+ 
+    var redirect_uri =encodeURIComponent(appConfig.wx_redirect_host+"/wx/login");
 
     var query = {
-        "appid":"wxca2fce9912762fde",
+        "appid":appConfig.wx_appId,
         "redirect_uri":redirect_uri,
         "scope":"snsapi_login",
         "response_type":"code",
         "state":"iqianba"
      }
-    var keys = Object.keys(query);
-
-    var params = keys.map(
-      (key)=>{
-        return key+"="+query[key];
-        }
-    ).join("&");
+    var params = jsonToUrl(query);
 
     var url = "https://open.weixin.qq.com/connect/qrconnect?"+params;
   
