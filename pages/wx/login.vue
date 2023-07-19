@@ -41,37 +41,27 @@ import {useMessage,NAvatar } from 'naive-ui'
 //   unionid:String,
 //   headimgurl:String,
 // }
-
-const url = useRequestURL()
-
 definePageMeta({
   layout: false,
 });
-  var userInfo = null;
-  var accessToken = "";
-  var refresh_token = "";
-  var openId = "";
-  var pageMsg = "扫码登录中"; 
-  const code =url.searchParams.get("code");
-  const state = url.searchParams.get("state");
-  if(code == null || state != "iqianba"){
-    navigateTo({ 
-      path: '/error',
-      query: {
-        msg: "no way!",
-    } })
-  }
-  else{
-    var reqUrl = "/wx/getAccessToken";
+
+if(localStorage.getItem("zfToken")!= null){
+  navigateTo({path: "/index"});
+ // return;
+}
+
+async function getWXInfo(){
+  var reqUrl = "/wx/login";
     var options ={     
         baseURL : "http://api.iqianba.cn",
-        method: "post",
+        method: "options",
         query: {
           "code": code,
           "state": state
         }
     }
     var {data} = await useFetch(reqUrl,options);
+
     var res = data.value;
     if(res != null){
       if(res.code == 200){
@@ -109,7 +99,29 @@ definePageMeta({
         } })
       }
     }
+}
 
+const url = useRequestURL()
+  var userInfo = null;
+  var accessToken = "";
+ // var refresh_token = "";
+  var openId = "";
+  var pageMsg = "扫码登录中"; 
+  const code =url.searchParams.get("code");
+  const state = url.searchParams.get("state");
+
+  if(code == null || state != "iqianba"){
+    navigateTo({ 
+      path: '/error',
+      query: {
+        msg: "no way!",
+    } })
+  }
+  else{
+    if(state == "test")
+      pageMsg = code;
+    else
+      getWXInfo();
   }
 
 

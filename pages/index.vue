@@ -26,7 +26,8 @@ async function doWxLogin(){
         "redirect_uri":redirect_uri,
         "scope":"snsapi_login",
         "response_type":"code",
-        "state":"iqianba"
+       // "state":""
+        "state":"test"
      }
     var params = jsonToUrl(query);
 
