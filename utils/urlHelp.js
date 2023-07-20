@@ -11,3 +11,4 @@ export function jsonToUrl(query) {
       ).join("&");
       return params;    
 }
+

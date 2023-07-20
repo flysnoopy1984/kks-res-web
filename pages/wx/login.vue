@@ -45,10 +45,10 @@ definePageMeta({
   layout: false,
 });
 
-if(localStorage.getItem("zfToken")!= null){
-  navigateTo({path: "/index"});
- // return;
-}
+// if(localStorage.getItem("zfToken")!= null){
+//   await navigateTo({path: "/index"});
+//  // return;
+// }
 
 async function getWXInfo(){
   var reqUrl = "/wx/login";
@@ -89,8 +89,7 @@ async function getWXInfo(){
         const message = useMessage()
         message.info(res.msg)
         pageMsg = " accessToken not get";
-      }  
-      
+      }     
       else{
         navigateTo({ 
           path: '/error',
@@ -118,11 +117,16 @@ const url = useRequestURL()
     } })
   }
   else{
-    if(state == "test")
+    if(state == "testweb")
       pageMsg = code;
     else
       getWXInfo();
   }
+
+onMounted(()=>{
+  
+///  console.log("ls:"+localStorage.getItem("zfUserToken"))
+})
 
 
 </script>

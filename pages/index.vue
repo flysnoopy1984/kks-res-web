@@ -4,8 +4,9 @@
         <HomeItemPart></HomeItemPart>
         <!-- <HomeSectionList></HomeSectionList> -->
         <div class="divIn">
-          <!-- <n-button type="warning" @click="doTestServerApi">测试Server API</n-button> -->
+          <n-button type="warning" @click="doTestAny">TestAny</n-button>
           <n-button type="primary" @click="doWxLogin">WX Login</n-button>
+
         </div>
     </div>
 </template>
@@ -27,7 +28,7 @@ async function doWxLogin(){
         "scope":"snsapi_login",
         "response_type":"code",
        // "state":""
-        "state":"test"
+        "state":"testweb"
      }
     var params = jsonToUrl(query);
 
@@ -36,6 +37,15 @@ async function doWxLogin(){
     navigateTo(url,{external:true})
 
 }
+
+/* Test */
+async function doTestAny(){
+  navigateTo("/my/tokenTest");
+}
+
+// onMounted(()=>{
+//   console.log("ls:"+localStorage.getItem("zfUserToken"))
+// })
 
 
 
