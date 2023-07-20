@@ -21,8 +21,7 @@ const zfnet = async (url:String,options?:any,headers?:any)=>{
     // config.public.Api_ZfHost
     const { public: { Api_ZfHost } } = useRuntimeConfig()
     const reqUrl = Api_ZfHost + url;
-debugger
-console.log("params:",...options);
+
     // 设置key
     const key = hash(options + url)
 
@@ -30,8 +29,10 @@ console.log("params:",...options);
     const customHeaders = { token: useApiToken().value, ...headers }
     try {
 
-     
-      const { data, error } = await useFetch(reqUrl, { ...options, key, headers: customHeaders })
+      const op = { ...options, key, headers: customHeaders };
+      
+      console.log("op",op);
+      const { data, error } = await useFetch(reqUrl,op)
       const result = data.value as ResComm<any>
     
       console.log("result data:",result)
@@ -80,7 +81,7 @@ export default class zfHttp {
     }
 
     options(url: string, body?: any, headers?: any) {
-      return zfnet(url, { method: 'options', body }, headers)
+      return zfnet(url, { method: 'options', ...body }, headers)
     }
 
   

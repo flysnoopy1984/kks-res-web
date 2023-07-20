@@ -37,10 +37,28 @@ async function doWxLogin(){
     navigateTo(url,{external:true})
 
 }
+var openId = "aaa";
+
+// const time2 = {
+//     year: 2021,
+//     month: 8,
+//     day: {
+//         value: 10,
+//     },
+// };
+var number = {
+  params:
+           {
+            openId:openId,
+          }
+      };
+  console.log({...number}) 
 
 /* Test */
 async function doTestAny(){
   navigateTo("/my/tokenTest");
+
+
 }
 
 // onMounted(()=>{

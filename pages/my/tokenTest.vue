@@ -17,11 +17,8 @@ definePageMeta({
 var tokenInfo = "";
 async function doApplyToken(){
   
-    // op = {
-    //             params: {openId:openId}
-    //         }       ;
-  //  tokenInfo = ...op;      
-  //  tokenInfo =  apiToken.createToken("oHs2t1FnFnJu7QTAiG2B7QI34yqs");
+  
+    tokenInfo =  apiToken.createToken("oHs2t1FnFnJu7QTAiG2B7QI34yqs");
 }
 </script>
 <style scoped>
