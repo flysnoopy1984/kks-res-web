@@ -68,20 +68,7 @@ const zfnet = async (url:String,options?:any,headers?:any)=>{
     }
   } 
 
-function showGlobeError(errorMsg:any,code:any){
-  if(process.server){
-    throw createError({
-      statusCode: code,
-      message: errorMsg,
-    })
-  }
-  else{
-    showError({
-      message: errorMsg,
-      statusCode: code
-    })
-  }
-}
+
 
 export default class zfHttp {
 

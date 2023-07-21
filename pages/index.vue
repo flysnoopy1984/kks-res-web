@@ -21,14 +21,14 @@ const appConfig = useAppConfig();
 async function doWxLogin(){
  
     var redirect_uri =encodeURIComponent(appConfig.wx_redirect_host+"/wx/login");
-
+    const { public: { WxState } } = useRuntimeConfig()
     var query = {
         "appid":appConfig.wx_appId,
         "redirect_uri":redirect_uri,
         "scope":"snsapi_login",
         "response_type":"code",
        // "state":""
-        "state":"testweb"
+        "state":WxState
      }
     var params = jsonToUrl(query);
 

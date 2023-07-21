@@ -109,12 +109,8 @@ const url = useRequestURL()
   const code =url.searchParams.get("code");
   const state = url.searchParams.get("state");
 
-  if(code == null || state != "iqianba"){
-    navigateTo({ 
-      path: '/error',
-      query: {
-        msg: "no way!",
-    } })
+  if(code == null || state == null){
+    showGlobeError("非法Code!",500);
   }
   else{
     if(state == "testweb")

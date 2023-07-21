@@ -9,7 +9,8 @@ export default defineNuxtConfig({
 
     // Public keys that are exposed to the client
     public: {
-      Api_ZfHost: process.env.NUXT_ZF_API_HOST || '/api'
+      Api_ZfHost: process.env.NUXT_ZF_API_HOST || '/api',
+      WxState: process.env.NUXT_WX_STATE 
     }
   },
 
