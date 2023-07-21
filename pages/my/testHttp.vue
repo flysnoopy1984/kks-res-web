@@ -6,6 +6,7 @@ created by JackySong@2023
         <div class="divIn">
           <n-button type="info" @click="doLogin">Login</n-button>
           <n-button type="warning" @click="doTestServerApi">测试Server API</n-button>
+          <n-button type="info" @click="doPostJson">测试json入参</n-button>
         </div>
     </div>
 </template>
@@ -38,10 +39,26 @@ console.log("after useFetch");
 console.log(data.data.value.msg)
 }
 
+async function doPostJson(){
+  var options = {
+    baseURL: "http://localhost:9001",
+    method:"options",
+    headers:{
+        "content-Type":"application/json"
+    },
+    body:JSON.stringify({
+      openId:"oHs2t1FnFnJu7QTAiG2B7QI34yqs"
+    })
+  }
+  var url = "/token/create";
+  var data = await useFetch(url,options);
+  console.log(data);
+}
+
 /* server API 测试 */
 async function doTestServerApi(){
  
- var url = "/api/user/getInfo";
+  var url = "/api/user/getInfo";
   var data = await useFetch(url,{
    params:{"userId":1}
   });

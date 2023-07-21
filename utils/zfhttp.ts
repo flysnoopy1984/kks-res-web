@@ -1,10 +1,11 @@
 // 参考 https://yezipi.net/article/detail/10095
+import { errorMonitor } from 'events'
 import { hash } from 'ohash'
 
 // 后端返回的数据类型
 interface ResComm<T> {
   data?: T
-  code: string
+  code: number
   msg: string
 }
 
@@ -21,23 +22,29 @@ const zfnet = async (url:String,options?:any,headers?:any)=>{
     // config.public.Api_ZfHost
     const { public: { Api_ZfHost } } = useRuntimeConfig()
     const reqUrl = Api_ZfHost + url;
+    console.log("reqUrl:",reqUrl);
 
     // 设置key
     const key = hash(options + url)
 
     // 可以设置默认headers例如，token的获取最好用useState返回一个useCookie
     const customHeaders = { token: useApiToken().value, ...headers }
-    try {
 
-      const op = { ...options, key, headers: customHeaders };
+    const op = { ...options, key, headers: customHeaders };
+    console.log("options:",op);
+    let result;
+    try {
+      const { data, error } = await useFetch(reqUrl,op);
+
       
-      console.log("op",op);
-      const { data, error } = await useFetch(reqUrl,op)
-      const result = data.value as ResComm<any>
-    
-      console.log("result data:",result)
-      if (error.value || !result || (result && result.code !== "200")) {
-        //  // 处理token失效的情况
+      if(error.value) showGlobeError(error.value.data.error,error.value.statusCode);
+      
+      
+      else{
+        result = data.value as ResComm<any>;
+        console.log("result data:",result)
+        if(result.code !== 200) {
+           //  // 处理token失效的情况
         // if (result.code === "401") {
         //   // token.value = ''
         //   await navigateTo('/login')
@@ -46,30 +53,36 @@ const zfnet = async (url:String,options?:any,headers?:any)=>{
         // if (process.client) {
         //   return Promise.reject(result)
         // }
-        // 在服务端就直接渲染错误页面，需要设置一个error.vue接收错误信息
-        throw createError({
-          statusCode: 500,
-          statusMessage: reqUrl,
-          message: error.value?.message || '服务器内部错误',
-        })
+          showGlobeError(result.msg,result.code);
+        }
+    
+       
+      
+       
+      
       }
-      return result.data;
-
-    } 
-    catch (ex) {
-      throw createError({
-        statusCode: 500,
-        statusMessage: reqUrl,
-        message: '网络错误',
-      })
+      return result;
     }
-   
-    
-    
+    catch (ex) {
+      showGlobeError("服务器内部错误",500);
+    }
+  } 
 
-  
-
+function showGlobeError(errorMsg:any,code:any){
+  if(process.server){
+    throw createError({
+      statusCode: code,
+      message: errorMsg,
+    })
+  }
+  else{
+    showError({
+      message: errorMsg,
+      statusCode: code
+    })
+  }
 }
+
 export default class zfHttp {
 
     get(url: string, params?: any, headers?: any) {
@@ -81,7 +94,8 @@ export default class zfHttp {
     }
 
     options(url: string, body?: any, headers?: any) {
-      return zfnet(url, { method: 'options', ...body }, headers)
+     
+      return zfnet(url, { method: 'options', body }, headers)
     }
 
   
