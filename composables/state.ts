@@ -1,4 +1,5 @@
 
+
 import { useState, useCookie } from "nuxt/app";
 
 export const useInfo = () =>
@@ -10,5 +11,14 @@ export const useInfo = () =>
   });
 
 //apiToken
-export const useApiToken = () => 
-  useState<String>("token", () => "");
+export const useApiToken = () =>{
+  // if (typeof window !== 'undefined'){
+  //   const lsVal = localStorage.getItem(lsKeys.userToken);
+  // }
+  const lsVal = "";
+
+  return useState(lsKeys.userToken, () =>  lsVal);
+
+}
+
+

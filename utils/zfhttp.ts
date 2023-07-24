@@ -3,7 +3,7 @@ import { errorMonitor } from 'events'
 import { hash } from 'ohash'
 
 // 后端返回的数据类型
-interface ResComm<T> {
+export interface ResComm<T> {
   data?: T
   code: number
   msg: string
@@ -34,11 +34,11 @@ const zfnet = async (url:String,options?:any,headers?:any)=>{
     console.log("options:",op);
     let result;
     try {
+    
       const { data, error } = await useFetch(reqUrl,op);
 
-      
-      if(error.value) showGlobeError(error.value.data.error,error.value.statusCode);
-      
+      if(error.value) 
+        showGlobeError(error.value.data.error,error.value.statusCode);
       
       else{
         result = data.value as ResComm<any>;
@@ -72,26 +72,27 @@ const zfnet = async (url:String,options?:any,headers?:any)=>{
 
 export default class zfHttp {
 
-    get(url: string, params?: any, headers?: any) {
-      return zfnet(url, { method: 'get', params }, headers)
+    get(url: string, body?: any, headers?: any) {
+      return zfnet(url, { method: 'get', ...body }, headers)
     }
   
     post(url: string, body?: any, headers?: any) {
-      return zfnet(url, { method: 'post', body }, headers)
+      return zfnet(url, { method: 'post', ...body }, headers)
     }
 
     options(url: string, body?: any, headers?: any) {
      
-      return zfnet(url, { method: 'options', body }, headers)
+      //console.log("body:",{...body});
+      return zfnet(url, { method: 'options', ...body }, headers)
     }
 
   
     put(url: string, body?: any, headers?: any) {
-      return zfnet(url, { method: 'put', body }, headers)
+      return zfnet(url, { method: 'put', ...body }, headers)
     }
 
   
     delete(url: string, body?: any, headers?: any) {
-      return zfnet(url, { method: 'delete', body }, headers)
+      return zfnet(url, { method: 'delete',...body }, headers)
     }
   }

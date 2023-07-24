@@ -10,7 +10,7 @@ created by JackySong@2023
 
 <script setup>
 import { NButton } from 'naive-ui'
-import apiToken from '@/zfApi/tokenApi'
+import apiToken from '@/zfApi/apiToken'
 definePageMeta({
     layout: 'test'
 })
@@ -24,4 +24,4 @@ async function doApplyToken(){
 }
 </script>
 <style scoped>
-</style>
+</style>zfApi/apiToken

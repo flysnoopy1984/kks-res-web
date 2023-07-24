@@ -8,7 +8,7 @@ created by JackySong@2023
        <p></p>
     </div>
     <div v-else>
-      <p>accessToken: {{ accessToken   }}</p>
+      <p>accessToken: {{ userToken.accessToken   }}</p>
      <!--  <p>openId:{{ openId }}</p> -->
       <div class="userInfoContainer">
           <p>
@@ -28,7 +28,13 @@ created by JackySong@2023
 
 <script setup>
 
+definePageMeta({
+  layout: false,
+});
+
 import {useMessage,NAvatar } from 'naive-ui'
+import apiWx from '@/zfApi/apiWx'
+import nuxtStorage from 'nuxt-storage';
 
 
 // interface userInfo {
@@ -41,68 +47,87 @@ import {useMessage,NAvatar } from 'naive-ui'
 //   unionid:String,
 //   headimgurl:String,
 // }
-definePageMeta({
-  layout: false,
-});
+
 
 // if(localStorage.getItem("zfToken")!= null){
 //   await navigateTo({path: "/index"});
 //  // return;
 // }
 
-async function getWXInfo(){
-  var reqUrl = "/wx/login";
-    var options ={     
-        baseURL : "http://api.iqianba.cn",
-        method: "options",
-        query: {
-          "code": code,
-          "state": state
-        }
-    }
-    var {data} = await useFetch(reqUrl,options);
+async function getWxToken(){
 
-    var res = data.value;
-    if(res != null){
-      if(res.code == 200){
-          var gd = res.data;
-          accessToken = gd.access_token;
-          openId = gd.openid;
-          refresh_token = gd.refresh_token;
-          reqUrl = "/wx/userinfo";
-          options ={     
-              baseURL : "http://api.iqianba.cn",
-              method: "post",
-              query: {
-                "accessToken": accessToken,
-                "openId": openId
-              }
-          }
-          var {data} = await useFetch(reqUrl,options);
-           console.log(data);
-           res = data.value;
-           userInfo = res.data;
-           console.log(userInfo);
-          
-      }
-      else if(res.code == -100){
-        const message = useMessage()
-        message.info(res.msg)
-        pageMsg = " accessToken not get";
-      }     
-      else{
-        navigateTo({ 
-          path: '/error',
-          query: {
-            msg: "no way!",
-        } })
-      }
-    }
+   var res = await apiWx.login(code,state);
+ 
+   console.log("res",res)
+   if(res.code == 200){
+       return res.data;
+   }
+   else{
+      const msg = "登陆失败:"+res.msg;
+      showGlobeError(msg,res.code);
+   }
+   return null;
 }
 
-const url = useRequestURL()
-  var userInfo = null;
-  var accessToken = "";
+async function getWXInfo(){
+
+  var {res} = apiWx.login(code,state)
+
+
+  // var reqUrl = "/wx/login";
+  //   var options ={     
+  //       baseURL : "http://api.iqianba.cn",
+  //       method: "options",
+  //       query: {
+  //         "code": code,
+  //         "state": state
+  //       }
+  //   }
+  //   var {data} = await useFetch(reqUrl,options);
+
+ 
+    // if(res != null){
+    //   if(res.code == 200){
+    //       var gd = res.data;
+    //       accessToken = gd.access_token;
+    //       openId = gd.openid;
+    //       refresh_token = gd.refresh_token;
+    //       reqUrl = "/wx/userinfo";
+    //       options ={     
+    //           baseURL : "http://api.iqianba.cn",
+    //           method: "post",
+    //           query: {
+    //             "accessToken": accessToken,
+    //             "openId": openId
+    //           }
+    //       }
+    //       var {data} = await useFetch(reqUrl,options);
+    //        console.log(data);
+    //        res = data.value;
+    //        userInfo = res.data;
+    //        console.log(userInfo);
+          
+    //   }
+    //   else if(res.code == -100){
+    //     const message = useMessage()
+    //     message.info(res.msg)
+    //     pageMsg = " accessToken not get";
+    //   }     
+    //   else{
+    //     navigateTo({ 
+    //       path: '/error',
+    //       query: {
+    //         msg: "no way!",
+    //     } })
+    //   }
+    // }
+}
+
+  const url = useRequestURL()
+  let userInfo = null;
+  //let userToken = null;
+
+ // var accessToken = "";
  // var refresh_token = "";
   var openId = "";
   var pageMsg = "扫码登录中"; 
@@ -113,18 +138,22 @@ const url = useRequestURL()
     showGlobeError("非法Code!",500);
   }
   else{
-    if(state == "testweb")
+    if(state == "testCode")
       pageMsg = code;
-    else
-      getWXInfo();
+    else{
+      const apiToken = useApiToken();
+      apiToken.value = await getWxToken();
+      //console.log("userToken",userToken);
+      nuxtStorage.localStorage.setData(lsKeys.userToken, apiToken.value,2,'h');
+    }
+     // getWXInfo();
   }
 
 onMounted(()=>{
-  
+ // lsSave2Local(lsKeys.userToken,userToken);
+ // console.log("token:",useApiToken().value);
 ///  console.log("ls:"+localStorage.getItem("zfUserToken"))
 })
-
-
 </script>
 
 <style scoped>

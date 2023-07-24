@@ -4,7 +4,7 @@ created by JackySong@2023
 <template>
     <div>
         token:{{ token }}
-        t2 :{{ key }}
+        after set token :{{ after }}
     </div>
 </template>
 
@@ -13,9 +13,10 @@ definePageMeta({
     layout: 'test'
 })
 
-    const token = useApiToken();
-               
-    const key =  lsKeys.userToken;
+let token = useApiToken();
+token.value = "abcdeft";
+let after = useApiToken();
+const key =  lsKeys.userToken;
     //.at.  useState("token")
    
 </script>
