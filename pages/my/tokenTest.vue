@@ -17,7 +17,7 @@ created by JackySong@2023
 import { NButton } from 'naive-ui'
 import apiToken from '@/zfApi/apiToken'
 import apiWx from '@/zfApi/apiWx'
-import nuxtStorage from 'nuxt-storage';
+
 definePageMeta({
     layout: 'test'
 })
@@ -31,11 +31,11 @@ async function doApplyToken(){
 }
 async function getUserInfo(){
 
-    const apiToken = useApiToken();
-    apiToken.value =  nuxtStorage.localStorage.getData(lsKeys.userToken);
-    console.log("apiToken.value",apiToken.value);
-    
-    var ui = await apiWx.getUserInfo(apiToken.value.accessToken);
+ 
+   // console.log("apiToken.value",apiToken.value);
+
+    var ui = await apiWx.getUserInfo();
+
     console.log("ui",ui);
 }
 </script>

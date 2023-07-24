@@ -13,14 +13,8 @@ const apiWx =  class apiWx extends zfhttp{
     
     }
 
-    public getUserInfo(accessToken:string){
-        return this.get("/wx/userinfo",
-            {
-                "params":{
-                    "accessToken":accessToken,
-                }
-            },
-        )
+    public getUserInfo(){
+        return this.get("/wx/userinfo");
     }
 }
 

@@ -75,7 +75,7 @@ async function getWxToken(){
 
 async function getUserInfo(){
 
-  var ui = await apiWx.getUserInfo(apiToken.value.accessToken);
+  var ui = await apiWx.getUserInfo();
   console.log("ui",ui);
 
 
