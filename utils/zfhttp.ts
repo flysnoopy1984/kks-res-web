@@ -18,20 +18,17 @@ export interface ResComm<T> {
  * @param { Object } headers 自定义header头, 单独设置headers区分请求参数，也好设置类型
  */
 const zfnet = async (url:String,options?:any,headers?:any)=>{
-    // const config= useRuntimeConfig()
-    // config.public.Api_ZfHost
+
     const { public: { Api_ZfHost } } = useRuntimeConfig()
     const reqUrl = Api_ZfHost + url;
-    console.log("reqUrl:",reqUrl);
-
-    // 设置key
+   // console.log("reqUrl:",reqUrl);
+   // 设置key
     const key = hash(options + url)
-
     // 可以设置默认headers例如，token的获取最好用useState返回一个useCookie
-    const customHeaders = { token: useApiToken().value, ...headers }
+    const customHeaders = { token: useApiToken().value.token, ...headers }
 
     const op = { ...options, key, headers: customHeaders };
-    console.log("options:",op);
+    console.log("customHeaders:",customHeaders);
     let result;
     try {
     

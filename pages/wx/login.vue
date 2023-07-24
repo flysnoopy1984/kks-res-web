@@ -3,12 +3,15 @@ created by JackySong@2023
 -->
 <template>
     
-    <div v-if="userInfo == null">
+    <div v-if="apiToken.value == ''">
        <p>{{pageMsg}}</p>
        <p></p>
     </div>
+    <div v-else-if="userInfo==null">
+      <n-button type="primary" @click="getUserInfo">获取用户信息</n-button>
+    </div>
     <div v-else>
-      <p>accessToken: {{ userToken.accessToken   }}</p>
+      <p>accessToken: {{ apiToken.value.accessToken   }}</p>
      <!--  <p>openId:{{ openId }}</p> -->
       <div class="userInfoContainer">
           <p>
@@ -35,7 +38,7 @@ definePageMeta({
 import {useMessage,NAvatar } from 'naive-ui'
 import apiWx from '@/zfApi/apiWx'
 import nuxtStorage from 'nuxt-storage';
-
+import { NButton } from 'naive-ui'
 
 // interface userInfo {
 //   openid:String,
@@ -54,6 +57,7 @@ import nuxtStorage from 'nuxt-storage';
 //  // return;
 // }
 
+
 async function getWxToken(){
 
    var res = await apiWx.login(code,state);
@@ -69,9 +73,10 @@ async function getWxToken(){
    return null;
 }
 
-async function getWXInfo(){
+async function getUserInfo(){
 
-  var {res} = apiWx.login(code,state)
+  var ui = await apiWx.getUserInfo(apiToken.value.accessToken);
+  console.log("ui",ui);
 
 
   // var reqUrl = "/wx/login";
@@ -125,12 +130,8 @@ async function getWXInfo(){
 
   const url = useRequestURL()
   let userInfo = null;
-  //let userToken = null;
-
- // var accessToken = "";
- // var refresh_token = "";
-  var openId = "";
-  var pageMsg = "扫码登录中"; 
+  const apiToken = useApiToken();
+  let pageMsg = "扫码登录中"; 
   const code =url.searchParams.get("code");
   const state = url.searchParams.get("state");
 
@@ -141,19 +142,16 @@ async function getWXInfo(){
     if(state == "testCode")
       pageMsg = code;
     else{
-      const apiToken = useApiToken();
+      
       apiToken.value = await getWxToken();
-      //console.log("userToken",userToken);
+
       nuxtStorage.localStorage.setData(lsKeys.userToken, apiToken.value,2,'h');
+
     }
      // getWXInfo();
   }
 
-onMounted(()=>{
- // lsSave2Local(lsKeys.userToken,userToken);
- // console.log("token:",useApiToken().value);
-///  console.log("ls:"+localStorage.getItem("zfUserToken"))
-})
+
 </script>
 
 <style scoped>
