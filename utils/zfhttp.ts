@@ -1,5 +1,4 @@
 // 参考 https://yezipi.net/article/detail/10095
-import { errorMonitor } from 'events'
 import { hash } from 'ohash'
 
 // 后端返回的数据类型
@@ -25,7 +24,7 @@ const zfnet = async (url:String,options?:any,headers?:any)=>{
    // 设置key
     const key = hash(options + url)
     // 可以设置默认headers例如，token的获取最好用useState返回一个useCookie
-    const customHeaders = { token: useApiToken().value.token, ...headers }
+    const customHeaders = { token:  useCookie(lsKeys.userToken).value, ...headers }
 
     const op = { ...options, key, headers: customHeaders };
     console.log("customHeaders:",customHeaders);

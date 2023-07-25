@@ -4,6 +4,12 @@ created by JackySong@2023
 <template>
     <div>
         <div>
+            <h1>tooken</h1>
+            <p>
+                {{ tokenInfo }}
+            </p>
+        </div>
+        <div>
             <n-button type="warning" @click="doApplyToken">applyToken</n-button>
         </div>
         <div v-html="tokenInfo"></div>   
@@ -22,11 +28,14 @@ definePageMeta({
     layout: 'test'
 })
 
-const tokenInfo = ref("");
+let tokenInfo = useApiToken();
 async function doApplyToken(){
-
    var result =  await apiToken.createToken("oHs2t1FnFnJu7QTAiG2B7QI34yqs");
-   tokenInfo.value = JSON.stringify(result, null, 4);
+   if(result.code == 200){
+       let userToken = result.data;
+       saveTokenAndOpenId(userToken);
+       tokenInfo = useApiToken();
+   }
 
 }
 async function getUserInfo(){

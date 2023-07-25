@@ -18,7 +18,6 @@
     "@css-render/vue3-ssr": "^0.15.12",
     "axios": "^1.4.0",
     "naive-ui": "^2.34.4",
-    "nuxt-storage": "^1.2.2",
     "nuxt-swiper": "^1.1.1"
   }
 }

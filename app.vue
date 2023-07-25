@@ -13,8 +13,10 @@
 </template>
 <script setup>
 import {NMessageProvider } from 'naive-ui'
-import nuxtStorage from 'nuxt-storage';
-const apiToken = useApiToken();
-apiToken.value =  nuxtStorage.localStorage.getData(lsKeys.userToken);
+
+// onMounted(()=>{
+//   if(process.server) return; 
+//   useApiToken().value =  localStorage.getItem(lsKeys.userToken);
+// })
 </script>
 

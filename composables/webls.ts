@@ -1,6 +1,8 @@
 
 export const lsKeys = {
-    userToken :"userToken"
+    userToken :"userToken",
+    userOpenId :"userOpenId",
+    userInfo :"userInfo"
 }
 
 export const lsSave2Local = (key:string,json:string)=>{
