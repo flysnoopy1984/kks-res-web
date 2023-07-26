@@ -2,13 +2,13 @@
     <div>
         <!-- {{ $route.params.group }}
         {{ $route.params.openId }} -->
-        <div class="userInfoContainer">
+        <div class="userInfoContainer" v-show="userInfo.openId!=null">
           <p>
             <n-avatar
               size="large"
-              :src=userInfo.headimgurl
+              :src=userInfo.headImgUrl
             /></p>
-          <p>nickname: {{userInfo.nickname}}</p>
+          <p>nickname: {{userInfo.nickName}}</p>
           <p>sex: {{userInfo.sex}}</p>
           <p>city: {{userInfo.city }}</p>
           <p>province: {{userInfo.province}}</p>
@@ -19,15 +19,22 @@
     </div>
 </template>
 <script setup>
-import { NButton } from 'naive-ui'
+import { NAvatar } from 'naive-ui'
 definePageMeta({
     layout: 'person'
 })
 
-userInfo = useUserInfo().value; 
 
 
-backToHome = ()=>{
+const userInfo = useUserInfo().value; 
+
+
+
+
+console.log("openId",userInfo.openid);
+const b= userInfo.openid!=null;
+
+function backToHome(){
     navigateTo("/");
 }
 </script>

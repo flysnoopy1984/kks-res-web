@@ -7,17 +7,23 @@ export class cookieManager {
         useCookie(lsKeys.userToken,{
             maxAge:3600*2
            }).value = userToken.token;
-           useCookie(lsKeys.userOpenId).value = userToken.openId;
+           
+        useCookie(lsKeys.userOpenId,
+            {
+                maxAge:3600*30
+            }).value = userToken.openId;
          
     }
 
     //30天 有效期
     static saveUserInfo(ui:userInfo){
 
-        useCookie(lsKeys.userInfo,
+      const userCookie =   useCookie(lsKeys.userInfo,
         {
             maxAge:3600*30
-        }).value = JSON.stringify(ui)
+        });
+
+        userCookie.value = JSON.stringify(ui);
           
     }
    

@@ -24,6 +24,8 @@ import { NButton } from 'naive-ui'
 import apiToken from '@/zfApi/apiToken'
 import apiWx from '@/zfApi/apiWx'
 
+
+
 definePageMeta({
     layout: 'test'
 })
@@ -44,12 +46,15 @@ async function getUserInfo(){
  
    // console.log("apiToken.value",apiToken.value);
 
-    var ui = await apiWx.getUserInfo();
-
+   // var ui = await apiWx.getUserInfo();
+   
   //  cookieManager.saveTokenAndOpenId(userLogin.token);
-      cookieManager.saveUserInfo(userLogin.userInfo);
+    //  cookieManager.saveUserInfo(userLogin.userInfo);
+ //  cookieManager.saveUserInfo(ui.data)
 
-    console.log("ui",ui);
+   const userInfo = useUserInfo().value; 
+   
+  //  console.log("userInfo",userInfo.openid);
 }
 </script>
 <style scoped>

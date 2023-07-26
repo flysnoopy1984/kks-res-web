@@ -57,7 +57,7 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
       return result;
     }
     catch (ex) {
-      showGlobeError("服务器内部错误",500);
+      showGlobeError("服务器内部错误",1500);
     }
   } 
 

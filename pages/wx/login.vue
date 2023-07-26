@@ -3,17 +3,10 @@ created by JackySong@2023
 -->
 <template>
     
-    <div v-if="apiToken.value == ''">
+    <div>
        <p>{{ pageMsg }}</p>
        <p></p>
     </div>
-    <!-- <div v-else-if="userInfo==null">
-      <n-button type="primary" @click="getUserInfo">获取用户信息</n-button>
-    </div>
-    <div v-else>
-      <p>accessToken: {{ apiToken.value.accessToken   }}</p>
-    </div> -->
-
 </template>
 
 
@@ -23,57 +16,43 @@ definePageMeta({
   layout: false,
 });
 
-import {useMessage,NAvatar } from 'naive-ui'
 import apiWx from '@/zfApi/apiWx'
-import { NButton } from 'naive-ui'
-
 
 async function wxLogin(){
 
-  console.log("wxLogin...");
-  debugger
+  console.log("process:",process.server);
+
    var res = await apiWx.login(code,state);
-  
-   console.log("res",res)
    if(res.code == 200){
-
-      const userLogin = res.data;
-
-     // cookieManager.saveTokenAndOpenId(userLogin.token);
-     // cookieManager.saveUserInfo(userLogin.userInfo);
+  
+      return res.data;
 
    }
    else{
       const msg = "登陆失败:"+res.msg;
       showGlobeError(msg,res.code);
    }
-  // return null;
 }
 
-// async function getUserInfo(){
-
-//   var ui = await apiWx.getUserInfo();
-//   console.log("ui",ui);
-// }
-
 const url = useRequestURL()
-let userInfo = null;
-
-
 let pageMsg = "扫码登录中"; 
 const code =url.searchParams.get("code");
 const state = url.searchParams.get("state");
 
 if(code == null || state == null){
-  showGlobeError("非法Code!",500);
+  showGlobeError("非法Code!",501);
 }
 else{
   if(state == "testCode")
     pageMsg = code;
   else{
-     await wxLogin(); 
-   //  debugger
-   //  navigateTo("/person/"+ useApiToken().value.openId);
+    console.log("WX login");
+
+    const userLogin = await wxLogin(); 
+    cookieManager.saveTokenAndOpenId(userLogin.token);
+    cookieManager.saveUserInfo(userLogin.userInfo);
+  
+    navigateTo("/person/"+ useApiToken().value.openId);
   }
 }
 </script>
