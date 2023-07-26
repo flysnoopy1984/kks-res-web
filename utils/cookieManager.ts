@@ -1,14 +1,29 @@
- 
- export interface userToken{
-    token:any,
-    openId:any,
-    expireDate?:any
-  }
+import {userToken,userInfo} from './models'
 
- export const saveTokenAndOpenId = (userToken:userToken)=>
- {
-    useCookie(lsKeys.userToken,{
-     maxAge:3600*2
-    }).value = userToken.token;
-    useCookie(lsKeys.userOpenId).value = userToken.openId;
+export class cookieManager {
+     //2小时 有效期
+    static saveTokenAndOpenId(userToken:userToken){
+        
+        useCookie(lsKeys.userToken,{
+            maxAge:3600*2
+           }).value = userToken.token;
+           useCookie(lsKeys.userOpenId).value = userToken.openId;
+         
+    }
+
+    //30天 有效期
+    static saveUserInfo(ui:userInfo){
+
+        useCookie(lsKeys.userInfo,
+        {
+            maxAge:3600*30
+        }).value = JSON.stringify(ui)
+          
+    }
+   
 }
+ 
+//  export const saveTokenAndOpenId = (userToken:userToken)=>
+//  {
+   
+// }

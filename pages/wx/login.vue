@@ -4,7 +4,7 @@ created by JackySong@2023
 <template>
     
     <div v-if="apiToken.value == ''">
-       <p>{{pageMsg}}</p>
+       <p>{{ pageMsg }}</p>
        <p></p>
     </div>
     <!-- <div v-else-if="userInfo==null">
@@ -28,31 +28,38 @@ import apiWx from '@/zfApi/apiWx'
 import { NButton } from 'naive-ui'
 
 
-async function getWxToken(){
+async function wxLogin(){
 
+  console.log("wxLogin...");
+  debugger
    var res = await apiWx.login(code,state);
- 
+  
    console.log("res",res)
    if(res.code == 200){
-       return res.data;
+
+      const userLogin = res.data;
+
+     // cookieManager.saveTokenAndOpenId(userLogin.token);
+     // cookieManager.saveUserInfo(userLogin.userInfo);
+
    }
    else{
       const msg = "登陆失败:"+res.msg;
       showGlobeError(msg,res.code);
    }
-   return null;
+  // return null;
 }
 
-async function getUserInfo(){
+// async function getUserInfo(){
 
-  var ui = await apiWx.getUserInfo();
-  console.log("ui",ui);
-}
+//   var ui = await apiWx.getUserInfo();
+//   console.log("ui",ui);
+// }
 
 const url = useRequestURL()
 let userInfo = null;
 
-const apiToken = useApiToken();
+
 let pageMsg = "扫码登录中"; 
 const code =url.searchParams.get("code");
 const state = url.searchParams.get("state");
@@ -64,10 +71,9 @@ else{
   if(state == "testCode")
     pageMsg = code;
   else{
-    apiToken.value = await getWxToken();
-    saveTokenAndOpenId(apiToken.value);
-    
-    navigateTo("/person/"+apiToken.value.openId);
+     await wxLogin(); 
+   //  debugger
+   //  navigateTo("/person/"+ useApiToken().value.openId);
   }
 }
 </script>

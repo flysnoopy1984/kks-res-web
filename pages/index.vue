@@ -39,6 +39,7 @@ async function doWxLogin(){
 
 /* Test */
 async function doTestAny(){
+  console.log("to token Test");
   navigateTo("/my/tokenTest");
 
 }

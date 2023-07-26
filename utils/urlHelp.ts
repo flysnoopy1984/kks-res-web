@@ -2,7 +2,7 @@
 //     return "";
 // }
 
-export function jsonToUrl(query) {
+export function jsonToUrl(query:any) {
     var keys = Object.keys(query);
     var params = keys.map(
         (key)=>{

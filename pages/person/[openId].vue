@@ -24,7 +24,7 @@ definePageMeta({
     layout: 'person'
 })
 
-userInfo = 
+userInfo = useUserInfo().value; 
 
 
 backToHome = ()=>{

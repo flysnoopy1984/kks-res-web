@@ -29,11 +29,12 @@ definePageMeta({
 })
 
 let tokenInfo = useApiToken();
+
 async function doApplyToken(){
    var result =  await apiToken.createToken("oHs2t1FnFnJu7QTAiG2B7QI34yqs");
    if(result.code == 200){
        let userToken = result.data;
-       saveTokenAndOpenId(userToken);
+      cookieManager.saveTokenAndOpenId(userToken);
        tokenInfo = useApiToken();
    }
 
@@ -44,6 +45,9 @@ async function getUserInfo(){
    // console.log("apiToken.value",apiToken.value);
 
     var ui = await apiWx.getUserInfo();
+
+  //  cookieManager.saveTokenAndOpenId(userLogin.token);
+      cookieManager.saveUserInfo(userLogin.userInfo);
 
     console.log("ui",ui);
 }

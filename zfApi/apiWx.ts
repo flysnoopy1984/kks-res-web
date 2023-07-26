@@ -1,8 +1,10 @@
-import zfhttp from "@/utils/zfhttp";
+import {wxLogin,userInfo} from '@/utils/models'
+import zfhttp from '@/utils/zfhttp';
+
 const apiWx =  class apiWx extends zfhttp{
     public login(code:string,state:string){
 
-        return  this.options("/wx/login",
+        return  this.options<wxLogin>("/wx/login",
                     {
                         "params":
                         {
@@ -14,7 +16,7 @@ const apiWx =  class apiWx extends zfhttp{
     }
 
     public getUserInfo(){
-        return this.get("/wx/userinfo");
+        return this.get<userInfo>("/wx/userinfo");
     }
 }
 
