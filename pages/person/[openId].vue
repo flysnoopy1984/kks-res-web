@@ -31,8 +31,8 @@ const userInfo = useUserInfo().value;
 
 
 
-console.log("openId",userInfo.openid);
-const b= userInfo.openid!=null;
+console.log("openId",userInfo.openId);
+
 
 function backToHome(){
     navigateTo("/");
