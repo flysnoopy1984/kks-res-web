@@ -20,36 +20,30 @@ const appConfig = useAppConfig();
 //微信登陆
 async function doWxLogin(){
  
-    var redirect_uri =encodeURIComponent(appConfig.wx_redirect_host+"/wx/login");
-    const { public: { WxState } } = useRuntimeConfig()
-    var query = {
-        "appid":appConfig.wx_appId,
-        "redirect_uri":redirect_uri,
-        "scope":"snsapi_login",
-        "response_type":"code",
-        "state":WxState
-     }
-    var params = jsonToUrl(query);
+  nav.toWxLogin();
+    // var redirect_uri =encodeURIComponent(appConfig.wx_redirect_host+"/wx/login");
+    // const { public: { WxState } } = useRuntimeConfig()
+    // var query = {
+    //     "appid":appConfig.wx_appId,
+    //     "redirect_uri":redirect_uri,
+    //     "scope":"snsapi_login",
+    //     "response_type":"code",
+    //     "state":WxState
+    //  }
+    // var params = jsonToUrl(query);
 
-    var url = "https://open.weixin.qq.com/connect/qrconnect?"+params;
+    // var url = "https://open.weixin.qq.com/connect/qrconnect?"+params;
   
-    navigateTo(url,{external:true})
+    // navigateTo(url,{external:true})
 
 }
 
 /* Test */
 async function doTestAny(){
-  console.log("to token Test");
-  navigateTo("/my/tokenTest");
+
+  navigateTo("/my/jsTest");
 
 }
-
-// onMounted(()=>{
-//   console.log("ls:"+localStorage.getItem("zfUserToken"))
-// })
-
-
-
 
 </script>
 <style scoped>

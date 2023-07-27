@@ -14,9 +14,5 @@
 <script setup>
 import {NMessageProvider } from 'naive-ui'
 
-// onMounted(()=>{
-//   if(process.server) return; 
-//   useApiToken().value =  localStorage.getItem(lsKeys.userToken);
-// })
 </script>
 

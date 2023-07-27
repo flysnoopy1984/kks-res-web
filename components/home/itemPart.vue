@@ -39,16 +39,16 @@ created by JackySong@2023
 </template>
 
 <script setup>
-const slides = ref(
-  Array.from({ length: 10 }, () => {
-  const r = Math.floor(Math.random() * 256)
-  const g = Math.floor(Math.random() * 256)
-  const b = Math.floor(Math.random() * 256)
-  // Figure out contrast color for font
-  const contrast = r * 0.299 + g * 0.587 + b * 0.114 > 186 ? 'black' : 'white'
+// const slides = 
+//   Array.from({ length: 10 }, () => {
+//   const r = Math.floor(Math.random() * 256)
+//   const g = Math.floor(Math.random() * 256)
+//   const b = Math.floor(Math.random() * 256)
+//   // Figure out contrast color for font
+//   const contrast = r * 0.299 + g * 0.587 + b * 0.114 > 186 ? 'black' : 'white'
 
-  return { bg: `rgb(${r}, ${g}, ${b})`, color: contrast }
-}))
+//   return { bg: `rgb(${r}, ${g}, ${b})`, color: contrast }
+// })
 </script>
 <style scoped>
 .swiper-slide {

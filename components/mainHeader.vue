@@ -123,7 +123,7 @@
                     </nav>
                     <div class="user-info" id="user-info">
                         <div class="nav-user more-active">
-                            <a title="Jacky" href="/mine" class="avatar ">
+                            <a title="Jacky" href="/person/1" class="avatar ">
                                 <img width="30" height="30" alt="Jacky" src="https://img2.doubanio.com/icon/up47115977-3.jpg">
                             </a>
                             <div class="drop-down-list">

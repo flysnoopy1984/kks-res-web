@@ -12,3 +12,9 @@ export function showGlobeError(errorMsg:any,code:any){
       })
     }
   }
+  
+export function checkUserLogin(){
+  const ui = useUserInfo().value;
+  return (ui != null && ui != undefined)
+}
+

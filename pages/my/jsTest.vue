@@ -3,14 +3,33 @@ created by JackySong@2023
 -->
 <template>
     <div>
-            <h1>Test</h1>
+        <div id="login_container">
+
+        </div>
+            <h1><button @click="nav.toHome()">返回主页</button>></h1>
     </div>
 </template>
 
 <script setup>
-let op = {"params":"111"}
-let body = {...op}
-console.log("body:",body); 
+definePageMeta({
+  layout: 'blank',
+});
+function runWxJs(){
+    const { public: { WxState } } = useRuntimeConfig()
+    var obj = new WxLogin({
+      id:"login_container",
+      appid: "wxca2fce9912762fde",
+      scope: "snsapi_login",
+      redirect_uri: encodeURIComponent("http://www.iqianba.cn/wx/login"),
+      state:WxState,
+      response_type:"code"
+
+    });
+}
+onMounted(()=>{
+
+    runWxJs();
+})
 </script>
 <style scoped>
 </style>

@@ -2,6 +2,16 @@
 
 
 export default defineNuxtConfig({
+  app:{
+    head:{
+      "script": [
+        {
+          src: 'http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js',
+        }
+      ],
+    },
+  },
+ 
 
   runtimeConfig: {
     // Private keys are only available on the server
@@ -37,6 +47,7 @@ export default defineNuxtConfig({
           : []
     },
   },
-  modules: ['nuxt-swiper']
+  modules: ['nuxt-swiper'],
+  
  
 })
