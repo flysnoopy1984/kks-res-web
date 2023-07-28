@@ -1,13 +1,13 @@
 export class nav{
 
     static async toHome(){
-        await navigateTo({ path: '/' },{
+        return navigateTo({ path: '/' },{
             replace:true
         })
     }
 
     static async toWxLogin(){
-        await navigateTo("/wx/login",{
+        return navigateTo("/wx/login",{
             replace:true
         })
     }
@@ -20,6 +20,6 @@ export class nav{
 
 
     static async toPerson(){
-       await navigateTo("/person/"+ useApiToken().value.openId);
+        return navigateTo("/person/"+ useApiToken().value.openId);
     }
 }

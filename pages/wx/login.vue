@@ -50,9 +50,10 @@ else{
   if(state == "testCode")
     pageMsg = code;
   else{
-    console.log("WX login");
+
     pageMsg = "扫码登录中"; 
     const userLogin = await wxLogin(); 
+    
     cookieManager.saveTokenAndOpenId(userLogin.token);
     cookieManager.saveUserInfo(userLogin.userInfo);
   

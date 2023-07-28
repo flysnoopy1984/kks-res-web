@@ -1,8 +1,13 @@
 <template>
     <div>
-        <!-- {{ $route.params.group }}
-        {{ $route.params.openId }} -->
+
+         <!-- {{ $route.name }}  -->
         <div class="userInfoContainer" v-if="userInfo!=undefined">
+          <div v-if="openIdError == true">
+            <h1>走错咯，请返回主页</h1>
+            <n-button type="primary" @click="nav.toHome()">返回主页</n-button>
+          </div>
+          <div v-else>
             <p>
               <n-avatar
                 size="large"
@@ -15,12 +20,13 @@
             <div>
                 <n-button type="primary" @click="nav.toHome()">返回主页</n-button>
             </div>
+          </div>
+         
         </div>
         <div v-else>
+          
           <n-button type="primary" @click="nav.tojsTest()">返回登陆</n-button>
-        </div>
-     
-     
+        </div>   
      
     </div>
 </template>
@@ -31,12 +37,13 @@ definePageMeta({
     layout: 'person',
     
 })
-
- const userInfo = useUserInfo().value; 
-// if(userInfo == undefined){
-//     nav.toWxLogin();
-// }
-
+const userInfo = useUserInfo().value; 
+let openIdError = false;
+const route = useRoute()
+debugger
+if(route.params.openId != userInfo.openId){
+  openIdError = true;
+}
 
 
 </script>

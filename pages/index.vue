@@ -41,7 +41,7 @@ async function doWxLogin(){
 /* Test */
 async function doTestAny(){
 
-  navigateTo("/my/jsTest");
+  navigateTo("/my/tokenTest");
 
 }
 

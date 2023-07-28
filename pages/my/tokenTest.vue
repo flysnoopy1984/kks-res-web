@@ -2,7 +2,7 @@
 created by JackySong@2023
 -->
 <template>
-    <div>
+    <div class="container">
         <div>
             <h1>tooken</h1>
             <p>
@@ -14,7 +14,10 @@ created by JackySong@2023
         </div>
         <div v-html="tokenInfo"></div>   
         <div>
-            <n-button type="primary" @click="getUserInfo">获取用户信息</n-button>
+            <n-button type="info" @click="getUserInfo">获取用户信息</n-button>
+        </div>
+        <div>
+            <n-button type="primary" @click="testLogin">testLogin</n-button>
         </div>
     </div>
 </template>
@@ -22,7 +25,9 @@ created by JackySong@2023
 <script setup>
 import { NButton } from 'naive-ui'
 import apiToken from '@/zfApi/apiToken'
-import apiWx from '@/zfApi/apiWx'
+import apiTest from '@/zfApi/apiTest'
+
+import { useMessage } from 'naive-ui'
 
 
 
@@ -31,6 +36,21 @@ definePageMeta({
 })
 
 let tokenInfo = useApiToken();
+const message = useMessage()
+async function testLogin(){
+
+     const  res = await apiTest.userLogin("oHs2t1FnFnJu7QTAiG2B7QI34yqs");
+     if(res.code == 200){
+        const userLogin = res.data;
+        cookieManager.saveTokenAndOpenId(userLogin.token);
+        cookieManager.saveUserInfo(userLogin.userInfo);
+        message.success("获取用户成功");
+   
+     }
+     else{
+        message.error("get Error:",res.msg);
+     }
+}
 
 async function doApplyToken(){
    var result =  await apiToken.createToken("oHs2t1FnFnJu7QTAiG2B7QI34yqs");
@@ -58,4 +78,15 @@ async function getUserInfo(){
 }
 </script>
 <style scoped>
+.container{
+    display: flex;
+   
+    flex-direction: column;
+
+    
+}
+.container div {
+    margin-bottom: 20px;
+}
+
 </style>

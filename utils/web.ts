@@ -14,7 +14,9 @@ export function showGlobeError(errorMsg:any,code:any){
   }
   
 export function checkUserLogin(){
+  
   const ui = useUserInfo().value;
-  return (ui != null && ui != undefined)
+  const result =  (ui != null && ui != undefined);
+  return result;
 }
 
