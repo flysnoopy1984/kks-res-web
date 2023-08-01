@@ -8,7 +8,7 @@
         <div class="divIn">
           <n-button type="warning" @click="doTestAny">TestAny</n-button>
           <n-button type="primary" @click="doWxLogin">WX Login</n-button>
-
+        
         </div>
     </div>
 </template>

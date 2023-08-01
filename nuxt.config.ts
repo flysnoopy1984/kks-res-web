@@ -43,11 +43,11 @@ export default defineNuxtConfig({
       include:
        // 设置naive-UI
         process.env.NODE_ENV === 'development'
-          ? ['naive-ui','swiper', 'vueuc', 'date-fns-tz/esm/formatInTimeZone']
+          ? ['naive-ui', 'vueuc', 'date-fns-tz/esm/formatInTimeZone']
           : []
     },
   },
-  modules: ['nuxt-swiper'],
+  // modules: ['nuxt-swiper'],
   
  
 })
