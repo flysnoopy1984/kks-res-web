@@ -7,7 +7,7 @@
         <HomeBarSlider></HomeBarSlider>
         <div class="divIn">
           <n-button type="warning" @click="doTestAny">TestAny</n-button>
-          <n-button type="primary" @click="doWxLogin">WX Login</n-button>
+          <!-- <n-button type="primary" @click="doWxLogin">WX Login</n-button> -->
         
         </div>
     </div>
@@ -51,7 +51,7 @@ async function initPage() {
 /* Test */
 async function doTestAny(){
 
-  navigateTo("/my/tokenTest");
+  navigateTo("/my/amTest");
 
 }
 
