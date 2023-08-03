@@ -9,7 +9,12 @@ created by JackySong@2023
     </svg> -->
     
         <div class="hd">
-
+            <div class="title-section">
+                <h2 class="widget-title">当前热需</h2>
+                <div class="links">
+                    <a href="#" class="btn-contained" data-size="s" target="_blank">查看更多</a>
+                </div>
+            </div>
         </div>
         <div class="bd">
             <div class="my-slider slick-slider works-showcase slick-initialized">
@@ -20,9 +25,8 @@ created by JackySong@2023
                     </svg>
                 </button>
 
-                <div class="slick-list">
-                    <Transition name="swipe">
-                        <div class="slick-track" style="width: 10800px; opacity: 1;">
+                <div class="slick-list">    
+                    <div class="slick-track" style="width: 10800px; opacity: 1;" :style="styleMove">
                         <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
                             <div>
                                 <div class="works-item brief-works-item">
@@ -52,7 +56,7 @@ created by JackySong@2023
                                 <div class="works-item brief-works-item">
                                     <n-card title="带封面的卡片">
                                             <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/efc4503a3f9582e5afbd5d006d7674f9aeb12e606cc31-6ubQbc_fw480webp">
+                                                <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
                                             </template>
                                         卡片内容
                                     </n-card>
@@ -60,7 +64,7 @@ created by JackySong@2023
                             <div class="works-item brief-works-item">
                                     <n-card title="带封面的卡片">
                                             <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/b3dfcc54072a5e4230c236332deb37392b931fdc2dfce-UKmlQd_fw240webp">
+                                                <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
                                             </template>
                                         卡片内容
                                     </n-card>
@@ -112,8 +116,52 @@ created by JackySong@2023
                                 </div>
                             </div>              
                         </div>
-                    </div>
-                    </Transition>                  
+                         <!--第三个-->
+                         <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
+                            <div>
+                                <div class="works-item brief-works-item">
+                                    <n-card title="带封面的卡片">
+                                            <template #cover>
+                                            <img src="https://gd-hbimg.huaban.com/49b919bbee0b70769db0c4d9283dcb80e85aa0783f9ea-ykDLhM_fw480webp">
+                                            </template>
+                                        卡片内容
+                                    </n-card>
+                                </div>
+                                <div class="works-item brief-works-item">
+                                    <n-card title="带封面的卡片">
+                                            <template #cover>
+                                            <img src="https://gd-hbimg.huaban.com/49b919bbee0b70769db0c4d9283dcb80e85aa0783f9ea-ykDLhM_fw480webp">
+                                            </template>
+                                        卡片内容
+                                    </n-card>
+                                </div>
+                                <div class="works-item brief-works-item">
+                                    <n-card title="带封面的卡片">
+                                            <template #cover>
+                                            <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
+                                            </template>
+                                        卡片内容
+                                    </n-card>
+                                </div>
+                                <div class="works-item brief-works-item">
+                                    <n-card title="带封面的卡片">
+                                            <template #cover>
+                                            <img src="https://gd-hbimg.huaban.com/efc4503a3f9582e5afbd5d006d7674f9aeb12e606cc31-6ubQbc_fw480webp">
+                                            </template>
+                                        卡片内容
+                                    </n-card>
+                                </div>
+                            <div class="works-item brief-works-item">
+                                    <n-card title="带封面的卡片">
+                                            <template #cover>
+                                            <img src="https://gd-hbimg.huaban.com/b3dfcc54072a5e4230c236332deb37392b931fdc2dfce-UKmlQd_fw240webp">
+                                            </template>
+                                        卡片内容
+                                    </n-card>
+                                </div>
+                            </div>              
+                        </div>
+                    </div>                            
                 </div>
                 <button @click="slideRight" class="slick-arrow slick-next fill-current-color" aria-label="下一页" style="display: block;">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 11" width="7" height="14" style="transform: scaleX(-1);">
@@ -126,16 +174,37 @@ created by JackySong@2023
 </template>
 
 <script setup>
-import { NCard } from 'naive-ui'
-function slideLeft(){
+import { NCard } from 'naive-ui';
+let curPosX = 0;
+const moveDistance = 1200;
 
+const styleMove = reactive({
+    transform: "translate3d("+curPosX+"px, 0, 0)",
+    transition: "all .5s ease",
+});
+
+function slideLeft(){
+    curPosX+=moveDistance;
+    styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";
 }
 function slideRight() {
-    
+    curPosX-=moveDistance;
+    styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";
 }
+
 </script>
 <style scoped>
 /* swipe 动画*/
+
+.move-right{
+    transform: translate3d(1000px, 0, 0);
+    transition: all .5s ease;
+} 
+.move-left{
+    transform: translate3d(0px, 0, 0);
+    transition: all .5s ease
+}
+
 
 .n-card {
   max-width: 220px;
@@ -143,9 +212,16 @@ function slideRight() {
   border-radius: 8px;  
 }
 .barSliderContainer{
-    width: 100%;
+    box-sizing: content-box;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 60px;
+    padding-left: 60px;
+    max-width: 1200px;
+    margin-top: 20px;
+    /* width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: center; */
 }
 /* list */
 .slick-list {
@@ -356,6 +432,39 @@ function slideRight() {
     box-shadow: 1px 1px 3px rgba(0,0,0,0.2)
 }
 
+.barSliderContainer .widget-title {
+	font-weight: bold;
+	font-size: 24px;
+	line-height: 1
+}
+
+.barSliderContainer .title-section {
+	display: flex;
+	justify-content: space-between;
+	align-items: center
+}
+
+.gbarSliderContainer .links {
+	margin-left: auto
+}
+
+.barSliderContainer .links a {
+	margin-left: 8px
+}
+
+/* 按钮 -- 更多链接 */
+.btn-contained {
+    display: inline-block;
+    border: none;
+    border-radius: 4px;
+    background: var(--white);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    color: var(--grayBlack);
+    padding: 0 14px;
+    height: 30px;
+    font-size: 13px;
+    line-height: 30px;
+}
 
 
 </style>
