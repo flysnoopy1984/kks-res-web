@@ -3,11 +3,6 @@ created by JackySong@2023
 -->
 <template>
     <div class="barSliderContainer">
-    <!-- <svg aria-hidden="true" style="position: absolute; width: 0px; height: 0px; overflow: hidden;">
-        <symbol id="ic_chevron_left" viewBox="0 0 1024 1024"><path d="M641.450667 266.666667a42.666667 42.666667 0 0 0-60.330667 0l-215.125333 215.168a42.666667 42.666667 0 0 0 0 60.330666l215.125333 215.125334a42.666667 42.666667 0 0 0 60.330667-60.330667L456.490667 512l184.96-184.96a42.666667 42.666667 0 0 0 0-60.330667z"></path></symbol>
-        <symbol id="ic_chevron_right" viewBox="0 0 1024 1024"><path d="M427.605333 266.666667a42.666667 42.666667 0 0 1 60.330667 0l215.125333 215.168a42.666667 42.666667 0 0 1 0 60.330666l-215.125333 215.125334a42.666667 42.666667 0 0 1-60.330667-60.330667L612.565333 512l-184.96-184.96a42.666667 42.666667 0 0 1 0-60.330667z"></path></symbol>
-    </svg> -->
-    
         <div class="hd">
             <div class="title-section">
                 <h2 class="widget-title">当前热需</h2>

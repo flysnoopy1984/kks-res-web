@@ -62,7 +62,6 @@ else{
 }
 
 async function wxLogin(){
-   console.log("process:",process.server);
 
    var res = await apiWx.login(code,state);
    if(res.code == 200){
@@ -71,10 +70,25 @@ async function wxLogin(){
    }
    else{
       const msg = "登陆失败:"+res.msg;
-      showGlobeError(msg,res.code);
+      web.showGlobeError(msg,res.code);
    }
 }
 
+/*直接点击按钮,页面按钮点击后 */
+    // var redirect_uri =encodeURIComponent(appConfig.wx_redirect_host+"/wx/login");
+    // const { public: { WxState } } = useRuntimeConfig()
+    // var query = {
+    //     "appid":appConfig.wx_appId,
+    //     "redirect_uri":redirect_uri,
+    //     "scope":"snsapi_login",
+    //     "response_type":"code",
+    //     "state":WxState
+    //  }
+    // var params = jsonToUrl(query);
+
+    // var url = "https://open.weixin.qq.com/connect/qrconnect?"+params;
+  
+    // navigateTo(url,{external:true})
 
 
 function runWxJs(){

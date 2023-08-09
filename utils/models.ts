@@ -34,4 +34,28 @@ export interface wxLogin{
     token:userToken
 }
 
+export interface pageSectionEvent{
+    secName:string,
+    secCode:string,
+    defaultPage:number,
+    evCode:string,
+    evName:string,
+    evType:number,
+    ecCode:string,
+    ecStartDate:string,
+    ecEndDate:string
+}
+
+export interface pageEventPoster{
+    id:number,
+    title:string,
+    des:string,
+    author:string,
+    sUrl:string,
+    lUrl:string,
+    defaultEvent:string,
+    defaultYear:number
+
+}
+
 // {userToken,userInfo}

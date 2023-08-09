@@ -1,15 +1,17 @@
 <template>
     <div>
         <HomeBanner></HomeBanner>
-
-        <!-- <HomeItemPart></HomeItemPart> -->
         
-        <HomeBarSlider></HomeBarSlider>
-        <div class="divIn">
-          <n-button type="warning" @click="doTestAny">TestAny</n-button>
-          <!-- <n-button type="primary" @click="doWxLogin">WX Login</n-button> -->
-        
+        <div>
+          <HomeBarSlider></HomeBarSlider>
+    
+          <!-- <div class="divIn">
+            <n-button type="warning" @click="doTestAny">TestAny</n-button>
+          </div> -->
+          <HomeSectionArea bk-color="#b0f2fb" title="当下流行"></HomeSectionArea>
+          <HomeSectionArea></HomeSectionArea>
         </div>
+      
     </div>
 </template>
 
@@ -23,24 +25,6 @@ const appConfig = useAppConfig();
 async function doWxLogin(){
  
   nav.toWxLogin();
-
-
-  /*直接点击按钮 */
-    // var redirect_uri =encodeURIComponent(appConfig.wx_redirect_host+"/wx/login");
-    // const { public: { WxState } } = useRuntimeConfig()
-    // var query = {
-    //     "appid":appConfig.wx_appId,
-    //     "redirect_uri":redirect_uri,
-    //     "scope":"snsapi_login",
-    //     "response_type":"code",
-    //     "state":WxState
-    //  }
-    // var params = jsonToUrl(query);
-
-    // var url = "https://open.weixin.qq.com/connect/qrconnect?"+params;
-  
-    // navigateTo(url,{external:true})
-
 }
 
 //加载栏目，栏目中对应的Item（祝福海报）

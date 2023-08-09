@@ -35,7 +35,7 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
       const { data, error } = await useFetch(reqUrl,op);
 
       if(error.value) 
-        showGlobeError(error.value.data.error,error.value.statusCode);
+        web.showGlobeError(error.value.data.error,error.value.statusCode);
       
       else{
         result = data.value as ResComm<T>;
@@ -50,14 +50,14 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
         // if (process.client) {
         //   return Promise.reject(result)
         // }
-          showGlobeError(result.msg,result.code);
+          web.showGlobeError(result.msg,result.code);
         }
       
       }
       return result;
     }
     catch (ex) {
-      showGlobeError("服务器内部错误",1500);
+      web.showGlobeError("服务器内部错误",1500);
     }
   } 
 

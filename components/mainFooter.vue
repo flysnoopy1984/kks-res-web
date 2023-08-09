@@ -72,8 +72,9 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 text-center">
-						
-						<p class="mb-0">Copyright &copy; 2023 All rights reserved | 沪ICP备17005547号
+						<!--Copyright &copy; 2023 All rights reserved | -->
+						<p class="mb-0">
+							<a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备17005547号</a>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                     </div>
                 </div>
