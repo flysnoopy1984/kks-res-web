@@ -12,7 +12,7 @@ created by JackySong@2023
 </template>
 
 <script setup>
-import apiWebData from '@/zfApi/apiWebData';
+
 
 defineProps({
     bkColor:{
@@ -23,7 +23,8 @@ defineProps({
         type:String,
     }
 })
-// var res = await apiWebData.querySectionEvents(tools.currentYear());
+
+
 
 </script>
 <style scoped>
