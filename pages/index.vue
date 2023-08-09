@@ -18,9 +18,10 @@
 <script setup>
 // import { useMessage } from 'naive-ui'
 import { NButton } from 'naive-ui'
-
+import apiWebData from '@/zfApi/apiWebData';
 const appConfig = useAppConfig();
 
+initPage();
 //微信登陆
 async function doWxLogin(){
  
@@ -29,6 +30,7 @@ async function doWxLogin(){
 
 //加载栏目，栏目中对应的Item（祝福海报）
 async function initPage() {
+  var res = await apiWebData.querySectionEvents(tools.currentYear());
 
 }
 
