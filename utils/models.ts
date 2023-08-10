@@ -34,6 +34,11 @@ export interface wxLogin{
     token:userToken
 }
 
+export interface pageSection{
+    secName:string,
+    secCode:string
+}
+
 export interface pageSectionEvent{
     secName:string,
     secCode:string,
@@ -45,6 +50,8 @@ export interface pageSectionEvent{
     ecStartDate:string,
     ecEndDate:string
 }
+
+
 
 export interface pageEventPoster{
     id:number,

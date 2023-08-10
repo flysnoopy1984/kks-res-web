@@ -2,176 +2,183 @@
 created by JackySong@2023
 -->
 <template>
-    <div class="barSliderContainer">
-        <div class="hd">
-            <div class="title-section">
-                <h2 class="widget-title">当前热需</h2>
-                <div class="links">
-                    <a href="#" class="btn-contained" data-size="s" target="_blank">查看更多</a>
+    <div class="barSliderContainer" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
+        <div class="dataContainer">
+            <div class="hd">
+                <div class="title-section">
+                    <h2 class="widget-title">当前热需</h2>
+                    <div class="links">
+                        <a href="#" class="btn-contained" data-size="s" target="_blank">查看更多</a>
+                    </div>
+                </div>
+            </div>
+          
+            <div class="bd">
+                <div class="my-slider slick-slider works-showcase slick-initialized">
+                    <Transition name="btn-left">
+                        <button v-show="showButton" @click="slideLeft" class="slick-arrow slick-prev fill-current-color" aria-label="上一页" style="display: block;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 11" width="7" height="14">
+                                <path fill="#FFF" d="M4.894 10.986l1.1-.92-4.096-4.573L5.993.92 4.893 0 0 5.473l4.894 5.513z"></path>
+                            </svg>
+                        </button>
+                    </Transition>
+
+                    <div class="slick-list">    
+                        <div class="slick-track" style="width: 10800px; opacity: 1;" :style="styleMove">
+                            <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
+                                <div>
+                                    <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                    <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                    <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                    <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                    <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                    <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                </div>              
+                            </div>
+                            <!--第二个-->
+                            <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
+                                <div>
+                                    <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                <img src="https://gd-hbimg.huaban.com/49b919bbee0b70769db0c4d9283dcb80e85aa0783f9ea-ykDLhM_fw480webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                    <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                <img src="https://gd-hbimg.huaban.com/49b919bbee0b70769db0c4d9283dcb80e85aa0783f9ea-ykDLhM_fw480webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                    <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                    <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                <img src="https://gd-hbimg.huaban.com/efc4503a3f9582e5afbd5d006d7674f9aeb12e606cc31-6ubQbc_fw480webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                <img src="https://gd-hbimg.huaban.com/b3dfcc54072a5e4230c236332deb37392b931fdc2dfce-UKmlQd_fw240webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                </div>              
+                            </div>
+                            <!--第三个-->
+                            <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
+                                <div>
+                                    <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                <img src="https://gd-hbimg.huaban.com/49b919bbee0b70769db0c4d9283dcb80e85aa0783f9ea-ykDLhM_fw480webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                    <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                <img src="https://gd-hbimg.huaban.com/49b919bbee0b70769db0c4d9283dcb80e85aa0783f9ea-ykDLhM_fw480webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                    <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                    <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                <img src="https://gd-hbimg.huaban.com/efc4503a3f9582e5afbd5d006d7674f9aeb12e606cc31-6ubQbc_fw480webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                <div class="works-item brief-works-item">
+                                        <n-card title="带封面的卡片">
+                                                <template #cover>
+                                                <img src="https://gd-hbimg.huaban.com/b3dfcc54072a5e4230c236332deb37392b931fdc2dfce-UKmlQd_fw240webp">
+                                                </template>
+                                            卡片内容
+                                        </n-card>
+                                    </div>
+                                </div>              
+                            </div>
+                        </div>                            
+                    </div>
+
+                    <button v-show="showButton" @click="slideRight" class="slick-arrow slick-next fill-current-color" aria-label="下一页" style="display: block;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 11" width="7" height="14" style="transform: scaleX(-1);">
+                            <path fill="#FFF" d="M4.894 10.986l1.1-.92-4.096-4.573L5.993.92 4.893 0 0 5.473l4.894 5.513z"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="bd">
-            <div class="my-slider slick-slider works-showcase slick-initialized">
-
-                <button @click="slideLeft" class="slick-arrow slick-prev fill-current-color" aria-label="上一页" style="display: block;">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 11" width="7" height="14">
-                        <path fill="#FFF" d="M4.894 10.986l1.1-.92-4.096-4.573L5.993.92 4.893 0 0 5.473l4.894 5.513z"></path>
-                    </svg>
-                </button>
-
-                <div class="slick-list">    
-                    <div class="slick-track" style="width: 10800px; opacity: 1;" :style="styleMove">
-                        <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
-                            <div>
-                                <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                                <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                                <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                                <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                            <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                            </div>              
-                        </div>
-                        <!--第二个-->
-                        <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
-                            <div>
-                                <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/49b919bbee0b70769db0c4d9283dcb80e85aa0783f9ea-ykDLhM_fw480webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                                <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/49b919bbee0b70769db0c4d9283dcb80e85aa0783f9ea-ykDLhM_fw480webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                                <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                                <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/efc4503a3f9582e5afbd5d006d7674f9aeb12e606cc31-6ubQbc_fw480webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                            <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/b3dfcc54072a5e4230c236332deb37392b931fdc2dfce-UKmlQd_fw240webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                            </div>              
-                        </div>
-                         <!--第三个-->
-                         <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
-                            <div>
-                                <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/49b919bbee0b70769db0c4d9283dcb80e85aa0783f9ea-ykDLhM_fw480webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                                <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/49b919bbee0b70769db0c4d9283dcb80e85aa0783f9ea-ykDLhM_fw480webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                                <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                                <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/efc4503a3f9582e5afbd5d006d7674f9aeb12e606cc31-6ubQbc_fw480webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                            <div class="works-item brief-works-item">
-                                    <n-card title="带封面的卡片">
-                                            <template #cover>
-                                            <img src="https://gd-hbimg.huaban.com/b3dfcc54072a5e4230c236332deb37392b931fdc2dfce-UKmlQd_fw240webp">
-                                            </template>
-                                        卡片内容
-                                    </n-card>
-                                </div>
-                            </div>              
-                        </div>
-                    </div>                            
-                </div>
-                <button @click="slideRight" class="slick-arrow slick-next fill-current-color" aria-label="下一页" style="display: block;">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 11" width="7" height="14" style="transform: scaleX(-1);">
-                        <path fill="#FFF" d="M4.894 10.986l1.1-.92-4.096-4.573L5.993.92 4.893 0 0 5.473l4.894 5.513z"></path>
-                    </svg>
-                </button>
-                </div>
-        </div>
     </div>
+
 </template>
 
 <script setup>
 import { NCard } from 'naive-ui';
 let curPosX = 0;
 const moveDistance = 1200;
+const showButton = ref(false);
 
 const styleMove = reactive({
     transform: "translate3d("+curPosX+"px, 0, 0)",
@@ -186,11 +193,17 @@ function slideRight() {
     curPosX-=moveDistance;
     styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";
 }
+function mouseEnter(){
+    showButton.value=true;
+}
+
+function mouseLeave(){
+    showButton.value=false;
+}
 
 </script>
 <style scoped>
 /* swipe 动画*/
-
 .move-right{
     transform: translate3d(1000px, 0, 0);
     transition: all .5s ease;
@@ -200,6 +213,19 @@ function slideRight() {
     transition: all .5s ease
 }
 
+/*按钮动画 */
+
+.btn-left-leave-active,
+.btn-left-enter-active {
+  transition: all 0.8s ease-out;
+  transform: translateX(0);
+
+}
+.btn-left-enter-from,
+.btn-left-leave-to {
+    transition: all 0.8s ease-out;
+    transform: translateX(-20px);
+}
 
 .n-card {
   max-width: 220px;
@@ -208,16 +234,18 @@ function slideRight() {
 }
 .barSliderContainer{
     box-sizing: content-box;
-    margin-right: auto;
-    margin-left: auto;
+ 
     padding-right: 60px;
     padding-left: 60px;
-    max-width: 1200px;
+    max-width: 100%;
     margin-top: 20px;
-    /* width: 100%;
-    display: flex;
-    justify-content: center; */
 }
+.dataContainer{
+    margin-right: auto;
+    margin-left: auto;
+    width: 1200px;
+}
+
 /* list */
 .slick-list {
 	position: relative;
@@ -355,7 +383,7 @@ function slideRight() {
 	background: var(--white);
 	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 	color: var(--grayBlack);
-	transform: translate(0, -50%)
+	/* transform: translate(0, -50%) */
 }
 
 .slick-prev svg,
@@ -371,7 +399,7 @@ function slideRight() {
 }
 
 .slick-prev {
-	left: -45px
+	left: -55px
 }
 
 .slick-prev svg {
@@ -379,7 +407,7 @@ function slideRight() {
 }
 
 .slick-next {
-	right: -45px
+	right: -55px
 }
 
 .slick-next svg {

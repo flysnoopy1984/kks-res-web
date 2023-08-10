@@ -6,13 +6,11 @@ created by JackySong@2023
     <div class="sectionArea">
          <div class="title">{{ title }}</div>
          <div class="content">
-
          </div>
     </div>
 </template>
 
 <script setup>
-
 
 defineProps({
     bkColor:{
@@ -23,8 +21,6 @@ defineProps({
         type:String,
     }
 })
-
-
 
 </script>
 <style scoped>

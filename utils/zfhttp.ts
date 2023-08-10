@@ -28,18 +28,22 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
     const customHeaders = { token:  useApiToken().value.token, ...headers }
 
     const op = { ...options, key, headers: customHeaders };
-    console.log("customHeaders:",customHeaders);
-    let result;
+  //  console.log("customHeaders:",customHeaders);
+    let result:ResComm<T> ={
+      code:601,
+      msg: "请求错误",
+      data :undefined
+    };
     try {
     
       const { data, error } = await useFetch(reqUrl,op);
 
-      if(error.value) 
+      if(error.value){
         web.showGlobeError(error.value.data.error,error.value.statusCode);
-      
+      }
       else{
         result = data.value as ResComm<T>;
-        console.log("result data:",result)
+   //     console.log("result data:",result)
         if(result.code !== 200) {
            //  // 处理token失效的情况
         // if (result.code === "401") {
@@ -54,37 +58,38 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
         }
       
       }
-      return result;
+  
     }
     catch (ex) {
       web.showGlobeError("服务器内部错误",1500);
     }
+    return result;
   } 
 
 
 export default class zfHttp {
 
-    get<T>(url: string, body?: any, headers?: any) {
+    async get<T>(url: string, body?: any, headers?: any) {
       return zfnet<T>(url, { method: 'get', ...body }, headers)
     }
   
-    post<T>(url: string, body?: any, headers?: any) {
+    async post<T>(url: string, body?: any, headers?: any) {
       return zfnet<T>(url, { method: 'post', ...body }, headers)
     }
 
-    options<T>(url: string, body?: any, headers?: any) {
+    async options<T>(url: string, body?: any, headers?: any) {
      
       //console.log("body:",{...body});
       return zfnet<T>(url, { method: 'options', ...body }, headers)
     }
 
   
-    put<T>(url: string, body?: any, headers?: any) {
+    async put<T>(url: string, body?: any, headers?: any) {
       return zfnet<T>(url, { method: 'put', ...body }, headers)
     }
 
   
-    delete<T>(url: string, body?: any, headers?: any) {
+    async delete<T>(url: string, body?: any, headers?: any) {
       return zfnet<T>(url, { method: 'delete',...body }, headers)
     }
   }
