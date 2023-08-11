@@ -1,3 +1,4 @@
+/* 用户 */
 export interface userToken{
     token:any,
     openId:any,
@@ -33,6 +34,11 @@ export interface wxLogin{
     userInfo:userInfo,
     token:userToken
 }
+/* 页面 Section */
+export interface pageCommData{
+    pageSection: pageSection[],
+    pageSectionEvent:pageSectionEvent[]
+}
 
 export interface pageSection{
     secName:string,
@@ -51,8 +57,6 @@ export interface pageSectionEvent{
     ecEndDate:string
 }
 
-
-
 export interface pageEventPoster{
     id:number,
     title:string,
@@ -62,7 +66,6 @@ export interface pageEventPoster{
     lUrl:string,
     defaultEvent:string,
     defaultYear:number
-
 }
 
 // {userToken,userInfo}

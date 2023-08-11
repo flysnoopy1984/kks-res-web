@@ -17,6 +17,20 @@ const apiWebData =  class apiWebData extends zfhttp{
             {"content-Type": "application/json"}   
         );
     }
+
+    public queryEventsPoster(){
+        return this.post<pageEventPoster[]>("",
+            {
+                "body":JSON.stringify(
+                    {
+                        "eventCodes":null,
+                        "topNum":10
+                    }
+                )
+            },
+            {"content-Type": "application/json"}   
+        )
+    }
 }
 
 export default new apiWebData;

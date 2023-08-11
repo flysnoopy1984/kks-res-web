@@ -5,8 +5,8 @@ created by JackySong@2023
     <div class="barSliderContainer" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
         <div class="dataContainer">
             <div class="hd">
-                <div class="title-section">
-                    <h2 class="widget-title">当前热需</h2>
+                <div class="title-section" v-if="title!=''">
+                    <h2 class="widget-title">{{title}}</h2>
                     <div class="links">
                         <a href="#" class="btn-contained" data-size="s" target="_blank">查看更多</a>
                     </div>
@@ -161,12 +161,13 @@ created by JackySong@2023
                             </div>
                         </div>                            
                     </div>
-
-                    <button v-show="showButton" @click="slideRight" class="slick-arrow slick-next fill-current-color" aria-label="下一页" style="display: block;">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 11" width="7" height="14" style="transform: scaleX(-1);">
-                            <path fill="#FFF" d="M4.894 10.986l1.1-.92-4.096-4.573L5.993.92 4.893 0 0 5.473l4.894 5.513z"></path>
-                        </svg>
-                    </button>
+                    <Transition name="btn-right">
+                        <button v-show="showButton" @click="slideRight" class="slick-arrow slick-next fill-current-color" aria-label="下一页" style="display: block;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 11" width="7" height="14" style="transform: scaleX(-1);">
+                                <path fill="#FFF" d="M4.894 10.986l1.1-.92-4.096-4.573L5.993.92 4.893 0 0 5.473l4.894 5.513z"></path>
+                            </svg>
+                        </button>
+                    </Transition>           
                 </div>
             </div>
         </div>
@@ -176,6 +177,13 @@ created by JackySong@2023
 
 <script setup>
 import { NCard } from 'naive-ui';
+
+defineProps({
+    title:{
+        type:String,
+        default:"",
+    }
+})
 let curPosX = 0;
 const moveDistance = 1200;
 const showButton = ref(false);
@@ -217,14 +225,29 @@ function mouseLeave(){
 
 .btn-left-leave-active,
 .btn-left-enter-active {
-  transition: all 0.8s ease-out;
+  transition: all 0.5s ease;
   transform: translateX(0);
 
 }
 .btn-left-enter-from,
 .btn-left-leave-to {
-    transition: all 0.8s ease-out;
-    transform: translateX(-20px);
+    transition: all 0.5s ease;
+    transform: translateX(-25px);
+    opacity: 0;
+}
+
+.btn-right-leave-active,
+.btn-right-enter-active {
+  transition: all 0.5s ease;
+  transform: translateX(0);
+ 
+
+}
+.btn-right-enter-from,
+.btn-right-leave-to {
+    transition: all 0.5s ease;
+    transform: translateX(25px);
+    opacity: 0;
 }
 
 .n-card {
@@ -234,7 +257,6 @@ function mouseLeave(){
 }
 .barSliderContainer{
     box-sizing: content-box;
- 
     padding-right: 60px;
     padding-left: 60px;
     max-width: 100%;

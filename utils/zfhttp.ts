@@ -78,16 +78,12 @@ export default class zfHttp {
     }
 
     async options<T>(url: string, body?: any, headers?: any) {
-     
-      //console.log("body:",{...body});
       return zfnet<T>(url, { method: 'options', ...body }, headers)
     }
 
-  
     async put<T>(url: string, body?: any, headers?: any) {
       return zfnet<T>(url, { method: 'put', ...body }, headers)
     }
-
   
     async delete<T>(url: string, body?: any, headers?: any) {
       return zfnet<T>(url, { method: 'delete',...body }, headers)

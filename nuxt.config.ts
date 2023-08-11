@@ -11,7 +11,9 @@ export default defineNuxtConfig({
       ],
     },
   },
- 
+  // experimental: {
+  //   componentIslands: true
+  // },
 
   runtimeConfig: {
     // Private keys are only available on the server

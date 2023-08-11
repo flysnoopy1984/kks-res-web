@@ -1,8 +1,9 @@
-
+//State Key 管理
 export const lsKeys = {
     userToken :"userToken",
     userOpenId :"userOpenId",
-    userInfo :"userInfo"
+    userInfo :"userInfo",
+    pageCommData :"pageCommData"
 }
 
 export const lsSave2Local = (key:string,json:string)=>{
