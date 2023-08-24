@@ -47,6 +47,7 @@ if(code == null || state == null){
 }
 else{
   pageState = 0;
+  
   if(state == "testCode")
     pageMsg = code;
   else{

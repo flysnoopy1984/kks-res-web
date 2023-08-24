@@ -207,7 +207,7 @@ textarea {
 }
 
 body {
-	color: var(--grayBlack);
+	/* color: var(--grayBlack); */
 	font: 12px/1.5 'Helvetica Neue', Helvetica, 'Lucida Grande', 'Luxi Sans', Arial, 'PingFang SC', 'Hiragino Sans GB', STHeiti, 'Microsoft YaHei', 'Wenquanyi Micro Hei', 'WenQuanYi Micro Hei Mono', 'WenQuanYi Zen Hei', 'WenQuanYi Zen Hei Mono', LiGothicMed;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
@@ -2765,7 +2765,7 @@ body {
 	min-width: var(--page-min-width);
 	background-color: #fff;
 	/* background: var(--blue5); */
-	color: var(--grayBlack);
+	/* color: var(--grayBlack); */
 	touch-action: manipulation;
 	-webkit-text-size-adjust: none;
 	text-size-adjust: none

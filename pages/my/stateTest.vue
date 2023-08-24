@@ -46,13 +46,13 @@ async function initPage() {
       })
       secList.value = [...hash.values()]
 
-      let pageSec:pageCommData =  {
+    //   let pageSec:pageCommData =  {
     
-        pageSection:secList.value,
-        pageSectionEvent: secEventList.value
-      }
-     debugger
-      let cd = usePageCommData().value;
+    //     pageSection:secList.value,
+    //   //  pageSectionEvent: secEventList.value
+    //   }
+    //  debugger
+    //   let cd = usePageCommData().value;
       // =secList.value;
     //   webComm.value.pageSectionEvent = secEventList;
     }

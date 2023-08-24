@@ -4,15 +4,23 @@ created by JackySong@2023
 <template>
     <div class="barSliderContainer" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
         <div class="dataContainer">
-            <div class="hd">
-                <div class="title-section" v-if="title!=''">
+            <div class="hd" v-if="title!=''">
+                <div class="title-section">
                     <h2 class="widget-title">{{title}}</h2>
                     <div class="links">
-                        <a href="#" class="btn-contained" data-size="s" target="_blank">查看更多</a>
+                        <n-button icon-placement="right" color="#2F8E9C" text tag="a">
+                            查看更多
+                            <template #icon>
+                                <n-icon>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M5 3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2.05a2.512 2.512 0 0 1 0-1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v9.5a2.49 2.49 0 0 1 1-.45V5a2 2 0 0 0-2-2H5zm11 13.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 0 0-3 0zm-1.085-.5a1.497 1.497 0 0 1 0 1a1.5 1.5 0 1 1 0-1zM11 16.5A1.497 1.497 0 0 0 9.5 15a1.5 1.5 0 1 0 1.5 1.5zM6.5 6a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7zM6 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-.1-3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" fill="currentColor"></path></g></svg>
+                                </n-icon>
+                            </template>                          
+                        </n-button>
+                        <!-- <a href="#" class="btn-contained" data-size="s" target="_blank"></a> -->
                     </div>
                 </div>
             </div>
-          
+
             <div class="bd">
                 <div class="my-slider slick-slider works-showcase slick-initialized">
                     <Transition name="btn-left">
@@ -24,7 +32,9 @@ created by JackySong@2023
                     </Transition>
 
                     <div class="slick-list">    
-                        <div class="slick-track" style="width: 10800px; opacity: 1;" :style="styleMove">
+                        <div class="slick-track" style="width: 12000px; opacity: 1;" :style="styleMove">
+                            
+
                             <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
                                 <div>
                                     <div class="works-item brief-works-item">
@@ -176,7 +186,7 @@ created by JackySong@2023
 </template>
 
 <script setup>
-import { NCard } from 'naive-ui';
+import { NCard,NButton,NIcon } from 'naive-ui';
 
 defineProps({
     title:{
@@ -211,6 +221,7 @@ function mouseLeave(){
 
 </script>
 <style scoped>
+@import url('@/assets/css/barSlider.css');
 /* swipe 动画*/
 .move-right{
     transform: translate3d(1000px, 0, 0);
@@ -218,7 +229,7 @@ function mouseLeave(){
 } 
 .move-left{
     transform: translate3d(0px, 0, 0);
-    transition: all .5s ease
+    transition: all .5s ease;
 }
 
 /*按钮动画 */
@@ -249,253 +260,8 @@ function mouseLeave(){
     transform: translateX(25px);
     opacity: 0;
 }
+/* 动画结束 */
 
-.n-card {
-  max-width: 220px;
-  max-height: 350px;  
-  border-radius: 8px;  
-}
-.barSliderContainer{
-    box-sizing: content-box;
-    padding-right: 60px;
-    padding-left: 60px;
-    max-width: 100%;
-    margin-top: 20px;
-}
-.dataContainer{
-    margin-right: auto;
-    margin-left: auto;
-    width: 1200px;
-}
-
-/* list */
-.slick-list {
-	position: relative;
-	display: block;
-	overflow: hidden;
-	margin: 0;
-	padding: 0
-}
-
-.slick-list:focus {
-	outline: none
-}
-
-.slick-list.dragging {
-	cursor: pointer;
-	cursor: hand
-}
-
-.slick-slider .slick-track,
-.slick-slider .slick-list {
-	transform: translate3d(0, 0, 0)
-}
-
-
-/* track */
-.slick-track {
-	position: relative;
-	top: 0;
-	left: 0;
-	display: block;
-	margin-right: auto;
-	margin-left: auto;
-
-}
-
-.slick-track:before,
-.slick-track:after {
-	display: table;
-	content: ''
-}
-
-.slick-track:after {
-	clear: both
-}
-
-.slick-loading .slick-track {
-	visibility: hidden
-}
-
-.my-slider{
-    width: 1200px;
-    /* margin: 20px; */
-    padding: 20px;
-    background-color: #fff8e8;
-
-}
-.works-showcase .slick-slide>div {
-	display: flex
-}
-.slick-initialized .slick-slide {
-	display: block
-}
-.slick-slider {
-    position: relative;
-    display: block;
-    box-sizing: border-box;
-    touch-action: pan-y;
-    -webkit-tap-highlight-color: transparent;
-}
-
-/* slide */
-
-.slick-slide {
-	float: left;
-	min-height: 1px;
-	height: 100%;
-	display: none
-}
-
-.slick-slide img {
-	display: block
-}
-
-.slick-slide.slick-loading img {
-	display: none
-}
-
-.slick-slide.dragging img {
-	pointer-events: none
-}
-
-[dir='rtl'] .slick-slide {
-	float: right
-}
-
-.slick-initialized .slick-slide {
-	display: block
-}
-
-.slick-loading .slick-slide {
-	visibility: hidden
-}
-
-.slick-vertical .slick-slide {
-	display: block;
-	height: auto;
-	border: 1px solid transparent
-}
-
-.slick-arrow.slick-hidden {
-	display: none
-}
-
-.slick-slide,
-.slick-slider .slick-track,
-.slick-slider .slick-list {
-	-webkit-backface-visibility: hidden;
-	backface-visibility: hidden
-}
-.slick-arrow.slick-hidden {
-	display: none
-}
-
-
-.slick-prev,
-.slick-next {
-	width: 40px;
-	height: 40px;
-	position: absolute;
-	top: 50%;
-	z-index: 10;
-	margin-top: -20px;
-	border: none;
-	border-radius: 40px;
-	background: var(--white);
-	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-	color: var(--grayBlack);
-	/* transform: translate(0, -50%) */
-}
-
-.slick-prev svg,
-.slick-next svg {
-	vertical-align: -3px
-}
-
-.slick-prev:hover,
-.slick-next:hover {
-	background: #389eac;
-	box-shadow: none;
-	color: #fff
-}
-
-.slick-prev {
-	left: -55px
-}
-
-.slick-prev svg {
-	margin-left: -1px
-}
-
-.slick-next {
-	right: -55px
-}
-
-.slick-next svg {
-	margin-left: 1px
-}
-.fill-current-color path,.fill-current-color circle,.fill-current-color polygon {
-    fill: currentColor
-}
-
-
-.works-showcase .slick-slide > div {
-    display: flex;
-}
-
-.brief-works-item {
-	display: inline-flex;
-	flex-direction: column;
-	box-sizing: border-box;
-	padding: 40px 20px 0;
-	min-height: 373.5px;
-	width: 20%;
-	vertical-align: top;
-	line-height: 1
-}
-.brief-works-item .cover {
-	width: 120px;
-	height: 180px;
-	margin-bottom: 15px
-}
-.brief-works-item .cover .cover-label::before {
-	top: 23px;
-	right: 23px;
-	width: 131px;
-	height: 36px;
-	font-size: 24px;
-	line-height: 36px;
-	transform: translate(50%, -100%) rotate(45deg) scale(.5)
-}
-
-.brief-works-item .cover .cover-label.limited-vip-can-read-label::before {
-	font-size: 20px
-}
-
-.shadow-cover {
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.2)
-}
-
-.barSliderContainer .widget-title {
-	font-weight: bold;
-	font-size: 24px;
-	line-height: 1
-}
-
-.barSliderContainer .title-section {
-	display: flex;
-	justify-content: space-between;
-	align-items: center
-}
-
-.gbarSliderContainer .links {
-	margin-left: auto
-}
-
-.barSliderContainer .links a {
-	margin-left: 8px
-}
 
 /* 按钮 -- 更多链接 */
 .btn-contained {
@@ -510,6 +276,14 @@ function mouseLeave(){
     font-size: 13px;
     line-height: 30px;
 }
+
+
+.n-card {
+  max-width: 220px;
+  max-height: 350px;  
+  border-radius: 8px;  
+}
+
 
 
 </style>

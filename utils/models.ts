@@ -37,7 +37,8 @@ export interface wxLogin{
 /* 页面 Section */
 export interface pageCommData{
     pageSection: pageSection[],
-    pageSectionEvent:pageSectionEvent[]
+    pageSectionEvent:Map<string,pageSectionEvent[]>,
+    pageHomePoster:Map<string,pageEventPoster[]>
 }
 
 export interface pageSection{
@@ -54,7 +55,13 @@ export interface pageSectionEvent{
     evType:number,
     ecCode:string,
     ecStartDate:string,
-    ecEndDate:string
+    ecEndDate:string,
+    
+    //前端添加
+    weekDay?:string, //周几
+    diffNow:number  //距离今天几天
+    selected:boolean//是否选中
+
 }
 
 export interface pageEventPoster{

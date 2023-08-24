@@ -40,7 +40,7 @@ definePageMeta({
 const userInfo = useUserInfo().value; 
 let openIdError = false;
 const route = useRoute()
-debugger
+
 if(route.params.openId != userInfo.openId){
   openIdError = true;
 }

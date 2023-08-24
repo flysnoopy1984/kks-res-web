@@ -1,8 +1,20 @@
+:root {
+    --main-button-color:#2F8E9C;
+    --main-button-color2:#3d98a7;
+    --main-button-hover2:#72c2ce;
+    --main-color:#2F8E9C;
+    --main-border-line:#cef4fa;
+    --main-border-bk:#f7feff;
+    --main-border-bk-hover:#e1f6f9;
+
+}
 body 
 {
     margin: 0;
-    color: black;
     
+}
+.button-main-style{
+    background-color: var(--main-button-color);
 }
 .container{
     margin:20px;

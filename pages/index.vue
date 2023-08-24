@@ -1,99 +1,90 @@
 <template>
     <div>
-        <HomeBanner></HomeBanner>
-        
+        <!-- <HomeBanner></HomeBanner> -->
+        <HomeCalendarLine></HomeCalendarLine>
         <div>
           <!-- <HomeBarSlider></HomeBarSlider> -->
     
           <!-- <div class="divIn">
             <n-button type="warning" @click="doTestAny">TestAny</n-button>
           </div> -->
-          <template v-if="secList.length>0">
-            <LazyHomeBarSlider v-for="secEV in secList" :title="secEV.secName">            
-            </LazyHomeBarSlider>
-          </template>
-        
-          <!-- <span v-for="secEV in secList" :key="secEV.secCode">{{ secEV.secName }}</span>  -->
        
+          <template v-if="secList.length>0">
+            <LazyHomeBarSlider v-for="secEV in secList" :title="secEV.secName" style="padding-bottom: 60px;">            
+            </LazyHomeBarSlider>    
+          </template>       
         </div>
       
     </div>
 </template>
 
 <script setup lang="ts">
-import { NButton,useMessage } from 'naive-ui'
+import {useMessage } from 'naive-ui'
 import apiWebData from '@/zfApi/apiWebData';
-import {pageSection,pageSectionEvent} from '@/utils/models'
+import {pageSection} from '@/utils/models'
 
 const appConfig = useAppConfig();
 
 let secList = ref<pageSection[]>([]);
-let secEventList= ref<pageSectionEvent[]>([]);
+const message = useMessage();
+const pageData = usePageCommData().value;
 
-// let secList:pageSection[] = []; 
-// let secEventList:pageSectionEvent[]= [];
+let eventCodes:string[] = []; // 当获取好Section所有事件后，获取首页需要最先显示的海报事件Codes
 
-initPage();
-//微信登陆
-async function doWxLogin(){
-  nav.toWxLogin();
-}
-
-// async function initPage() {
-//   const message = useMessage();
-//   var res = await apiWebData.querySectionEvents(tools.currentYear());
-  
-//   let hash = new Map(); 
-//   if(res.code == 200){
-//     if(res.data!=undefined){
-//       secEventList =  res.data;    
-//       secEventList.forEach((item)=>{
-//         const sec:pageSection = {
-//           secCode : item.secCode,
-//           secName: item.secName
-//         } 
-//         hash.set(item.secCode,sec);
-//       })
-//       secList = [...hash.values()]
-//     }
-//   }
-//   else{
-//     message.error(res.msg);
-//   }
-// }
-
-//加载栏目，栏目中对应的Item（祝福海报）
-async function initPage() {
-  const message = useMessage();
-
+//Section Events
+if(pageData.pageSection.length==0){
   //请求Section和相关事件
-  //请求每个事件的相关Poster
-  var res = await apiWebData.querySectionEvents(tools.currentYear());
-  let hash = new Map(); 
+  const res = await apiWebData.querySectionEvents(tools.currentYear());
   if(res.code == 200){
-    console.log(res.data);
     if(res.data!=undefined){
-
-      secEventList.value =  res.data;    
-      secEventList.value.forEach((item)=>{
-        const sec:pageSection = {
-          secCode : item.secCode,
-          secName: item.secName
-        } 
-        hash.set(item.secCode,sec);
-      })
-      secList.value = [...hash.values()]
-    }
+        let gotCalenderEvent = false;
+        /*设置 state Section Events */
+        res.data.forEach((item,index)=>{
+          const secEvents = pageData.pageSectionEvent.get(item.secCode);
+          /* 设置显示内容 */
+          item.weekDay = tools.weekDay(item.ecStartDate);
+          item.diffNow = tools.diffDay(item.ecStartDate);
+          //非日历事件需要查询海报
+          if(item.evType>0) eventCodes.push(item.evCode);
+          //找到当前日历事件
+          if(item.diffNow>=0 && item.evType ==0 && gotCalenderEvent==false) {
+            eventCodes.push(item.evCode);
+            gotCalenderEvent= true;
+          }
+        
+          if(secEvents == undefined){
+            pageData.pageSectionEvent.set(item.secCode,[item]);
+            pageData.pageSection.push({
+               secCode : item.secCode,
+               secName: item.secName
+            });
+          }      
+          else
+              secEvents.push(item);
+          
+        });
+      }
   }
-  else{
+  else{ 
     message.error(res.msg);
   }
 }
-
-/* Test */
-async function doTestAny(){ 
-  navigateTo("/my/amTest");
+if(pageData.pageSectionEvent.size>0){
+  secList.value = pageData.pageSection;
 }
+
+
+
+// // 获取首页的Event Poster 
+// async function queryHomePoster() {
+  
+//   const res = await apiWebData.queryEventsPoster();
+
+// }
+
+
+
+
 
 </script>
 <style scoped>

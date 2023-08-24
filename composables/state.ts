@@ -1,5 +1,5 @@
 import { useState, useCookie } from "nuxt/app";
-import {userToken,userInfo,pageCommData} from '@/utils/models'
+import {userToken,userInfo,pageCommData,pageSectionEvent} from '@/utils/models'
 
 //userInfo
 export const useUserInfo = () =>{
@@ -22,12 +22,15 @@ export const useApiToken = () =>{
 
 //pageCommData
 export const usePageCommData = ()=>{
-  let cd:pageCommData;
+  let cd:pageCommData = {
+    pageSection:[],
+    pageSectionEvent:new Map<string,pageSectionEvent[]>(),
+  };
   
-  return useState(lsKeys.pageCommData, () => {
+  return useState<pageCommData>(lsKeys.pageCommData, () => {
       return cd;
   });
-
 }
+
 
 
