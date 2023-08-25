@@ -5,7 +5,9 @@ created by JackySong@2023
     <div>
         <p>get Error: </p>
         <h1>{{ err.statusCode }}</h1>
-        <h2> {{ err.message }}</h2>
+        <h1> {{ err.message }}</h1>
+        <h2>{{ err.stack }}</h2>
+        
         <div>
             <n-button type="primary" @click="nav.toHome()">返回主页</n-button>
         </div>
@@ -14,8 +16,7 @@ created by JackySong@2023
 
 <script setup>
 import { NButton } from 'naive-ui'
-    const err = useError();
-
+ const err = useError();
 </script>
 <style scoped>
 </style>

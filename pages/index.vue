@@ -36,6 +36,7 @@ if(pageData.pageSection.length==0){
   //请求Section和相关事件
   const res = await apiWebData.querySectionEvents(tools.currentYear());
   if(res.code == 200){
+
     if(res.data!=undefined){
         let gotCalenderEvent = false;
         /*设置 state Section Events */
@@ -61,9 +62,12 @@ if(pageData.pageSection.length==0){
           }      
           else
               secEvents.push(item);
-          
         });
+        // console.log("codes1:",eventCodes);
+        // const res2 = await apiWebData.queryHomePoster(eventCodes);
+        //console.log("res2:",res2);
       }
+  
   }
   else{ 
     message.error(res.msg);
@@ -73,15 +77,15 @@ if(pageData.pageSectionEvent.size>0){
   secList.value = pageData.pageSection;
 }
 
+//获取首页的Event Poster 
+async function queryHomePoster() {
 
+  console.log(eventCodes);
+  const res = await apiWebData.queryHomePoster(eventCodes);
 
-// // 获取首页的Event Poster 
-// async function queryHomePoster() {
-  
-//   const res = await apiWebData.queryEventsPoster();
-
-// }
-
+  console.log(res);
+}
+queryHomePoster();
 
 
 

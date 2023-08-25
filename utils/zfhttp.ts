@@ -28,6 +28,7 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
     const customHeaders = { token:  useApiToken().value.token, ...headers }
 
     const op = { ...options, key, headers: customHeaders };
+ 
   //  console.log("customHeaders:",customHeaders);
     let result:ResComm<T> ={
       code:601,
@@ -37,7 +38,6 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
     try {
     
       const { data, error } = await useFetch(reqUrl,op);
-
       if(error.value){
         web.showGlobeError(error.value.data.error,error.value.statusCode);
       }
@@ -45,11 +45,11 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
         result = data.value as ResComm<T>;
    //     console.log("result data:",result)
         if(result.code !== 200) {
-           //  // 处理token失效的情况
-        // if (result.code === "401") {
-        //   // token.value = ''
-        //   await navigateTo('/login')
-        // }
+       // 处理token失效的情况
+        if (result.code == 401) {
+          useApiToken().value.token = '';
+          await nav.toWxLogin();
+         }
         // // 在客户端的时候抛出错误结果方便捕捉
         // if (process.client) {
         //   return Promise.reject(result)

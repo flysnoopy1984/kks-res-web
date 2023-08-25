@@ -18,7 +18,7 @@ const apiWebData =  class apiWebData extends zfhttp{
         );
     }
 
-    public queryHomePoster(evList:[]){
+    public queryHomePoster(evList:string[]){
         return this.post<pageEventPoster[]>("/poster/queryHomeByEvents",
             {
                 "body":JSON.stringify(

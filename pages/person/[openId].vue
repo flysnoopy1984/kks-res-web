@@ -25,7 +25,7 @@
         </div>
         <div v-else>
           
-          <n-button type="primary" @click="nav.tojsTest()">返回登陆</n-button>
+          <n-button type="primary" @click="nav.toWxLogin()">返回登陆</n-button>
         </div>   
      
     </div>

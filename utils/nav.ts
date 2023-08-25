@@ -12,11 +12,11 @@ export class nav{
         })
     }
 
-    static async tojsTest(){
-        await navigateTo("/my/jsTest",{
-            replace:true
-        })
-    }
+    // static async tojsTest(){
+    //     await navigateTo("/my/jsTest",{
+    //         replace:true
+    //     })
+    // }
 
 
     static async toPerson(){

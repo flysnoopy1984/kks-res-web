@@ -80,7 +80,7 @@ for(let i=0,len = secEvents.length; i<len ; i++){
         eventItemSelected(i);
         break;
     }
-    if(secEvents[i].diffNow>0 && curEventIndex >=0 ){
+    if(secEvents[i].diffNow>0 && curEventIndex ==-1 ){
         eventItemSelected(i);
         break;
     }
