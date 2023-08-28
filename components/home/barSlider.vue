@@ -4,9 +4,9 @@ created by JackySong@2023
 <template>
     <div class="barSliderContainer" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
         <div class="dataContainer">
-            <div class="hd" v-if="title!=''">
+            <div class="hd" v-if="section!=null">
                 <div class="title-section">
-                    <h2 class="widget-title">{{title}}</h2>
+                    <h2 class="widget-title">{{section.secName}}</h2>
                     <div class="links">
                         <n-button icon-placement="right" color="#2F8E9C" text tag="a">
                             查看更多
@@ -16,7 +16,6 @@ created by JackySong@2023
                                 </n-icon>
                             </template>                          
                         </n-button>
-                        <!-- <a href="#" class="btn-contained" data-size="s" target="_blank"></a> -->
                     </div>
                 </div>
             </div>
@@ -30,57 +29,33 @@ created by JackySong@2023
                             </svg>
                         </button>
                     </Transition>
+                    <div v-if="evMap.size == 0" class="noDatas">
+                        <n-empty size="huge" description="暂时没有数据">
+                            <template #icon>
+                                <n-icon>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M10 2c2.817 0 4.415 1.923 4.647 4.246h.07C16.532 6.246 18 7.758 18 9.623c0 .095-.004.19-.011.283A5.75 5.75 0 0 0 7.772 13h-2.49C3.469 13 2 11.488 2 9.623c0-1.865 1.47-3.377 3.282-3.377h.071C5.587 3.908 7.183 2 10 2zm8 11.5a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0zm-2.646-1.146a.5.5 0 0 0-.708-.708L13.5 12.793l-1.146-1.147a.5.5 0 0 0-.708.708l1.147 1.146l-1.147 1.146a.5.5 0 0 0 .708.708l1.146-1.147l1.146 1.147a.5.5 0 0 0 .708-.708L14.207 13.5l1.147-1.146z" fill="currentColor"></path></g></svg>
+                                </n-icon>
+                            </template>
+                        </n-empty>
+                    </div>
 
-                    <div class="slick-list">    
-                        <div class="slick-track" style="width: 12000px; opacity: 1;" :style="styleMove">
-                            
-
-                            <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
-                                <div>
-                                    <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
-                                                </template>
-                                            卡片内容
+                    <div v-else class="slick-list">    
+                        <div class="slick-track" style="opacity: 1;" :style="styleMove">       
+                            <div v-for="evKey in evMap.keys()" class="slick-slide slick-active slick-current" style="outline: none;" :style="gpStyle">
+                                <div> 
+                                    <div class="works-item brief-works-item" v-for="poster in evMap.get(evKey)">        
+                                        <n-card :title="poster.title">
+                                            <template #cover>
+                                                <img :src=" poster.sUrl">
+                                            </template>
                                         </n-card>
                                     </div>
-                                    <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
-                                                </template>
-                                            卡片内容
-                                        </n-card>
-                                    </div>
-                                    <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
-                                                </template>
-                                            卡片内容
-                                        </n-card>
-                                    </div>
-                                    <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                    <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
-                                                </template>
-                                            卡片内容
-                                        </n-card>
-                                    </div>
-                                <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                    <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
-                                                </template>
-                                            卡片内容
-                                        </n-card>
-                                    </div>
-                                </div>              
+                                </div>  
                             </div>
-                            <!--第二个-->
-                            <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
+
+
+                          
+                            <!-- <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
                                 <div>
                                     <div class="works-item brief-works-item">
                                         <n-card title="带封面的卡片">
@@ -124,7 +99,7 @@ created by JackySong@2023
                                     </div>
                                 </div>              
                             </div>
-                            <!--第三个-->
+                 
                             <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
                                 <div>
                                     <div class="works-item brief-works-item">
@@ -168,7 +143,7 @@ created by JackySong@2023
                                         </n-card>
                                     </div>
                                 </div>              
-                            </div>
+                            </div> -->
                         </div>                            
                     </div>
                     <Transition name="btn-right">
@@ -185,23 +160,69 @@ created by JackySong@2023
 
 </template>
 
-<script setup>
-import { NCard,NButton,NIcon } from 'naive-ui';
+<script setup lang="ts">
+import { NCard,NButton,NIcon,NEmpty } from 'naive-ui';
+import { pageSectionEvent,pageEventPoster } from 'utils/models';
 
-defineProps({
-    title:{
-        type:String,
-        default:"",
+
+const props = defineProps({
+    cfg:{
+        type:Object,
+        default:{
+            totalwidth:12000,
+            gpWidth:1200
+        }
+    },
+    section:{
+        type: Object,
+        required: true
     }
 })
+/*配置 */
 let curPosX = 0;
 const moveDistance = 1200;
+const gpMaxItemNum = 5; 
+
+
 const showButton = ref(false);
 
 const styleMove = reactive({
     transform: "translate3d("+curPosX+"px, 0, 0)",
     transition: "all .5s ease",
+    width: props.cfg.totalwidth+"px",
 });
+
+const gpStyle = {
+    width: props.cfg.gpWidth+"px",
+}
+
+/* 初始载入 */
+const pageData = usePageCommData().value;
+
+const events = pageData.pageSectionEvent.get(props.section.secCode) as pageSectionEvent[];
+const evMap =reactive(new Map<number,pageEventPoster[]>);
+
+//events 长度是1 代表不是日历事件
+ if(events.length == 1){   
+    const posters =  pageData.pageHomePoster.get(events[0].evCode) as pageEventPoster[];
+    if(posters != undefined){
+        for(let i=0;i<posters.length;i++){
+         //   debugger
+            const gpNo = Math.floor(i/gpMaxItemNum)+1;
+            const list = evMap.get(gpNo);
+            if(list == undefined){
+                evMap.set( gpNo,[posters[i]]);
+            }
+            else{
+                list.push(posters[i])
+            }
+        }      
+        
+    }
+  }
+  else{
+
+  }
 
 function slideLeft(){
     curPosX+=moveDistance;
@@ -212,7 +233,8 @@ function slideRight() {
     styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";
 }
 function mouseEnter(){
-    showButton.value=true;
+    if(evMap.size>1)
+        showButton.value=true;
 }
 
 function mouseLeave(){
@@ -282,6 +304,12 @@ function mouseLeave(){
   max-width: 220px;
   max-height: 350px;  
   border-radius: 8px;  
+}
+.noDatas{
+  max-width: 1200px;
+  padding-top: 30px;
+
+
 }
 
 
