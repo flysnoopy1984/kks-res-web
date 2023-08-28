@@ -10,7 +10,7 @@
           </div> -->
        
           <template v-if="secList.length>0">
-            <LazyHomeBarSlider v-for="secEV in secList" :title="secEV.secName" style="padding-bottom: 60px;">            
+            <LazyHomeBarSlider v-for="secEV in secList" :section="secEV" style="padding-bottom: 60px;">            
             </LazyHomeBarSlider>    
           </template>       
         </div>
@@ -63,9 +63,6 @@ if(pageData.pageSection.length==0){
           else
               secEvents.push(item);
         });
-        // console.log("codes1:",eventCodes);
-        // const res2 = await apiWebData.queryHomePoster(eventCodes);
-        //console.log("res2:",res2);
       }
   
   }
@@ -80,10 +77,25 @@ if(pageData.pageSectionEvent.size>0){
 //获取首页的Event Poster 
 async function queryHomePoster() {
 
-  console.log(eventCodes);
   const res = await apiWebData.queryHomePoster(eventCodes);
+  // console.log("queryHomePoster:",res);
 
-  console.log(res);
+  if(process.server){
+      res.data?.forEach((item)=>{
+      
+      const evPosters =  pageData.pageHomePoster.get(item.defaultEvent);
+
+      if(evPosters == undefined){
+        pageData.pageHomePoster.set(item.defaultEvent,[item]);
+      }
+      else{
+        evPosters.push(item);
+      }
+    });
+
+  }
+  
+
 }
 queryHomePoster();
 

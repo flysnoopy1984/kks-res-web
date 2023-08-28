@@ -34,11 +34,11 @@ export interface wxLogin{
     userInfo:userInfo,
     token:userToken
 }
-/* 页面 Section */
+/* 首页数据 */
 export interface pageCommData{
     pageSection: pageSection[],
-    pageSectionEvent:Map<string,pageSectionEvent[]>,
-    pageHomePoster:Map<string,pageEventPoster[]>
+    pageSectionEvent:Map<string,pageSectionEvent[]>, //key sectionCode
+    pageHomePoster:Map<string,pageEventPoster[]> //key eventCode
 }
 
 export interface pageSection{
@@ -74,5 +74,10 @@ export interface pageEventPoster{
     defaultEvent:string,
     defaultYear:number
 }
+
+// export interface gpPageEventPoster{
+//     num:number,
+//     list:gpPageEventPoster[]
+// }
 
 // {userToken,userInfo}
