@@ -26,6 +26,7 @@ export const usePageCommData = ()=>{
     pageSection:[],
     pageSectionEvent:new Map<string,pageSectionEvent[]>(),
     pageHomePoster:new Map<string,pageEventPoster[]>(),
+    curCalendarEventIndex : -1,
   };
   
   return useState<pageCommData>(lsKeys.pageCommData, () => {

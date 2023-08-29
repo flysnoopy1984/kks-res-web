@@ -39,12 +39,14 @@ export interface pageCommData{
     pageSection: pageSection[],
     pageSectionEvent:Map<string,pageSectionEvent[]>, //key sectionCode
     pageHomePoster:Map<string,pageEventPoster[]> //key eventCode
+    curCalendarEventIndex:number;
 }
 
 export interface pageSection{
     secName:string,
     secCode:string
 }
+
 
 export interface pageSectionEvent{
     secName:string,
@@ -75,9 +77,3 @@ export interface pageEventPoster{
     defaultYear:number
 }
 
-// export interface gpPageEventPoster{
-//     num:number,
-//     list:gpPageEventPoster[]
-// }
-
-// {userToken,userInfo}

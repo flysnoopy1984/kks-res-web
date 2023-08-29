@@ -73,18 +73,21 @@ const styleMove = reactive({
 const eventsPageCount = Math.ceil((secEvents.length)/cfg.maxEventNum)-1;
 
 //初始化当前选中的事件,获取当前选中事件的Index
-let curEventIndex = -1;
-for(let i=0,len = secEvents.length; i<len ; i++){
+let curEventIndex = pageData.curCalendarEventIndex;
 
-    if(secEvents[i].diffNow ==0) {
-        eventItemSelected(i);
-        break;
-    }
-    if(secEvents[i].diffNow>0 && curEventIndex ==-1 ){
-        eventItemSelected(i);
-        break;
-    }
-}
+eventItemSelected(curEventIndex);
+// for(let i=0,len = secEvents.length; i<len ; i++){
+
+//     if(secEvents[i].diffNow ==0) {
+//         eventItemSelected(i);
+//         break;
+//     }
+//     if(secEvents[i].diffNow>0 && curEventIndex ==-1 ){
+//         eventItemSelected(i);
+//         break;
+//     }
+// }
+
 //根据当前index,决定当前滑动到哪个位置
 if(curEventIndex>-1){
     const rollNum = Math.floor(curEventIndex/cfg.maxEventNum);

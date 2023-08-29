@@ -127,7 +127,7 @@
                                 <img width="30" height="30" alt="Jacky" src="https://img2.doubanio.com/icon/up47115977-3.jpg">
                             </a>
                             <div class="drop-down-list">
-                                <a href="/person/47115977/">
+                                <a @click="nav.toPerson()">
                                     <span class="text">个人主页</span>
                                 </a>
                                 <!-- <a href="/reading_history">
@@ -213,6 +213,7 @@
 <script setup>
 import '~/assets/css/css-variable-generator.css'
 import '~/assets/css/header-compact.css'
+
 useHead({
    title: '呀哈哈，福到了',
    meta:[
@@ -221,4 +222,8 @@ useHead({
 
    ],
 })
+
+// const openId = useUserInfo().openId;
+// const href = "/person/"+openId;
+
 </script>

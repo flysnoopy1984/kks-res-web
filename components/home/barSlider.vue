@@ -202,9 +202,17 @@ const pageData = usePageCommData().value;
 const events = pageData.pageSectionEvent.get(props.section.secCode) as pageSectionEvent[];
 const evMap =reactive(new Map<number,pageEventPoster[]>);
 
+let posters:pageEventPoster[] = [];
 //events 长度是1 代表不是日历事件
- if(events.length == 1){   
-    const posters =  pageData.pageHomePoster.get(events[0].evCode) as pageEventPoster[];
+if(events.length == 1) posters =pageData.pageHomePoster.get(events[0].evCode) as pageEventPoster[];
+//日历事件
+else{
+    const calendarEvCode  = events[pageData.curCalendarEventIndex].evCode;
+    posters = pageData.pageHomePoster.get(calendarEvCode) as pageEventPoster[];   
+}
+setPosterData(posters);
+
+function setPosterData(posters:pageEventPoster[]){
     if(posters != undefined){
         for(let i=0;i<posters.length;i++){
          //   debugger
@@ -219,10 +227,8 @@ const evMap =reactive(new Map<number,pageEventPoster[]>);
         }      
         
     }
-  }
-  else{
 
-  }
+}
 
 function slideLeft(){
     curPosX+=moveDistance;

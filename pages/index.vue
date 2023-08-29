@@ -41,6 +41,7 @@ if(pageData.pageSection.length==0){
         let gotCalenderEvent = false;
         /*设置 state Section Events */
         res.data.forEach((item,index)=>{
+
           const secEvents = pageData.pageSectionEvent.get(item.secCode);
           /* 设置显示内容 */
           item.weekDay = tools.weekDay(item.ecStartDate);
@@ -50,6 +51,7 @@ if(pageData.pageSection.length==0){
           //找到当前日历事件
           if(item.diffNow>=0 && item.evType ==0 && gotCalenderEvent==false) {
             eventCodes.push(item.evCode);
+            pageData.curCalendarEventIndex = index;
             gotCalenderEvent= true;
           }
         
