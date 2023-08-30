@@ -2,13 +2,19 @@ export class nav{
 
     static async toHome(){
         return navigateTo({ path: '/' },{
-            replace:true
+            replace:false
         })
     }
 
     static async toWxLogin(){
         return navigateTo("/wx/login",{
-            replace:true
+            replace:false
+        })
+    }
+
+    static async toLogOut(){
+        return navigateTo("/logout",{
+            replace:false
         })
     }
 

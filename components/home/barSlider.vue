@@ -29,7 +29,7 @@ created by JackySong@2023
                             </svg>
                         </button>
                     </Transition>
-                    <div v-if="evMap.size == 0" class="noDatas">
+                    <div v-if="evGroup[0].length == 0" class="noDatas">
                         <n-empty size="huge" description="暂时没有数据">
                             <template #icon>
                                 <n-icon>
@@ -41,9 +41,10 @@ created by JackySong@2023
 
                     <div v-else class="slick-list">    
                         <div class="slick-track" style="opacity: 1;" :style="styleMove">       
-                            <div v-for="evKey in evMap.keys()" class="slick-slide slick-active slick-current" style="outline: none;" :style="gpStyle">
+                    
+                            <div :aria-label="gp[0].title" v-for="(gp,index) in evGroup" :key="index" class="slick-slide slick-active" style="outline: none;" :style="gpStyle">
                                 <div> 
-                                    <div class="works-item brief-works-item" v-for="poster in evMap.get(evKey)">        
+                                    <div class="works-item brief-works-item" v-for="poster in gp">        
                                         <n-card :title="poster.title">
                                             <template #cover>
                                                 <img :src=" poster.sUrl">
@@ -52,98 +53,6 @@ created by JackySong@2023
                                     </div>
                                 </div>  
                             </div>
-
-
-                          
-                            <!-- <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
-                                <div>
-                                    <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/49b919bbee0b70769db0c4d9283dcb80e85aa0783f9ea-ykDLhM_fw480webp">
-                                                </template>
-                                            卡片内容
-                                        </n-card>
-                                    </div>
-                                    <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/49b919bbee0b70769db0c4d9283dcb80e85aa0783f9ea-ykDLhM_fw480webp">
-                                                </template>
-                                            卡片内容
-                                        </n-card>
-                                    </div>
-                                    <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
-                                                </template>
-                                            卡片内容
-                                        </n-card>
-                                    </div>
-                                    <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/efc4503a3f9582e5afbd5d006d7674f9aeb12e606cc31-6ubQbc_fw480webp">
-                                                </template>
-                                            卡片内容
-                                        </n-card>
-                                    </div>
-                                <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/b3dfcc54072a5e4230c236332deb37392b931fdc2dfce-UKmlQd_fw240webp">
-                                                </template>
-                                            卡片内容
-                                        </n-card>
-                                    </div>
-                                </div>              
-                            </div>
-                 
-                            <div class="slick-slide slick-active slick-current" style="outline: none; width: 1200px;">
-                                <div>
-                                    <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/49b919bbee0b70769db0c4d9283dcb80e85aa0783f9ea-ykDLhM_fw480webp">
-                                                </template>
-                                            卡片内容
-                                        </n-card>
-                                    </div>
-                                    <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/49b919bbee0b70769db0c4d9283dcb80e85aa0783f9ea-ykDLhM_fw480webp">
-                                                </template>
-                                            卡片内容
-                                        </n-card>
-                                    </div>
-                                    <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/b32829350c44eeb046aecc86e18af0dacd23997198fdd-f8OFyN_fw240webp">
-                                                </template>
-                                            卡片内容
-                                        </n-card>
-                                    </div>
-                                    <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/efc4503a3f9582e5afbd5d006d7674f9aeb12e606cc31-6ubQbc_fw480webp">
-                                                </template>
-                                            卡片内容
-                                        </n-card>
-                                    </div>
-                                <div class="works-item brief-works-item">
-                                        <n-card title="带封面的卡片">
-                                                <template #cover>
-                                                <img src="https://gd-hbimg.huaban.com/b3dfcc54072a5e4230c236332deb37392b931fdc2dfce-UKmlQd_fw240webp">
-                                                </template>
-                                            卡片内容
-                                        </n-card>
-                                    </div>
-                                </div>              
-                            </div> -->
                         </div>                            
                     </div>
                     <Transition name="btn-right">
@@ -164,13 +73,13 @@ created by JackySong@2023
 import { NCard,NButton,NIcon,NEmpty } from 'naive-ui';
 import { pageSectionEvent,pageEventPoster } from 'utils/models';
 
-
 const props = defineProps({
     cfg:{
         type:Object,
         default:{
             totalwidth:12000,
-            gpWidth:1200
+            gpWidth:1200,
+            gpMaxItemNum:5
         }
     },
     section:{
@@ -178,16 +87,18 @@ const props = defineProps({
         required: true
     }
 })
+
+
 /*配置 */
-let curPosX = 0;
-const moveDistance = 1200;
-const gpMaxItemNum = 5; 
 
-
+let gpNo = -1;
+//let curPosX = -1200;
+const moveDistance = props.cfg.gpWidth;
+const gpMaxItemNum = props.cfg.gpMaxItemNum; 
 const showButton = ref(false);
 
 const styleMove = reactive({
-    transform: "translate3d("+curPosX+"px, 0, 0)",
+    transform: "translate3d("+curPosX()+"px, 0, 0)",
     transition: "all .5s ease",
     width: props.cfg.totalwidth+"px",
 });
@@ -200,7 +111,9 @@ const gpStyle = {
 const pageData = usePageCommData().value;
 
 const events = pageData.pageSectionEvent.get(props.section.secCode) as pageSectionEvent[];
-const evMap =reactive(new Map<number,pageEventPoster[]>);
+
+//将事件N个一组，用于滑动
+const evGroup = reactive<[pageEventPoster[]]>([[]]);
 
 let posters:pageEventPoster[] = [];
 //events 长度是1 代表不是日历事件
@@ -210,42 +123,94 @@ else{
     const calendarEvCode  = events[pageData.curCalendarEventIndex].evCode;
     posters = pageData.pageHomePoster.get(calendarEvCode) as pageEventPoster[];   
 }
+
+//设置当前时间的数据，为无缝滑动做准备
 setPosterData(posters);
 
 function setPosterData(posters:pageEventPoster[]){
-    if(posters != undefined){
-        for(let i=0;i<posters.length;i++){
-         //   debugger
-            const gpNo = Math.floor(i/gpMaxItemNum)+1;
-            const list = evMap.get(gpNo);
-            if(list == undefined){
-                evMap.set( gpNo,[posters[i]]);
-            }
-            else{
-                list.push(posters[i])
-            }
-        }      
-        
-    }
 
+    if(posters != undefined){
+        let i=0,j=0;
+        let no = 1;
+        for(let n=0;n<posters.length;n++){              
+            if(no>gpMaxItemNum){
+                no = 1;
+                j=0;
+                i++;
+                evGroup[i] = []; 
+            }
+            evGroup[i][j] = posters[n];
+            j++;no++;            
+        } 
+        //clone 一组Map到最前面，用于滑动     
+        const len = evGroup.length;
+        let data= evGroup[len-1];
+        evGroup.unshift(data);
+        for(i=1;i<len;i++){
+            data= evGroup[i];
+            evGroup.push(data);  
+        }
+      //  console.log("server",process.server,"len:",evGroup.length);
+    }
+}   
+
+function curPosX(){
+    
+    const curX =  gpNo*moveDistance;
+     console.log("gpNo",gpNo);
+    return curX;
 }
+
 
 function slideLeft(){
-    curPosX+=moveDistance;
-    styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";
+
+    gpNo++;
+    styleMove.transform = "translate3d("+curPosX()+"px, 0, 0)";
+    if(gpNo == 0){
+        gpNo-= evGroup.length/2;
+
+        
+    }
 }
-function slideRight() {
-    curPosX-=moveDistance;
-    styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";
+
+function slideRight() {  
+
+  
+    styleMove.transform = "translate3d("+curPosX()+"px, 0, 0)";
+    gpNo--;  
+    if(gpNo % (evGroup.length/2) == 0)  {
+        gpNo+=evGroup.length/2;
+    }
+   
 }
+
 function mouseEnter(){
-    if(evMap.size>1)
+    if(evGroup[0].length>0)
         showButton.value=true;
 }
 
 function mouseLeave(){
     showButton.value=false;
 }
+
+
+// function setPosterData(posters:pageEventPoster[]){
+//     if(posters != undefined){
+//         for(let i=0;i<posters.length;i++){
+//          //   debugger
+//             const gpNo = Math.floor(i/gpMaxItemNum);
+//             const list = evMap.get(gpNo);
+//             if(list == undefined){
+//                 evMap.set( gpNo,[posters[i]]);
+//             }
+//             else{
+//                 list.push(posters[i])
+//             }
+//         } 
+//         //clone 一组Map到最前面，用于滑动     
+
+//     }
+// }
 
 </script>
 <style scoped>

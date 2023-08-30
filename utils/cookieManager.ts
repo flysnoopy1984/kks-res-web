@@ -1,6 +1,13 @@
 import {userToken,userInfo} from './models'
 
 export class cookieManager {
+
+    static quit(){
+        useCookie(lsKeys.userToken).value = null;
+        useCookie(lsKeys.userOpenId).value = null;
+        useCookie(lsKeys.userInfo).value = null;
+
+    }
      //2小时 有效期
     static saveTokenAndOpenId(userToken:userToken){
         

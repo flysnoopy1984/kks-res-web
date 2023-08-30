@@ -123,7 +123,7 @@
                     </nav>
                     <div class="user-info" id="user-info">
                         <div class="nav-user more-active">
-                            <a title="Jacky" href="/person/1" class="avatar ">
+                            <a title="Jacky" @click="nav.toPerson()" class="avatar ">
                                 <img width="30" height="30" alt="Jacky" src="https://img2.doubanio.com/icon/up47115977-3.jpg">
                             </a>
                             <div class="drop-down-list">
@@ -154,7 +154,7 @@
                                 <a href="/account/setting">
                                     <span class="text">设置</span>
                                 </a>
-                                <a href="/logout?ck=kDa6" class="logout">
+                                <a @click="nav.toLogOut()" class="logout">
                                     <span class="text">退出登录</span>
                                 </a>
                             </div>
