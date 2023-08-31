@@ -11,6 +11,10 @@ export default defineNuxtConfig({
       ],
     },
   },
+  plugins: [{
+    src: '@/plugins/vue-lazyload',
+    ssr: false
+  }],
   css:[
     '@/assets/css/main.css'
   ],

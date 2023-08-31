@@ -41,13 +41,14 @@ created by JackySong@2023
 
                     <div v-else class="slick-list">    
                         <div class="slick-track" style="opacity: 1;" :style="styleMove">       
-                    
                             <div :aria-label="gp[0].title" v-for="(gp,index) in evGroup" :key="index" class="slick-slide slick-active" style="outline: none;" :style="gpStyle">
                                 <div> 
                                     <div class="works-item brief-works-item" v-for="poster in gp">        
                                         <n-card :title="poster.title">
                                             <template #cover>
-                                                <img :src=" poster.sUrl">
+                                                <!-- <n-image lazy preview-disabled :src=" poster.sUrl"
+                                                ></n-image> -->
+                                                <img @error="errorImg" v-lazy="poster.sUrl">
                                             </template>
                                         </n-card>
                                     </div>
@@ -70,7 +71,7 @@ created by JackySong@2023
 </template>
 
 <script setup lang="ts">
-import { NCard,NButton,NIcon,NEmpty } from 'naive-ui';
+import { NCard,NButton,NIcon,NEmpty,NImage } from 'naive-ui';
 import { pageSectionEvent,pageEventPoster } from 'utils/models';
 
 const props = defineProps({
@@ -79,7 +80,8 @@ const props = defineProps({
         default:{
             totalwidth:12000,
             gpWidth:1200,
-            gpMaxItemNum:5
+            gpMaxItemNum:5,
+            trans:"all .5s ease"
         }
     },
     section:{
@@ -92,14 +94,13 @@ const props = defineProps({
 /*配置 */
 
 let gpNo = -1;
-//let curPosX = -1200;
 const moveDistance = props.cfg.gpWidth;
 const gpMaxItemNum = props.cfg.gpMaxItemNum; 
 const showButton = ref(false);
 
 const styleMove = reactive({
     transform: "translate3d("+curPosX()+"px, 0, 0)",
-    transition: "all .5s ease",
+    transition: props.cfg.trans,
     width: props.cfg.totalwidth+"px",
 });
 
@@ -154,34 +155,41 @@ function setPosterData(posters:pageEventPoster[]){
     }
 }   
 
-function curPosX(){
-    
+function curPosX(){ 
     const curX =  gpNo*moveDistance;
-     console.log("gpNo",gpNo);
     return curX;
 }
 
+function moveSlide(trans:String){
+    styleMove.transition = trans;
+    styleMove.transform = "translate3d("+curPosX()+"px, 0, 0)";
+}
 
 function slideLeft(){
 
     gpNo++;
-    styleMove.transform = "translate3d("+curPosX()+"px, 0, 0)";
+    moveSlide(props.cfg.trans);
     if(gpNo == 0){
-        gpNo-= evGroup.length/2;
-
-        
+        setTimeout(function() {
+            gpNo-= (evGroup.length/2);
+            moveSlide("none");
+        }, 700);
+      
+         
     }
 }
 
 function slideRight() {  
-
-  
-    styleMove.transform = "translate3d("+curPosX()+"px, 0, 0)";
-    gpNo--;  
-    if(gpNo % (evGroup.length/2) == 0)  {
-        gpNo+=evGroup.length/2;
-    }
    
+    gpNo--; 
+    moveSlide(props.cfg.trans);
+
+    if(gpNo % (evGroup.length/2) == -1 && gpNo!=-2){
+        setTimeout(function() {
+            gpNo = -1; 
+            moveSlide("none");
+        }, 700);
+    }
 }
 
 function mouseEnter(){
@@ -193,24 +201,11 @@ function mouseLeave(){
     showButton.value=false;
 }
 
-
-// function setPosterData(posters:pageEventPoster[]){
-//     if(posters != undefined){
-//         for(let i=0;i<posters.length;i++){
-//          //   debugger
-//             const gpNo = Math.floor(i/gpMaxItemNum);
-//             const list = evMap.get(gpNo);
-//             if(list == undefined){
-//                 evMap.set( gpNo,[posters[i]]);
-//             }
-//             else{
-//                 list.push(posters[i])
-//             }
-//         } 
-//         //clone 一组Map到最前面，用于滑动     
-
-//     }
-// }
+/*图片处理 */
+function errorImg(e:any){
+    console.log("error:",e);
+    
+}
 
 </script>
 <style scoped>
@@ -279,10 +274,23 @@ function mouseLeave(){
 .noDatas{
   max-width: 1200px;
   padding-top: 30px;
-
-
 }
-
+img[lazy=error]{
+    background-image: url('/assets/img/error.svg');
+    background-position: center center;
+    background-size: 20%;
+    background-repeat: no-repeat;
+    opacity: 0.1;
+    height: 370px;
+}
+img[lazy=loading]{
+    background-image: url('/assets/img/loading.svg');
+    background-position: center center;
+    background-size: 20%;
+    background-repeat: no-repeat;
+    opacity: 0.1;
+    height: 370px;
+}
 
 
 </style>
