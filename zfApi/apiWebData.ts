@@ -31,6 +31,8 @@ const apiWebData =  class apiWebData extends zfhttp{
             {"content-Type": "application/json"}   
         )
     }
+
+   
 }
 
 export default new apiWebData;

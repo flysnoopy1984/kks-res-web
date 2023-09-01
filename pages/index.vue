@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- <HomeBanner></HomeBanner> -->
-        <HomeCalendarLine></HomeCalendarLine>
+        <HomeCalendarLine @select-event="selectEvent"></HomeCalendarLine>
         <div>
           <!-- <HomeBarSlider></HomeBarSlider> -->
     
@@ -10,7 +10,7 @@
           </div> -->
        
           <template v-if="secList.length>0">
-            <LazyHomeBarSlider v-for="secEV in secList" :section="secEV" style="padding-bottom: 60px;">            
+            <LazyHomeBarSlider v-for="sec in secList" :section="sec" style="padding-bottom: 60px;">            
             </LazyHomeBarSlider>    
           </template>       
         </div>
@@ -21,33 +21,38 @@
 <script setup lang="ts">
 import {useMessage } from 'naive-ui'
 import apiWebData from '@/zfApi/apiWebData';
-import {pageSection} from '@/utils/models'
+import apiPoster from '@/zfApi/apiPoster';
+import {pageSectionData,pageEventPoster,ResComm} from '@/utils/models'
 
-const appConfig = useAppConfig();
 
-let secList = ref<pageSection[]>([]);
+let secList = ref<pageSectionData[]>([]);
 const message = useMessage();
-const pageData = usePageCommData().value;
+
+//const pageData = usePageCommData().value;
+const pageData = {
+  pageSection:[] as pageSectionData[],
+  curCalendarEventIndex:-1
+};
 
 let eventCodes:string[] = []; // 当获取好Section所有事件后，获取首页需要最先显示的海报事件Codes
 
 //Section Events
-if(pageData.pageSection.length==0){
-  //请求Section和相关事件
-  const res = await apiWebData.querySectionEvents(tools.currentYear());
+const res = await apiWebData.querySectionEvents(tools.currentYear());
   if(res.code == 200){
-
     if(res.data!=undefined){
         let gotCalenderEvent = false;
         /*设置 state Section Events */
         res.data.forEach((item,index)=>{
 
-          const secEvents = pageData.pageSectionEvent.get(item.secCode);
-          /* 设置显示内容 */
+          const secEvents  = pageData.pageSection.find(a=>a.secCode = item.secCode);
+       //   const secEvents = pageData.pageSectionEvent.get(item.secCode);
+          /* 设置Calendar Line 组件 显示内容 */
           item.weekDay = tools.weekDay(item.ecStartDate);
           item.diffNow = tools.diffDay(item.ecStartDate);
+
           //非日历事件需要查询海报
           if(item.evType>0) eventCodes.push(item.evCode);
+
           //找到当前日历事件
           if(item.diffNow>=0 && item.evType ==0 && gotCalenderEvent==false) {
             eventCodes.push(item.evCode);
@@ -56,11 +61,12 @@ if(pageData.pageSection.length==0){
           }
         
           if(secEvents == undefined){
-            pageData.pageSectionEvent.set(item.secCode,[item]);
-            pageData.pageSection.push({
-               secCode : item.secCode,
-               secName: item.secName
-            });
+            pageData.pageSection
+            // pageData.pageSectionEvent.set(item.secCode,[item]);
+            // pageData.pageSection.push({
+            //    secCode : item.secCode,
+            //    secName: item.secName
+            // });
           }      
           else
               secEvents.push(item);
@@ -71,7 +77,6 @@ if(pageData.pageSection.length==0){
   else{ 
     message.error(res.msg);
   }
-}
 if(pageData.pageSectionEvent.size>0){
   secList.value = pageData.pageSection;
 }
@@ -80,28 +85,43 @@ if(pageData.pageSectionEvent.size>0){
 async function queryHomePoster() {
 
   const res = await apiWebData.queryHomePoster(eventCodes);
-  // console.log("queryHomePoster:",res);
-
   if(process.server){
-      res.data?.forEach((item)=>{
-      
-      const evPosters =  pageData.pageHomePoster.get(item.defaultEvent);
-
-      if(evPosters == undefined){
-        pageData.pageHomePoster.set(item.defaultEvent,[item]);
-      }
-      else{
-        evPosters.push(item);
-      }
-    });
-
-  }
-  
-
+    handlePosterData(res);
+  } 
 }
+
 queryHomePoster();
 
+//CalendarLine 选择日历组件后，更新滑动组件
+async function selectEvent(evCode:string){
+  // let data = pageData.pageHomePoster.get(evCode) as pageEventPoster[];
+  // if(data == undefined){
+  //   const res = await apiPoster.querySectionEvents(evCode,20);
+  //   handlePosterData(res);  
+  // }
+  //secList.value[0].secName = evCode;
+  console.log("selectEvent");
+}
 
+function handlePosterData(res:ResComm<pageEventPoster[]>){
+
+  if(res.code == 200){
+    if(res.data!=undefined){
+        res.data.forEach((item)=>{
+        
+        const evPosters =  pageData.pageHomePoster.get(item.defaultEvent);
+
+        if(evPosters == undefined){
+          pageData.pageHomePoster.set(item.defaultEvent,[item]);
+        }
+        else{
+          evPosters.push(item);
+        }
+      });
+    }
+  }
+  console.log("pageHomePoster",pageData.pageHomePoster);
+}
 
 
 </script>

@@ -1,12 +1,12 @@
 // 参考 https://yezipi.net/article/detail/10095
 import { hash } from 'ohash'
-
-// 后端返回的数据类型
-export interface ResComm<T> {
-  data?: T
-  code: number
-  msg: string
-}
+import {ResComm} from '@/utils/models'
+// // 后端返回的数据类型
+// export interface ResComm<T> {
+//   data?: T
+//   code: number
+//   msg: string
+// }
 
 
 

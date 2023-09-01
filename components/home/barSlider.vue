@@ -40,20 +40,24 @@ created by JackySong@2023
                     </div>
 
                     <div v-else class="slick-list">    
-                        <div class="slick-track" style="opacity: 1;" :style="styleMove">       
-                            <div :aria-label="gp[0].title" v-for="(gp,index) in evGroup" :key="index" class="slick-slide slick-active" style="outline: none;" :style="gpStyle">
+                        <div class="slick-track" style="opacity: 1;" :style="styleMove">  
+                            <n-space v-if="pageStatus == -1">
+                                <div class="works-item brief-works-item" v-for="n in gpMaxItemNum">
+                                    <n-skeleton width="190px" height="250px" :sharp="false" />
+                                </div>
+                            </n-space>
+                            
+                            <div v-else :aria-label="gp[0].title" v-for="(gp,index) in evGroup" :key="index" class="slick-slide slick-active" style="outline: none;" :style="gpStyle">
                                 <div> 
                                     <div class="works-item brief-works-item" v-for="poster in gp">        
                                         <n-card :title="poster.title">
                                             <template #cover>
-                                                <!-- <n-image lazy preview-disabled :src=" poster.sUrl"
-                                                ></n-image> -->
                                                 <img @error="errorImg" v-lazy="poster.sUrl">
                                             </template>
                                         </n-card>
                                     </div>
                                 </div>  
-                            </div>
+                            </div>                          
                         </div>                            
                     </div>
                     <Transition name="btn-right">
@@ -71,7 +75,7 @@ created by JackySong@2023
 </template>
 
 <script setup lang="ts">
-import { NCard,NButton,NIcon,NEmpty,NImage } from 'naive-ui';
+import { NCard,NButton,NIcon,NEmpty,NSkeleton,NSpace } from 'naive-ui';
 import { pageSectionEvent,pageEventPoster } from 'utils/models';
 
 const props = defineProps({
@@ -87,7 +91,14 @@ const props = defineProps({
     section:{
         type: Object,
         required: true
-    }
+    },
+    pageStatus:{
+        type: Number,
+        default: -1
+
+    },
+    posters:[]
+
 })
 
 
@@ -97,6 +108,7 @@ let gpNo = -1;
 const moveDistance = props.cfg.gpWidth;
 const gpMaxItemNum = props.cfg.gpMaxItemNum; 
 const showButton = ref(false);
+
 
 const styleMove = reactive({
     transform: "translate3d("+curPosX()+"px, 0, 0)",
@@ -114,7 +126,7 @@ const pageData = usePageCommData().value;
 const events = pageData.pageSectionEvent.get(props.section.secCode) as pageSectionEvent[];
 
 //将事件N个一组，用于滑动
-const evGroup = reactive<[pageEventPoster[]]>([[]]);
+let evGroup = reactive<[pageEventPoster[]]>([[]]);
 
 let posters:pageEventPoster[] = [];
 //events 长度是1 代表不是日历事件
@@ -128,8 +140,24 @@ else{
 //设置当前时间的数据，为无缝滑动做准备
 setPosterData(posters);
 
-function setPosterData(posters:pageEventPoster[]){
+function changePageState(status:number){
+    
+    if(status>0){
+        gpNo = -1;
+        moveSlide("none");
+       // pageStatus = 1;
+    }
+    else{
+        gpNo = 0;
+        moveSlide("none");
+       // pageStatus.value = -1;
 
+    }    
+}
+
+function setPosterData(posters:pageEventPoster[]){
+    changePageState(-1);
+    evGroup = [[]];
     if(posters != undefined){
         let i=0,j=0;
         let no = 1;
@@ -153,6 +181,7 @@ function setPosterData(posters:pageEventPoster[]){
         }
       //  console.log("server",process.server,"len:",evGroup.length);
     }
+    changePageState(1);
 }   
 
 function curPosX(){ 
@@ -189,19 +218,18 @@ function slideRight() {
             gpNo = -1; 
             moveSlide("none");
         }, 700);
-    }
+    } 
 }
 
 function mouseEnter(){
-    if(evGroup[0].length>0)
+    if(evGroup[0].length>0 && props.pageStatus>0)
         showButton.value=true;
 }
 
 function mouseLeave(){
     showButton.value=false;
 }
-
-/*图片处理 */
+/*图片错误处理 */
 function errorImg(e:any){
     console.log("error:",e);
     

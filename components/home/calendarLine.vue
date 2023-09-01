@@ -49,6 +49,12 @@ created by JackySong@2023
 
 <script setup lang="ts">
 import {pageSectionEvent} from '@/utils/models'
+//import { provide } from 'vue'
+
+//const selectEvCode = inject('selectEvCode') as string;
+
+const emit = defineEmits(['selectEvent']);
+
 const props = defineProps({
     secCodeKey:{
         type:String,
@@ -76,17 +82,6 @@ const eventsPageCount = Math.ceil((secEvents.length)/cfg.maxEventNum)-1;
 let curEventIndex = pageData.curCalendarEventIndex;
 
 eventItemSelected(curEventIndex);
-// for(let i=0,len = secEvents.length; i<len ; i++){
-
-//     if(secEvents[i].diffNow ==0) {
-//         eventItemSelected(i);
-//         break;
-//     }
-//     if(secEvents[i].diffNow>0 && curEventIndex ==-1 ){
-//         eventItemSelected(i);
-//         break;
-//     }
-// }
 
 //根据当前index,决定当前滑动到哪个位置
 if(curEventIndex>-1){
@@ -109,6 +104,7 @@ function moveRight(){
         styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";
     }
 }
+
 function eventItemSelected(index:number){
 
     if(curEventIndex>=0){
@@ -116,7 +112,9 @@ function eventItemSelected(index:number){
     }
     secEvents[index].selected = true;
     curEventIndex = index;
-
+   emit("selectEvent",secEvents[index].evCode);
+    //提供数据给其他组件
+   // provide('selectEvCode', secEvents[index].evCode);
 }
 </script>
 <style scoped>

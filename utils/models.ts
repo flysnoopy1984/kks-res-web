@@ -36,15 +36,18 @@ export interface wxLogin{
 }
 /* 首页数据 */
 export interface pageCommData{
-    pageSection: pageSection[],
-    pageSectionEvent:Map<string,pageSectionEvent[]>, //key sectionCode
-    pageHomePoster:Map<string,pageEventPoster[]> //key eventCode
+    pageSection: pageSectionData[],
+ //   pageSectionEvent:Map<string,pageSectionEvent[]>, //key sectionCode
+ //   pageHomePoster:Map<string,pageEventPoster[]> //key eventCode
     curCalendarEventIndex:number;
 }
 
-export interface pageSection{
+export interface pageSectionData{
     secName:string,
-    secCode:string
+    secCode:string,
+    curEvCode:string,
+    secEvents:pageSectionEvent[],
+    posterDatas:pageEventPoster[]
 }
 
 
@@ -75,6 +78,12 @@ export interface pageEventPoster{
     lUrl:string,
     defaultEvent:string,
     defaultYear:number
+}
+
+export interface ResComm<T> {
+    data?: T
+    code: number
+    msg: string
 }
 
 
