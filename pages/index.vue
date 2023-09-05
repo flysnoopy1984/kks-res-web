@@ -186,15 +186,15 @@ async function selectEvent(evCode:string){
   
   if(sd != undefined){
     sd.loadstatus = 1;
-  
-   // childs.value[0].changePageState(-1);
-    // sd.curEvCode = evCode;
-    // const res = await apiPoster.querySectionEvents(evCode,20);
-    // if(res.code == 200){
-    //   sd.posterDatas =  res.data;
-    //   sd.evGroup = getPosterData(sd.posterDatas);
-    // }
-    // sd.loadstatus =0;
+
+   //childs.value[0].changePageState(-1);
+    sd.curEvCode = evCode;
+    const res = await apiPoster.querySectionEvents(evCode,20);
+    if(res.code == 200){
+      sd.posterDatas =  res.data;
+      sd.evGroup = getPosterData(sd.posterDatas);
+    }
+    sd.loadstatus =0;
   }
   
 }
