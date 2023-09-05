@@ -4,9 +4,9 @@ created by JackySong@2023
 <template>
     <div class="barSliderContainer" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
         <div class="dataContainer">
-            <div class="hd" v-if="section!=null">
+            <div class="hd" v-if="props.secData!=null">
                 <div class="title-section">
-                    <h2 class="widget-title">{{section.secName}}</h2>
+                    <h2 class="widget-title">{{props.secData.secName}}</h2>
                     <div class="links">
                         <n-button icon-placement="right" color="#2F8E9C" text tag="a">
                             查看更多
@@ -29,7 +29,7 @@ created by JackySong@2023
                             </svg>
                         </button>
                     </Transition>
-                    <div v-if="evGroup[0].length == 0" class="noDatas">
+                    <div v-if="secData.evGroup[0].length == 0" class="noDatas">
                         <n-empty size="huge" description="暂时没有数据">
                             <template #icon>
                                 <n-icon>
@@ -41,13 +41,13 @@ created by JackySong@2023
 
                     <div v-else class="slick-list">    
                         <div class="slick-track" style="opacity: 1;" :style="styleMove">  
-                            <n-space v-if="pageStatus == -1">
+                            <n-space v-if="secData.loadstatus == 1">
                                 <div class="works-item brief-works-item" v-for="n in gpMaxItemNum">
                                     <n-skeleton width="190px" height="250px" :sharp="false" />
                                 </div>
                             </n-space>
                             
-                            <div v-else :aria-label="gp[0].title" v-for="(gp,index) in evGroup" :key="index" class="slick-slide slick-active" style="outline: none;" :style="gpStyle">
+                            <div v-else :aria-label="gp[0].title" v-for="(gp,index) in secData.evGroup" :key="index" class="slick-slide slick-active" style="outline: none;" :style="gpStyle">
                                 <div> 
                                     <div class="works-item brief-works-item" v-for="poster in gp">        
                                         <n-card :title="poster.title">
@@ -76,7 +76,8 @@ created by JackySong@2023
 
 <script setup lang="ts">
 import { NCard,NButton,NIcon,NEmpty,NSkeleton,NSpace } from 'naive-ui';
-import { pageSectionEvent,pageEventPoster } from 'utils/models';
+import { pageSectionData } from 'utils/models';
+import type { PropType } from 'vue'
 
 const props = defineProps({
     cfg:{
@@ -88,19 +89,17 @@ const props = defineProps({
             trans:"all .5s ease"
         }
     },
-    section:{
-        type: Object,
+    // evGroup:{
+    //     type:[],
+    //     retquired:true,
+    // },
+    secData:{
+        type: Object as PropType<pageSectionData>,
         required: true
     },
-    pageStatus:{
-        type: Number,
-        default: -1
-
-    },
-    posters:[]
-
 })
 
+console.log("isCalendar:",props.secData.isCalendar);
 
 /*配置 */
 
@@ -108,7 +107,6 @@ let gpNo = -1;
 const moveDistance = props.cfg.gpWidth;
 const gpMaxItemNum = props.cfg.gpMaxItemNum; 
 const showButton = ref(false);
-
 
 const styleMove = reactive({
     transform: "translate3d("+curPosX()+"px, 0, 0)",
@@ -120,32 +118,41 @@ const gpStyle = {
     width: props.cfg.gpWidth+"px",
 }
 
+defineExpose({
+    changePageState
+})
+
 /* 初始载入 */
-const pageData = usePageCommData().value;
+//const pageData = usePageCommData().value;
 
-const events = pageData.pageSectionEvent.get(props.section.secCode) as pageSectionEvent[];
-
+//const events = pageData.pageSectionEvent.get(props.section.secCode) as pageSectionEvent[];
+//const events = props.secData.posterDatas;
 //将事件N个一组，用于滑动
-let evGroup = reactive<[pageEventPoster[]]>([[]]);
+//let evGroup = reactive<[pageEventPoster[]]>([[]]);
 
-let posters:pageEventPoster[] = [];
+
+// console.log("events",events);
+// let posters:pageEventPoster[] = [];
+
 //events 长度是1 代表不是日历事件
-if(events.length == 1) posters =pageData.pageHomePoster.get(events[0].evCode) as pageEventPoster[];
-//日历事件
-else{
-    const calendarEvCode  = events[pageData.curCalendarEventIndex].evCode;
-    posters = pageData.pageHomePoster.get(calendarEvCode) as pageEventPoster[];   
-}
+// if(events.length == 1) 
+
+//     //posters =pageData.pageHomePoster.get(events[0].evCode) as pageEventPoster[];
+// //日历事件
+// else{
+//     const calendarEvCode  = events[pageData.curCalendarEventIndex].evCode;
+//     posters = pageData.pageHomePoster.get(calendarEvCode) as pageEventPoster[];   
+// }
 
 //设置当前时间的数据，为无缝滑动做准备
-setPosterData(posters);
+//setPosterData(props.secData.posterDatas);
 
 function changePageState(status:number){
     
     if(status>0){
         gpNo = -1;
         moveSlide("none");
-       // pageStatus = 1;
+        //pageStatus = 1;
     }
     else{
         gpNo = 0;
@@ -155,34 +162,7 @@ function changePageState(status:number){
     }    
 }
 
-function setPosterData(posters:pageEventPoster[]){
-    changePageState(-1);
-    evGroup = [[]];
-    if(posters != undefined){
-        let i=0,j=0;
-        let no = 1;
-        for(let n=0;n<posters.length;n++){              
-            if(no>gpMaxItemNum){
-                no = 1;
-                j=0;
-                i++;
-                evGroup[i] = []; 
-            }
-            evGroup[i][j] = posters[n];
-            j++;no++;            
-        } 
-        //clone 一组Map到最前面，用于滑动     
-        const len = evGroup.length;
-        let data= evGroup[len-1];
-        evGroup.unshift(data);
-        for(i=1;i<len;i++){
-            data= evGroup[i];
-            evGroup.push(data);  
-        }
-      //  console.log("server",process.server,"len:",evGroup.length);
-    }
-    changePageState(1);
-}   
+
 
 function curPosX(){ 
     const curX =  gpNo*moveDistance;
@@ -200,7 +180,7 @@ function slideLeft(){
     moveSlide(props.cfg.trans);
     if(gpNo == 0){
         setTimeout(function() {
-            gpNo-= (evGroup.length/2);
+            gpNo-= (props.secData.evGroup.length/2);
             moveSlide("none");
         }, 700);
       
@@ -213,7 +193,7 @@ function slideRight() {
     gpNo--; 
     moveSlide(props.cfg.trans);
 
-    if(gpNo % (evGroup.length/2) == -1 && gpNo!=-2){
+    if(gpNo % (props.secData.evGroup.length/2) == -1 && gpNo!=-2){
         setTimeout(function() {
             gpNo = -1; 
             moveSlide("none");
@@ -222,7 +202,7 @@ function slideRight() {
 }
 
 function mouseEnter(){
-    if(evGroup[0].length>0 && props.pageStatus>0)
+    if(props.secData.evGroup[0].length>0)
         showButton.value=true;
 }
 

@@ -8,119 +8,195 @@
           <!-- <div class="divIn">
             <n-button type="warning" @click="doTestAny">TestAny</n-button>
           </div> -->
-       
-          <template v-if="secList.length>0">
-            <LazyHomeBarSlider v-for="sec in secList" :section="sec" style="padding-bottom: 60px;">            
+          <n-button type="warning" @click="doTest">TestAny</n-button>
+          <template v-if="secMap.size>0">
+            <LazyHomeBarSlider  ref="childs" v-for="sec in sdList" :sec-data="sec" style="padding-bottom: 60px;">            
             </LazyHomeBarSlider>    
-          </template>       
+          </template>      
+        
         </div>
       
     </div>
 </template>
 
 <script setup lang="ts">
-import {useMessage } from 'naive-ui'
+import {useMessage,NButton } from 'naive-ui'
 import apiWebData from '@/zfApi/apiWebData';
 import apiPoster from '@/zfApi/apiPoster';
-import {pageSectionData,pageEventPoster,ResComm} from '@/utils/models'
+import {pageSectionData,pageEventPoster,ResComm,pageSectionEvent} from '@/utils/models'
 
 
-let secList = ref<pageSectionData[]>([]);
+let sdList = reactive<pageSectionData[]>([]);
+
+// const childs = ref([]);
+
 const message = useMessage();
+const pageData = usePageCommData().value;
 
-//const pageData = usePageCommData().value;
-const pageData = {
-  pageSection:[] as pageSectionData[],
-  curCalendarEventIndex:-1
-};
 
 let eventCodes:string[] = []; // 当获取好Section所有事件后，获取首页需要最先显示的海报事件Codes
 
 //Section Events
 const res = await apiWebData.querySectionEvents(tools.currentYear());
-  if(res.code == 200){
-    if(res.data!=undefined){
-        let gotCalenderEvent = false;
-        /*设置 state Section Events */
-        res.data.forEach((item,index)=>{
+const secMap = new Map<string,pageSectionEvent[]>();
+if(res.code == 200){
+  if(res.data!=undefined){
+      let gotCalenderEvent = false;
+      /*设置 state Section Events */
+      
+      res.data.forEach((item,index)=>{
+      //  debugger
+        let secEvents = secMap.get(item.secCode);
+        //let secEvents =  pageData.pageSectionEvent.get(item.secCode);
+        if(secEvents == undefined)
+          secMap.set(item.secCode,[item]);
+        else
+          secEvents.push(item);
+          
+        /* 设置Calendar Line 组件 显示内容 */
+        item.weekDay = tools.weekDay(item.ecStartDate);
+        item.diffNow = tools.diffDay(item.ecStartDate);
+        //非日历事件需要查询海报
+        if(item.evType>0) {
+          eventCodes.push(item.evCode);
+          addSectionData(item);
+        }
+        //找到当前日历事件
+        if(item.diffNow>=0 && item.evType ==0 && gotCalenderEvent==false) {
+          eventCodes.push(item.evCode);
+          
+          pageData.curCalendarEventIndex = index;
+          item.selected = true;
+          gotCalenderEvent= true;
 
-          const secEvents  = pageData.pageSection.find(a=>a.secCode = item.secCode);
-       //   const secEvents = pageData.pageSectionEvent.get(item.secCode);
-          /* 设置Calendar Line 组件 显示内容 */
-          item.weekDay = tools.weekDay(item.ecStartDate);
-          item.diffNow = tools.diffDay(item.ecStartDate);
+          addSectionData(item);
+        }
+      });
+      
+      //设置State
+      pageData.pageSectionEvent = secMap;
+   //    pageData.pageSectionData = sdList.value;
+      // console.log("pageData.pageSectionData",pageData.pageSectionData);
+    }
 
-          //非日历事件需要查询海报
-          if(item.evType>0) eventCodes.push(item.evCode);
-
-          //找到当前日历事件
-          if(item.diffNow>=0 && item.evType ==0 && gotCalenderEvent==false) {
-            eventCodes.push(item.evCode);
-            pageData.curCalendarEventIndex = index;
-            gotCalenderEvent= true;
-          }
-        
-          if(secEvents == undefined){
-            pageData.pageSection
-            // pageData.pageSectionEvent.set(item.secCode,[item]);
-            // pageData.pageSection.push({
-            //    secCode : item.secCode,
-            //    secName: item.secName
-            // });
-          }      
-          else
-              secEvents.push(item);
-        });
-      }
-  
-  }
-  else{ 
-    message.error(res.msg);
-  }
-if(pageData.pageSectionEvent.size>0){
-  secList.value = pageData.pageSection;
+}
+else{ 
+  message.error(res.msg);
 }
 
-//获取首页的Event Poster 
-async function queryHomePoster() {
+function addSectionData(item:pageSectionEvent){
 
-  const res = await apiWebData.queryHomePoster(eventCodes);
-  if(process.server){
-    handlePosterData(res);
-  } 
+   const sd:pageSectionData ={
+              secName: item.secName,
+              secCode: item.secCode,
+              curEvCode :item.evCode,
+              isCalendar :item.evType ==0,
+              evGroup :[[]],
+              loadstatus:1,
+              // evGroupPoster: [[]],
+              posterDatas:[]
+            }
+  sdList.push(sd);
 }
 
 queryHomePoster();
 
-//CalendarLine 选择日历组件后，更新滑动组件
-async function selectEvent(evCode:string){
-  // let data = pageData.pageHomePoster.get(evCode) as pageEventPoster[];
-  // if(data == undefined){
-  //   const res = await apiPoster.querySectionEvents(evCode,20);
-  //   handlePosterData(res);  
-  // }
-  //secList.value[0].secName = evCode;
-  console.log("selectEvent");
+
+
+//获取首页的Event Poster 
+async function queryHomePoster() {
+//  debugger
+  const res = await apiWebData.queryHomePoster(eventCodes);
+ //console.log("queryHomePoster:",res);
+  handlePosterData(res);
 }
 
 function handlePosterData(res:ResComm<pageEventPoster[]>){
 
+  const secMap = new Map<String,pageSectionData>();
+
   if(res.code == 200){
+
     if(res.data!=undefined){
         res.data.forEach((item)=>{
-        
-        const evPosters =  pageData.pageHomePoster.get(item.defaultEvent);
-
-        if(evPosters == undefined){
-          pageData.pageHomePoster.set(item.defaultEvent,[item]);
-        }
-        else{
-          evPosters.push(item);
-        }
+          let sec = secMap.get(item.defaultEvent);
+          if(sec == undefined){
+             sec = sdList.find(s=>s.curEvCode == item.defaultEvent) as pageSectionData;
+             sec.posterDatas = [item];
+             secMap.set(item.defaultEvent,sec);
+          }
+          else{
+            sec.posterDatas.push(item);
+          }
       });
+     // debugger
+      sdList.forEach((sd)=>{
+        sd.evGroup = getPosterData(sd.posterDatas);
+        sd.loadstatus = 0;
+        // console.log("sd.evGroup",sd.evGroup);
+      })
     }
   }
-  console.log("pageHomePoster",pageData.pageHomePoster);
+
+}
+
+function getPosterData(posters:pageEventPoster[]){
+     
+    const evGroup:[pageEventPoster[]]= [[]];
+    const gpMaxItemNum = 5;
+    if(posters != undefined){
+        let i=0,j=0;
+        let no = 1;
+        for(let n=0;n<posters.length;n++){              
+            if(no>gpMaxItemNum){
+                no = 1;
+                j=0;
+                i++;
+                evGroup[i] = []; 
+            }
+            evGroup[i][j] = posters[n];
+            j++;no++;            
+        } 
+      // clone 一组数据，最后一条到最前面，其他接到最后，用于滑动     
+        const len = evGroup.length;
+        let data= evGroup[len-1];
+        evGroup.unshift(data);
+        for(i=1;i<len;i++){
+            data= evGroup[i];
+            evGroup.push(data);  
+        }
+      
+    }
+    //console.log("evGroup",evGroup);
+    return evGroup;
+    
+
+}   
+
+
+function  doTest() {
+  
+}
+
+
+//CalendarLine 选择日历组件后，更新滑动组件
+async function selectEvent(evCode:string){
+
+  const sd =  sdList.find(s=>s.isCalendar);
+  
+  if(sd != undefined){
+    sd.loadstatus = 1;
+  
+   // childs.value[0].changePageState(-1);
+    // sd.curEvCode = evCode;
+    // const res = await apiPoster.querySectionEvents(evCode,20);
+    // if(res.code == 200){
+    //   sd.posterDatas =  res.data;
+    //   sd.evGroup = getPosterData(sd.posterDatas);
+    // }
+    // sd.loadstatus =0;
+  }
+  
 }
 
 

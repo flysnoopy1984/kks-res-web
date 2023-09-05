@@ -1,5 +1,5 @@
 import { useState, useCookie } from "nuxt/app";
-import {userToken,userInfo,pageCommData,pageSectionEvent,pageEventPoster} from '@/utils/models'
+import {userToken,userInfo,pageCommData,pageSectionData} from '@/utils/models'
 
 //userInfo
 export const useUserInfo = () =>{
@@ -23,9 +23,10 @@ export const useApiToken = () =>{
 //pageCommData
 export const usePageCommData = ()=>{
   let cd:pageCommData = {
-    pageSection:[],
-    pageSectionEvent:new Map<string,pageSectionEvent[]>(),
-    pageHomePoster:new Map<string,pageEventPoster[]>(),
+    pageSectionData:[] as pageSectionData[],
+
+    // pageSectionEvent:new Map<string,pageSectionEvent[]>(),
+    // pageHomePoster:new Map<string,pageEventPoster[]>(),
     curCalendarEventIndex : -1,
   };
   

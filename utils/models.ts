@@ -36,20 +36,21 @@ export interface wxLogin{
 }
 /* 首页数据 */
 export interface pageCommData{
-    pageSection: pageSectionData[],
- //   pageSectionEvent:Map<string,pageSectionEvent[]>, //key sectionCode
- //   pageHomePoster:Map<string,pageEventPoster[]> //key eventCode
+    pageSectionData: pageSectionData[],
+    pageSectionEvent:Map<string,pageSectionEvent[]>, //key sectionCode
+    pageEventPoster:Map<string,pageEventPoster[]> //key eventCode
     curCalendarEventIndex:number;
 }
 
 export interface pageSectionData{
     secName:string,
     secCode:string,
+    isCalendar:boolean,
     curEvCode:string,
-    secEvents:pageSectionEvent[],
-    posterDatas:pageEventPoster[]
+    evGroup: [pageEventPoster[]], //将Poser进行分组
+    posterDatas:pageEventPoster[],
+    loadstatus:number;  //数据加载状态 0完成 1 加载中
 }
-
 
 export interface pageSectionEvent{
     secName:string,
@@ -81,9 +82,16 @@ export interface pageEventPoster{
 }
 
 export interface ResComm<T> {
-    data?: T
+    data: T
     code: number
     msg: string
+}
+
+export interface homeSliderConfig {
+    totalwidth?:number,
+    gpWidth?:number,
+    gpMaxItemNum?:number,
+    trans?:string
 }
 
 

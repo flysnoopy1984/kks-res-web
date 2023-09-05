@@ -49,6 +49,7 @@ created by JackySong@2023
 
 <script setup lang="ts">
 import {pageSectionEvent} from '@/utils/models'
+
 //import { provide } from 'vue'
 
 //const selectEvCode = inject('selectEvCode') as string;
@@ -66,7 +67,11 @@ const cfg = {
 }
 //事件数据
 const pageData = usePageCommData().value;
-const secEvents:pageSectionEvent[] = pageData.pageSectionEvent.get(props.secCodeKey) as pageSectionEvent[];
+// const secData =  pageData.pageSectionData.find(s=>s.isCalendar  = true) as pageSectionData;
+
+// const secEvents =secData.secEvents;
+
+const secEvents = pageData.pageSectionEvent.get(props.secCodeKey) as pageSectionEvent[];
 
 //动画相关
 let curPosX = 0;
@@ -81,7 +86,7 @@ const eventsPageCount = Math.ceil((secEvents.length)/cfg.maxEventNum)-1;
 //初始化当前选中的事件,获取当前选中事件的Index
 let curEventIndex = pageData.curCalendarEventIndex;
 
-eventItemSelected(curEventIndex);
+//eventItemSelected(curEventIndex);
 
 //根据当前index,决定当前滑动到哪个位置
 if(curEventIndex>-1){
@@ -106,13 +111,13 @@ function moveRight(){
 }
 
 function eventItemSelected(index:number){
-
+   
     if(curEventIndex>=0){
         secEvents[curEventIndex].selected = false;
     }
     secEvents[index].selected = true;
     curEventIndex = index;
-   emit("selectEvent",secEvents[index].evCode);
+    emit("selectEvent",secEvents[index].evCode);
     //提供数据给其他组件
    // provide('selectEvCode', secEvents[index].evCode);
 }
