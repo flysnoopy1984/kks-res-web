@@ -8,9 +8,10 @@
           <!-- <div class="divIn">
             <n-button type="warning" @click="doTestAny">TestAny</n-button>
           </div> -->
-          <n-button type="warning" @click="doTest">TestAny</n-button>
+          <!-- <n-button type="warning" @click="doTest">TestAny</n-button> -->
           <template v-if="secMap.size>0">
-            <LazyHomeBarSlider  ref="childs" v-for="sec in sdList" :sec-data="sec" style="padding-bottom: 60px;">            
+            <LazyHomeBarSlider ref="calBarSlider" :sec-data="secCalendar" style="padding-bottom: 60px;"></LazyHomeBarSlider>
+            <LazyHomeBarSlider v-for="sec in sdList" :sec-data="sec" style="padding-bottom: 60px;">            
             </LazyHomeBarSlider>    
           </template>      
         
@@ -26,9 +27,21 @@ import apiPoster from '@/zfApi/apiPoster';
 import {pageSectionData,pageEventPoster,ResComm,pageSectionEvent} from '@/utils/models'
 
 
-let sdList = reactive<pageSectionData[]>([]);
+const sdList = reactive<pageSectionData[]>([]);
+let secCalendar = reactive<pageSectionData>({
+  secName: "",
+  secCode: "",
+  curEvCode :"",
+  isCalendar :true,
+  evGroup :[[]],
+ // loadstatus:1,
+  posterDatas:[]
+});
 
-// const childs = ref([]);
+
+
+
+const calBarSlider= ref();
 
 const message = useMessage();
 const pageData = usePageCommData().value;
@@ -86,17 +99,25 @@ else{
 
 function addSectionData(item:pageSectionEvent){
 
+  if(item.evType == 0){
+    secCalendar.secName = item.secName;
+    secCalendar.secCode = item.secCode;
+    secCalendar.curEvCode = item.evCode;
+  }
+  else{
    const sd:pageSectionData ={
               secName: item.secName,
               secCode: item.secCode,
               curEvCode :item.evCode,
-              isCalendar :item.evType ==0,
+              isCalendar :false,
               evGroup :[[]],
-              loadstatus:1,
               // evGroupPoster: [[]],
               posterDatas:[]
             }
-  sdList.push(sd);
+ 
+    sdList.push(sd);
+  }
+
 }
 
 queryHomePoster();
@@ -116,25 +137,35 @@ function handlePosterData(res:ResComm<pageEventPoster[]>){
   const secMap = new Map<String,pageSectionData>();
 
   if(res.code == 200){
-
+    //遍历所有的海报，可能是多事件查询，所以要根据不同事件进行整理。
     if(res.data!=undefined){
         res.data.forEach((item)=>{
+         // debugger;
           let sec = secMap.get(item.defaultEvent);
-          if(sec == undefined){
-             sec = sdList.find(s=>s.curEvCode == item.defaultEvent) as pageSectionData;
-             sec.posterDatas = [item];
-             secMap.set(item.defaultEvent,sec);
+          //日历事件
+          if(item.defaultEvent == secCalendar.curEvCode){
+            secCalendar.posterDatas.push(item);
           }
           else{
-            sec.posterDatas.push(item);
-          }
+            if(sec == undefined){
+              sec = sdList.find(s=>s.curEvCode == item.defaultEvent) as pageSectionData;
+              sec.posterDatas = [item];
+              secMap.set(item.defaultEvent,sec);
+              //在sdList中没有获取到，则到secCalendar获取
+            } 
+            else
+              sec.posterDatas.push(item);
+             
+            }
+         
       });
      // debugger
       sdList.forEach((sd)=>{
         sd.evGroup = getPosterData(sd.posterDatas);
-        sd.loadstatus = 0;
         // console.log("sd.evGroup",sd.evGroup);
       })
+    
+      secCalendar.evGroup =  getPosterData(secCalendar.posterDatas);
     }
   }
 
@@ -157,7 +188,8 @@ function getPosterData(posters:pageEventPoster[]){
             evGroup[i][j] = posters[n];
             j++;no++;            
         } 
-      // clone 一组数据，最后一条到最前面，其他接到最后，用于滑动     
+        if(evGroup.length>1){
+             // clone 一组数据，最后一条到最前面，其他接到最后，用于滑动     
         const len = evGroup.length;
         let data= evGroup[len-1];
         evGroup.unshift(data);
@@ -165,6 +197,8 @@ function getPosterData(posters:pageEventPoster[]){
             data= evGroup[i];
             evGroup.push(data);  
         }
+        }
+     
       
     }
     //console.log("evGroup",evGroup);
@@ -172,30 +206,26 @@ function getPosterData(posters:pageEventPoster[]){
     
 
 }   
-
-
-function  doTest() {
-  
-}
-
+// console.log("secCalendar",secCalendar);
+// console.log("sdList",sdList);
 
 //CalendarLine 选择日历组件后，更新滑动组件
 async function selectEvent(evCode:string){
 
-  const sd =  sdList.find(s=>s.isCalendar);
-  
-  if(sd != undefined){
-    sd.loadstatus = 1;
 
-   //childs.value[0].changePageState(-1);
-    sd.curEvCode = evCode;
-    const res = await apiPoster.querySectionEvents(evCode,20);
+  //修改加载数据状态
+  calBarSlider.value.changePageState(1);
+  //当前事件
+  secCalendar.curEvCode = evCode;
+  
+  const res = await apiPoster.querySectionEvents(evCode,20);
     if(res.code == 200){
-      sd.posterDatas =  res.data;
-      sd.evGroup = getPosterData(sd.posterDatas);
+     
+      secCalendar.posterDatas =  res.data;
+      secCalendar.evGroup = getPosterData(secCalendar.posterDatas);
     }
-    sd.loadstatus =0;
-  }
+  
+    calBarSlider.value.changePageState(0);
   
 }
 

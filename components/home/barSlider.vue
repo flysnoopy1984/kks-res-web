@@ -41,7 +41,7 @@ created by JackySong@2023
 
                     <div v-else class="slick-list">    
                         <div class="slick-track" style="opacity: 1;" :style="styleMove">  
-                            <n-space v-if="secData.loadstatus == 1">
+                            <n-space v-if="pageStatus == 1">
                                 <div class="works-item brief-works-item" v-for="n in gpMaxItemNum">
                                     <n-skeleton width="190px" height="250px" :sharp="false" />
                                 </div>
@@ -99,11 +99,11 @@ const props = defineProps({
     },
 })
 
-console.log("isCalendar:",props.secData.isCalendar);
 
 /*配置 */
 
-let gpNo = -1;
+let gpNo = props.secData.evGroup.length ==1?0:-1;
+let pageStatus =0;
 const moveDistance = props.cfg.gpWidth;
 const gpMaxItemNum = props.cfg.gpMaxItemNum; 
 const showButton = ref(false);
@@ -149,16 +149,20 @@ defineExpose({
 
 function changePageState(status:number){
     
+ 
+    //loading
     if(status>0){
-        gpNo = -1;
-        moveSlide("none");
-        //pageStatus = 1;
-    }
-    else{
         gpNo = 0;
         moveSlide("none");
-       // pageStatus.value = -1;
-
+        pageStatus = 1;
+       
+    }
+   
+    //load done
+    else{
+        gpNo =props.secData.evGroup.length ==1?0:-1;
+        moveSlide("none");   
+        pageStatus = 0;
     }    
 }
 
@@ -178,13 +182,12 @@ function slideLeft(){
 
     gpNo++;
     moveSlide(props.cfg.trans);
+
     if(gpNo == 0){
         setTimeout(function() {
             gpNo-= (props.secData.evGroup.length/2);
             moveSlide("none");
-        }, 700);
-      
-         
+        }, 700);        
     }
 }
 
@@ -202,7 +205,8 @@ function slideRight() {
 }
 
 function mouseEnter(){
-    if(props.secData.evGroup[0].length>0)
+   // debugger
+    if(props.secData.evGroup.length>1 )
         showButton.value=true;
 }
 

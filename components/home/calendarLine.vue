@@ -121,6 +121,12 @@ function eventItemSelected(index:number){
     //提供数据给其他组件
    // provide('selectEvCode', secEvents[index].evCode);
 }
+const test = () => {
+    console.log("test In");
+  }
+  defineExpose({
+   test
+  })
 </script>
 <style scoped>
 .calSlider{

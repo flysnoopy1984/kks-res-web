@@ -49,7 +49,7 @@ export interface pageSectionData{
     curEvCode:string,
     evGroup: [pageEventPoster[]], //将Poser进行分组
     posterDatas:pageEventPoster[],
-    loadstatus:number;  //数据加载状态 0完成 1 加载中
+  //  loadstatus:number;  //数据加载状态 0完成 1 加载中
 }
 
 export interface pageSectionEvent{
