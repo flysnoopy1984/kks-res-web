@@ -36,8 +36,8 @@ export interface wxLogin{
 }
 /* 首页数据 */
 export interface pageCommData{
-    pageSectionData: pageSectionData[],
-    pageSectionEvent:Map<string,pageSectionEvent[]>, //key sectionCode
+   // pageSectionData: pageSectionData[],
+    pageSectionEvent:Map<string,pageSectionEvent[]>, //key sectionCode ,缓存前20个
     pageEventPoster:Map<string,pageEventPoster[]> //key eventCode
     curCalendarEventIndex:number;
 }
@@ -82,7 +82,7 @@ export interface pageEventPoster{
 }
 
 export interface ResComm<T> {
-    data: T
+    data?: T
     code: number
     msg: string
 }

@@ -2,8 +2,11 @@
 export const lsKeys = {
     userToken :"userToken",
     userOpenId :"userOpenId",
+    userTokenExpireDate:"userTokenExpireDate",
     userInfo :"userInfo",
-    pageCommData :"pageCommData"
+    pageCommData :"pageCommData",
+    lastPage:"lastPage"
+
 }
 
 export const lsSave2Local = (key:string,json:string)=>{

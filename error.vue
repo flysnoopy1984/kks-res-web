@@ -3,10 +3,10 @@ created by JackySong@2023
 -->
 <template>
     <div>
-        <p>get Error: </p>
-        <h1>{{ err.statusCode }}</h1>
-        <h1> {{ err.message }}</h1>
-        <h2>{{ err.stack }}</h2>
+        <h1>错误 </h1>
+        <div>{{ err.statusCode }}</div>
+        <!-- <h1>{{ err.statusCode }}</h1> -->
+        <h2> {{ err.message }}</h2>
         
         <div>
             <n-button type="primary" @click="nav.toHome()">返回主页</n-button>

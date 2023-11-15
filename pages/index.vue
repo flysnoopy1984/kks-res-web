@@ -122,8 +122,6 @@ function addSectionData(item:pageSectionEvent){
 
 queryHomePoster();
 
-
-
 //获取首页的Event Poster 
 async function queryHomePoster() {
 //  debugger
@@ -197,9 +195,7 @@ function getPosterData(posters:pageEventPoster[]){
             data= evGroup[i];
             evGroup.push(data);  
         }
-        }
-     
-      
+        }   
     }
     //console.log("evGroup",evGroup);
     return evGroup;
@@ -212,7 +208,6 @@ function getPosterData(posters:pageEventPoster[]){
 //CalendarLine 选择日历组件后，更新滑动组件
 async function selectEvent(evCode:string){
 
-
   //修改加载数据状态
   calBarSlider.value.changePageState(1);
   //当前事件
@@ -221,7 +216,7 @@ async function selectEvent(evCode:string){
   const res = await apiPoster.querySectionEvents(evCode,20);
     if(res.code == 200){
      
-      secCalendar.posterDatas =  res.data;
+      secCalendar.posterDatas =  res.data as pageEventPoster[];
       secCalendar.evGroup = getPosterData(secCalendar.posterDatas);
     }
   

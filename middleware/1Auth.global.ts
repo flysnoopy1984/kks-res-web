@@ -1,10 +1,6 @@
 export default defineNuxtRouteMiddleware((to, from) => {
 
-//   $route.params.group
-    // console.log(to.name);
-    if(to.name == "person-openId"){
-        if(!web.checkUserLogin()){
-            return nav.toWxLogin();
-        }
-    }
+    if(to.path == "/wx/login" || to.path == "/login") return;
+
+   
   })

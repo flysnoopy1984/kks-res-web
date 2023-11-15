@@ -5,7 +5,8 @@ const apiWebData =  class apiWebData extends zfhttp{
 
     public querySectionEvents(year:number){
 
-        return this.post<pageSectionEvent[]>("/section/query",
+        //new :/event/querySectionEvent
+        return this.post<pageSectionEvent[]>("/event/querySectionEvent",
             {
                 "body":JSON.stringify(
                     {
