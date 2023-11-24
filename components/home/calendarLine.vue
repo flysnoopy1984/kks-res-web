@@ -92,8 +92,7 @@ let curEventIndex = pageData.curCalendarEventIndex;
 if(curEventIndex>-1){
     const rollNum = Math.floor(curEventIndex/cfg.maxEventNum);
     curPosX = 0-moveDistance*rollNum;
-    styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";
-    
+    styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";    
 }
 
 function moveLeft(){    

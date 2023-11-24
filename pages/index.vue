@@ -14,7 +14,6 @@
             <LazyHomeBarSlider v-for="sec in sdList" :sec-data="sec" style="padding-bottom: 60px;">            
             </LazyHomeBarSlider>    
           </template>      
-        
         </div>
       
     </div>

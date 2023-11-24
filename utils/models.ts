@@ -38,6 +38,7 @@ export interface wxLogin{
 export interface pageCommData{
    // pageSectionData: pageSectionData[],
     pageSectionEvent:Map<string,pageSectionEvent[]>, //key sectionCode ,缓存前20个
+    
     pageEventPoster:Map<string,pageEventPoster[]> //key eventCode
     curCalendarEventIndex:number;
 }
