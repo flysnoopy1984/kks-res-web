@@ -50,6 +50,7 @@ let eventCodes:string[] = []; // 当获取好Section所有事件后，获取首�
 
 //Section Events
 const res = await apiWebData.querySectionEvents(tools.currentYear());
+console.log("querySectionEvents:",res.data)
 const secMap = new Map<string,pageSectionEvent[]>();
 if(res.code == 200){
   if(res.data!=undefined){
