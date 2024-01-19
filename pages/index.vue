@@ -143,6 +143,7 @@ function handlePosterData(res:ResComm<pageEventPoster[]>){
           //日历事件
           if(item.defaultEvent == secCalendar.curEvCode){
             secCalendar.posterDatas.push(item);
+            console.log("item", item);
           }
           else{
             if(sec == undefined){

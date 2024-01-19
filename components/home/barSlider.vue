@@ -122,6 +122,8 @@ defineExpose({
     changePageState
 })
 
+// console.log(" secData.evGroup", props.secData);
+
 /* 初始载入 */
 //const pageData = usePageCommData().value;
 
