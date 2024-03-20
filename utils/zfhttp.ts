@@ -1,14 +1,6 @@
 // 参考 https://yezipi.net/article/detail/10095
 import { hash } from 'ohash'
 import {ResComm} from '@/utils/models'
-// // 后端返回的数据类型
-// export interface ResComm<T> {
-//   data?: T
-//   code: number
-//   msg: string
-// }
-
-
 
 /**
  * api请求封装
@@ -28,7 +20,7 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
     const customHeaders = { token:  useApiToken().value.token, ...headers }
 
     const op = { ...options, key, headers: customHeaders };
- 
+
   //  console.log("customHeaders:",customHeaders);
     let result:ResComm<T> ={
       code:601,
@@ -43,12 +35,13 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
       }
       else{
         result = data.value as ResComm<T>;
+        debugger
    //     console.log("result data:",result)
         if(result.code !== 200) {
        // 处理token失效的情况
         if (result.code == 401) {
           useApiToken().value.token = '';
-          await nav.toWxLogin();
+          return nav.toWxLogin();
          }
         // // 在客户端的时候抛出错误结果方便捕捉
         // if (process.client) {

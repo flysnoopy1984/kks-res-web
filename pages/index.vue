@@ -1,14 +1,9 @@
 <template>
     <div>
-        <!-- <HomeBanner></HomeBanner> -->
+
         <HomeCalendarLine @select-event="selectEvent"></HomeCalendarLine>
         <div>
-          <!-- <HomeBarSlider></HomeBarSlider> -->
-    
-          <!-- <div class="divIn">
-            <n-button type="warning" @click="doTestAny">TestAny</n-button>
-          </div> -->
-          <!-- <n-button type="warning" @click="doTest">TestAny</n-button> -->
+      
           <template v-if="secMap.size>0">
             <LazyHomeBarSlider ref="calBarSlider" :sec-data="secCalendar" style="padding-bottom: 60px;"></LazyHomeBarSlider>
             <LazyHomeBarSlider v-for="sec in sdList" :sec-data="sec" style="padding-bottom: 60px;">            
@@ -38,8 +33,6 @@ let secCalendar = reactive<pageSectionData>({
 });
 
 
-
-
 const calBarSlider= ref();
 
 const message = useMessage();
@@ -47,12 +40,18 @@ const pageData = usePageCommData().value;
 
 
 let eventCodes:string[] = []; // 当获取好Section所有事件后，获取首页需要最先显示的海报事件Codes
-
-//Section Events
-const res = await apiWebData.querySectionEvents(tools.currentYear());
-console.log("querySectionEvents:",res.data)
 const secMap = new Map<string,pageSectionEvent[]>();
-if(res.code == 200){
+
+initPage();
+
+async function  initPage(){
+//Section Events
+
+let res = await apiWebData.querySectionEvents(tools.currentYear());
+// debugger
+if(res != undefined){
+  res = res as ResComm<pageSectionEvent[]>
+  if(res.code == 200){
   if(res.data!=undefined){
       let gotCalenderEvent = false;
       /*设置 state Section Events */
@@ -88,6 +87,9 @@ if(res.code == 200){
       
       //设置State
       pageData.pageSectionEvent = secMap;
+
+      queryHomePoster();
+
    //    pageData.pageSectionData = sdList.value;
       // console.log("pageData.pageSectionData",pageData.pageSectionData);
     }
@@ -96,6 +98,14 @@ if(res.code == 200){
 else{ 
   message.error(res.msg);
 }
+}
+
+
+
+
+}
+
+// queryHomePoster();
 
 function addSectionData(item:pageSectionEvent){
 
@@ -120,14 +130,18 @@ function addSectionData(item:pageSectionEvent){
 
 }
 
-queryHomePoster();
+
 
 //获取首页的Event Poster 
 async function queryHomePoster() {
-//  debugger
+  debugger
+  console.log("queryHomePoster Events Code:",eventCodes);
   const res = await apiWebData.queryHomePoster(eventCodes);
+  if(res!=undefined){
+    handlePosterData(res as ResComm<pageEventPoster[]>);
+  }
  //console.log("queryHomePoster:",res);
-  handlePosterData(res);
+ 
 }
 
 function handlePosterData(res:ResComm<pageEventPoster[]>){
@@ -214,14 +228,18 @@ async function selectEvent(evCode:string){
   //当前事件
   secCalendar.curEvCode = evCode;
   
-  const res = await apiPoster.querySectionEvents(evCode,20);
+  let res = await apiPoster.querySectionEvents(evCode,1,20);
+  if(res!=undefined){
+    res = res as ResComm<pageEventPoster[]>
     if(res.code == 200){
      
-      secCalendar.posterDatas =  res.data as pageEventPoster[];
-      secCalendar.evGroup = getPosterData(secCalendar.posterDatas);
-    }
-  
-    calBarSlider.value.changePageState(0);
+     secCalendar.posterDatas =  res.data as pageEventPoster[];
+     secCalendar.evGroup = getPosterData(secCalendar.posterDatas);
+   }
+ 
+   calBarSlider.value.changePageState(0);
+  }
+   
   
 }
 

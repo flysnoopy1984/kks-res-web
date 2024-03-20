@@ -76,10 +76,12 @@ export interface pageEventPoster{
     title:string,
     des:string,
     author:string,
-    sUrl:string,
-    lUrl:string,
+    url:string,
+    coverUrl:string,
     defaultEvent:string,
-    defaultYear:number
+    defaultYear:number,
+    favCount:number,
+    likeCount:number
 }
 
 export interface ResComm<T> {

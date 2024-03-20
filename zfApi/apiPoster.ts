@@ -3,15 +3,15 @@ import zfhttp from '@/utils/zfhttp';
 
 const apiPoster =  class apiPoster extends zfhttp{
 
-    public querySectionEvents(evCode:string,topNum:number){
+    public querySectionEvents(evCode:string,pageIndex:number,pageSize:number){
 
-        return this.post<pageEventPoster[]>("/poster/queryList",
+        return this.post<pageEventPoster[]>("/poster/queryListByEvCode",
             {
                 "body":JSON.stringify(
                     {
                         "eventCode":evCode,
-                        "topNum":topNum,
-                        "showType":1
+                        "pageIndex":pageIndex,
+                        "pageSize":pageSize,
                     }
                 )
             },

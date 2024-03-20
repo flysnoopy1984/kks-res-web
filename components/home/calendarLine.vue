@@ -3,7 +3,7 @@ created by JackySong@2023
 -->
 <template>
     <div class="lineContainer">
-        <div class="calSlider">
+        <div class="calSlider" v-if="secEvents!=undefined">
             <div class="calLineData">
                 <Transition name="btn-left">
                 <button @click="moveLeft" class="calLine_prev fill-current-color" style="display: block;">
@@ -65,14 +65,9 @@ const props = defineProps({
 const cfg = {
     maxEventNum:5
 }
+
 //事件数据
 const pageData = usePageCommData().value;
-// const secData =  pageData.pageSectionData.find(s=>s.isCalendar  = true) as pageSectionData;
-
-// const secEvents =secData.secEvents;
-
-const secEvents = pageData.pageSectionEvent.get(props.secCodeKey) as pageSectionEvent[];
-
 //动画相关
 let curPosX = 0;
 const moveDistance = 1200;
@@ -80,20 +75,27 @@ const styleMove = reactive({
     transform: "translate3d("+curPosX+"px, 0, 0)",
     transition: "all .5s ease",
 });
-//根据数据计算出，事件最多右滑多少次，数据长度除与5（5为页面显示事件的数量）
-const eventsPageCount = Math.ceil((secEvents.length)/cfg.maxEventNum)-1;
 
-//初始化当前选中的事件,获取当前选中事件的Index
-let curEventIndex = pageData.curCalendarEventIndex;
+const secEvents = pageData.pageSectionEvent.get(props.secCodeKey) as pageSectionEvent[];
+if(secEvents != undefined){
 
-//eventItemSelected(curEventIndex);
+    //根据数据计算出，事件最多右滑多少次，数据长度除与5（5为页面显示事件的数量）
+    const eventsPageCount = Math.ceil((secEvents.length)/cfg.maxEventNum)-1;
 
-//根据当前index,决定当前滑动到哪个位置
-if(curEventIndex>-1){
-    const rollNum = Math.floor(curEventIndex/cfg.maxEventNum);
-    curPosX = 0-moveDistance*rollNum;
-    styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";    
+    //初始化当前选中的事件,获取当前选中事件的Index
+    let curEventIndex = pageData.curCalendarEventIndex;
+
+    //eventItemSelected(curEventIndex);
+
+    //根据当前index,决定当前滑动到哪个位置
+    if(curEventIndex>-1){
+        const rollNum = Math.floor(curEventIndex/cfg.maxEventNum);
+        curPosX = 0-moveDistance*rollNum;
+        styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";    
+    }
+
 }
+
 
 function moveLeft(){    
     if(curPosX <0){
