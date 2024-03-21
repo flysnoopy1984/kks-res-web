@@ -52,7 +52,7 @@ created by JackySong@2023
                                     <div class="works-item brief-works-item" v-for="poster in gp">        
                                         <n-card :title="poster.title">
                                             <template #cover>
-                                                <img @error="errorImg" v-lazy="poster.sUrl">
+                                                <img @error="errorImg" v-lazy="poster.url">
                                             </template>
                                         </n-card>
                                     </div>
@@ -89,17 +89,14 @@ const props = defineProps({
             trans:"all .5s ease"
         }
     },
-    // evGroup:{
-    //     type:[],
-    //     retquired:true,
-    // },
+
     secData:{
         type: Object as PropType<pageSectionData>,
         required: true
     },
 })
 
-
+debugger
 /*配置 */
 
 let gpNo = props.secData.evGroup.length ==1?0:-1;
@@ -122,32 +119,7 @@ defineExpose({
     changePageState
 })
 
-// console.log(" secData.evGroup", props.secData);
 
-/* 初始载入 */
-//const pageData = usePageCommData().value;
-
-//const events = pageData.pageSectionEvent.get(props.section.secCode) as pageSectionEvent[];
-//const events = props.secData.posterDatas;
-//将事件N个一组，用于滑动
-//let evGroup = reactive<[pageEventPoster[]]>([[]]);
-
-
-// console.log("events",events);
-// let posters:pageEventPoster[] = [];
-
-//events 长度是1 代表不是日历事件
-// if(events.length == 1) 
-
-//     //posters =pageData.pageHomePoster.get(events[0].evCode) as pageEventPoster[];
-// //日历事件
-// else{
-//     const calendarEvCode  = events[pageData.curCalendarEventIndex].evCode;
-//     posters = pageData.pageHomePoster.get(calendarEvCode) as pageEventPoster[];   
-// }
-
-//设置当前时间的数据，为无缝滑动做准备
-//setPosterData(props.secData.posterDatas);
 
 function changePageState(status:number){
     

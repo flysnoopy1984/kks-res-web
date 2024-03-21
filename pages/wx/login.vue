@@ -7,7 +7,7 @@ created by JackySong@2023
                 <div class="signMain">
                     <div class="signHeader">
                             <a class="logo" ></a>
-                            <div class="title">网站名称.Slogan</div>
+                            <div class="title">卡卡送</div>
                     </div>
                     <div class="signBody">
                          <div id="login_container" v-if="pageState=1">
@@ -159,7 +159,7 @@ onMounted(()=>{
     display:inline-block;
     height: 80px;
     width: 100px;
-    background: url('/img/webLogo_100.png')  no-repeat;
+    background: url('/img/kksLogo_128.png')  no-repeat;
     background-size: 80px 80px;
 }
 .signHeader .title{

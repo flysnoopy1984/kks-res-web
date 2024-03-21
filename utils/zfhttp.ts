@@ -35,18 +35,14 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
       }
       else{
         result = data.value as ResComm<T>;
-        debugger
-   //     console.log("result data:",result)
+
         if(result.code !== 200) {
        // 处理token失效的情况
         if (result.code == 401) {
           useApiToken().value.token = '';
           return nav.toWxLogin();
          }
-        // // 在客户端的时候抛出错误结果方便捕捉
-        // if (process.client) {
-        //   return Promise.reject(result)
-        // }
+
           web.showGlobeError(result.msg,result.code);
         }
       

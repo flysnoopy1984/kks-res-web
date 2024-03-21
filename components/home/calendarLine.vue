@@ -75,15 +75,17 @@ const styleMove = reactive({
     transform: "translate3d("+curPosX+"px, 0, 0)",
     transition: "all .5s ease",
 });
+let curEventIndex = -1;
+let eventsPageCount =0;
 
 const secEvents = pageData.pageSectionEvent.get(props.secCodeKey) as pageSectionEvent[];
 if(secEvents != undefined){
 
     //根据数据计算出，事件最多右滑多少次，数据长度除与5（5为页面显示事件的数量）
-    const eventsPageCount = Math.ceil((secEvents.length)/cfg.maxEventNum)-1;
+    eventsPageCount = Math.ceil((secEvents.length)/cfg.maxEventNum)-1;
 
     //初始化当前选中的事件,获取当前选中事件的Index
-    let curEventIndex = pageData.curCalendarEventIndex;
+    curEventIndex = pageData.curCalendarEventIndex;
 
     //eventItemSelected(curEventIndex);
 
@@ -122,12 +124,12 @@ function eventItemSelected(index:number){
     //提供数据给其他组件
    // provide('selectEvCode', secEvents[index].evCode);
 }
-const test = () => {
-    console.log("test In");
-  }
-  defineExpose({
-   test
-  })
+// const test = () => {
+//     console.log("test In");
+//   }
+//   defineExpose({
+//    test
+//   })
 </script>
 <style scoped>
 .calSlider{

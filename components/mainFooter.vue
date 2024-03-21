@@ -1,7 +1,7 @@
 <template>
     <div class="footer-style">
         <footer class="ftco-footer">
-		<div class="container">
+		<!-- <div class="container">
 			<div class="row mb-5 justify-content-between">
 				<div class="col-sm-12 col-md-5">
 					
@@ -32,10 +32,7 @@
 							<div class="ftco-footer-widget">
 								<ul class="list-unstyled">
 									<li><a href="#">Home</a></li>
-									<!-- <li><a href="#">Services</a></li>
-									<li><a href="#">Work</a></li>
-									<li><a href="#">About</a></li>
-									<li><a href="#">Blog</a></li> -->
+								
 								</ul>
 							</div>
 						</div>
@@ -43,10 +40,7 @@
 							<div class="ftco-footer-widget">
 								<ul class="list-unstyled">
 									<li><a href="#">Press</a></li>
-									<!-- <li><a href="#">Blog</a></li>
-									<li><a href="#">Contact</a></li>
-									<li><a href="#">Support</a></li>
-									<li><a href="#">Privacy</a></li> -->
+								
 								</ul>
 							</div>
 						</div>
@@ -54,17 +48,14 @@
 							<div class="ftco-footer-widget">
 								<ul class="list-unstyled">
 									<li><a href="#">Privacy</a></li>
-									<!-- <li><a href="#">FAQ</a></li>
-									<li><a href="#">Careers</a></li>
-									<li><a href="#">Procedure</a></li>
-									<li><a href="#">Team</a></li> -->
+								
 								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<div class="px-0 py-5 bg-black">
 			<div class="container">
 				<div class="row">

@@ -3,12 +3,12 @@
 
         <HomeCalendarLine @select-event="selectEvent"></HomeCalendarLine>
         <div>
-      
-          <template v-if="secMap.size>0">
-            <LazyHomeBarSlider ref="calBarSlider" :sec-data="secCalendar" style="padding-bottom: 60px;"></LazyHomeBarSlider>
+          <HomeBarSlider ref="calBarSlider" :sec-data="secCalendar" style="padding-bottom: 60px;"></HomeBarSlider>  
             <LazyHomeBarSlider v-for="sec in sdList" :sec-data="sec" style="padding-bottom: 60px;">            
-            </LazyHomeBarSlider>    
-          </template>      
+            </LazyHomeBarSlider>  
+          <!-- <template v-if="secMap.size>0">
+            
+          </template>       -->
         </div>
       
     </div>
@@ -19,7 +19,6 @@ import {useMessage,NButton } from 'naive-ui'
 import apiWebData from '@/zfApi/apiWebData';
 import apiPoster from '@/zfApi/apiPoster';
 import {pageSectionData,pageEventPoster,ResComm,pageSectionEvent} from '@/utils/models'
-
 
 const sdList = reactive<pageSectionData[]>([]);
 let secCalendar = reactive<pageSectionData>({
@@ -34,6 +33,7 @@ let secCalendar = reactive<pageSectionData>({
 
 
 const calBarSlider= ref();
+
 
 const message = useMessage();
 const pageData = usePageCommData().value;
@@ -134,7 +134,7 @@ function addSectionData(item:pageSectionEvent){
 
 //获取首页的Event Poster 
 async function queryHomePoster() {
-  debugger
+  // debugger
   console.log("queryHomePoster Events Code:",eventCodes);
   const res = await apiWebData.queryHomePoster(eventCodes);
   if(res!=undefined){
@@ -224,6 +224,8 @@ function getPosterData(posters:pageEventPoster[]){
 async function selectEvent(evCode:string){
 
   //修改加载数据状态
+
+
   calBarSlider.value.changePageState(1);
   //当前事件
   secCalendar.curEvCode = evCode;

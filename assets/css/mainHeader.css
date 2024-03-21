@@ -1,0 +1,17 @@
+.header-compact-v3{
+	z-index: 110;
+	font-size: 12px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	background: var(--white);
+	color: var(--grayBlack)
+}
+.web-logo{
+    display:inline-block;
+    height: 80px;
+    width: 100px;
+    background: url('/img/kksLogo.png')  no-repeat;
+    background-size: 80px 80px;
+}
