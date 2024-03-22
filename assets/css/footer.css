@@ -1,13 +1,22 @@
+.img_kks_cc{
+  display:inline-block;
+  height: 150px;
+  width: 150px;
+    background: url('/img/kks_cc_ys.png')  no-repeat;
+    background-size: 150px 150px;
+}
+
 body {
     margin: 0;
-
+  
   }
-    body.menu-show {
-      overflow: hidden;
-      position: fixed;
-      height: 100%;
-      width: 100%; }
-      
+
+body.menu-show {
+  overflow: hidden;
+  position: fixed;
+  height: 100%;
+  width: 100%; }
+    
 .footer-style{
   text-align: left;
   font-family: "Nunito Sans", Arial, sans-serif;
@@ -467,7 +476,8 @@ dl {
 /* footer begin */
 .ftco-footer {
     font-size: 16px;
-    padding: 3em 0 0 0;
+    /* padding: 3em 0 0 0; */
+    background-color:#9bcad5;
     color: rgba(0, 0, 0, 0.9);
     border-top: 1px solid rgba(0, 0, 0, 0.1); }
 .ftco-footer .logo a {

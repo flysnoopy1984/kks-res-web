@@ -1,11 +1,10 @@
 <template>
     <div>
-
         <HomeCalendarLine @select-event="selectEvent"></HomeCalendarLine>
         <div>
-          <HomeBarSlider ref="calBarSlider" :sec-data="secCalendar" style="padding-bottom: 60px;"></HomeBarSlider>  
-            <LazyHomeBarSlider v-for="sec in sdList" :sec-data="sec" style="padding-bottom: 60px;">            
-            </LazyHomeBarSlider>  
+          <HomeBarSlider ref="calBarSlider" :sec-data="secCalendar" style="padding-bottom: 40px;"></HomeBarSlider>  
+          <HomeBarSlider v-for="sec in sdList" :sec-data="sec" style="padding-bottom: 60px;">            
+          </HomeBarSlider>  
           <!-- <template v-if="secMap.size>0">
             
           </template>       -->
@@ -70,6 +69,7 @@ if(res != undefined){
         item.diffNow = tools.diffDay(item.ecStartDate);
         //非日历事件需要查询海报
         if(item.evType>0) {
+       //   debugger
           eventCodes.push(item.evCode);
           addSectionData(item);
         }
@@ -135,7 +135,7 @@ function addSectionData(item:pageSectionEvent){
 //获取首页的Event Poster 
 async function queryHomePoster() {
   // debugger
-  console.log("queryHomePoster Events Code:",eventCodes);
+
   const res = await apiWebData.queryHomePoster(eventCodes);
   if(res!=undefined){
     handlePosterData(res as ResComm<pageEventPoster[]>);
@@ -146,6 +146,7 @@ async function queryHomePoster() {
 
 function handlePosterData(res:ResComm<pageEventPoster[]>){
 
+  console.log("queryHomePoster:",res);
   const secMap = new Map<String,pageSectionData>();
 
   if(res.code == 200){

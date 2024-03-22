@@ -42,20 +42,24 @@ created by JackySong@2023
                     <div v-else class="slick-list">    
                         <div class="slick-track" style="opacity: 1;" :style="styleMove">  
                             <n-space v-if="pageStatus == 1">
-                                <div class="works-item brief-works-item" v-for="n in gpMaxItemNum">
+                                <div class="brief-works-item" v-for="n in gpMaxItemNum">
                                     <n-skeleton width="190px" height="250px" :sharp="false" />
                                 </div>
                             </n-space>
                             
                             <div v-else :aria-label="gp[0].title" v-for="(gp,index) in secData.evGroup" :key="index" class="slick-slide slick-active" style="outline: none;" :style="gpStyle">
                                 <div> 
-                                    <div class="works-item brief-works-item" v-for="poster in gp">        
+                                     <!-- 图片显示区域 -->
+                                    <div class="brief-works-item" v-for="poster in gp">
+                                        <HomeTurnOverCard :poster="poster"></HomeTurnOverCard>
+                                    </div> 
+                                    <!-- <div class="brief-works-item" v-for="poster in gp" @click="turnOver(poster.title)">        
                                         <n-card :title="poster.title">
                                             <template #cover>
                                                 <img @error="errorImg" v-lazy="poster.url">
                                             </template>
                                         </n-card>
-                                    </div>
+                                    </div> -->
                                 </div>  
                             </div>                          
                         </div>                            
@@ -96,7 +100,6 @@ const props = defineProps({
     },
 })
 
-debugger
 /*配置 */
 
 let gpNo = props.secData.evGroup.length ==1?0:-1;
@@ -187,11 +190,7 @@ function mouseEnter(){
 function mouseLeave(){
     showButton.value=false;
 }
-/*图片错误处理 */
-function errorImg(e:any){
-    console.log("error:",e);
-    
-}
+
 
 </script>
 <style scoped>
@@ -252,31 +251,12 @@ function errorImg(e:any){
 }
 
 
-.n-card {
-  max-width: 220px;
-  max-height: 350px;  
-  border-radius: 8px;  
-}
+
 .noDatas{
   max-width: 1200px;
   padding-top: 30px;
 }
-img[lazy=error]{
-    background-image: url('/assets/img/error.svg');
-    background-position: center center;
-    background-size: 20%;
-    background-repeat: no-repeat;
-    opacity: 0.1;
-    height: 370px;
-}
-img[lazy=loading]{
-    background-image: url('/assets/img/loading.svg');
-    background-position: center center;
-    background-size: 20%;
-    background-repeat: no-repeat;
-    opacity: 0.1;
-    height: 370px;
-}
+
 
 
 </style>

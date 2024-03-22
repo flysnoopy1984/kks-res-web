@@ -1,8 +1,30 @@
 <template>
     <div class="footer-style">
         <footer class="ftco-footer">
-		<!-- <div class="container">
-			<div class="row mb-5 justify-content-between">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12 col-md-12" style="display: flex; align-items: flex-end;">
+				<div class="ftco-footer-widget">
+					<h2 class="ftco-heading-2">联系我们</h2>
+					<ul>
+						<li>商务合作</li>
+						<li>合作伙伴</li>
+						<li>建议咨询</li>
+					</ul>	
+				</div>
+				<div class="img_kks_cc" style="margin-left: 80px; align-self: center;"></div>
+				
+			</div>
+			<div style="margin-left: 40px; justify-self: flex-end;">
+					<p class="mb-0">
+						<a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备17005547号</a>
+					</p>
+				</div>
+		
+	
+		</div>
+	</div>
+		<!--<div class="row mb-5 justify-content-between">
 				<div class="col-sm-12 col-md-5">
 					
 					<div class="ftco-footer-widget mb-4">
@@ -56,18 +78,7 @@
 				</div>
 			</div>
 		</div> -->
-		<div class="px-0 py-5 bg-black">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12 text-center">
-						<!--Copyright &copy; 2023 All rights reserved | -->
-						<p class="mb-0">
-							<a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备17005547号</a>
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+		
 		</footer>
     </div>
 </template>
