@@ -1,14 +1,16 @@
 <!--
 created by JackySong@2023
 -->
+
 <template>
+
     <div class="barSliderContainer" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
         <div class="dataContainer">
             <div class="hd" v-if="props.secData!=null">
                 <div class="title-section">
                     <h2 class="widget-title">{{props.secData.secName}}</h2>
                     <div class="links">
-                        <n-button icon-placement="right" color="#2F8E9C" text tag="a">
+                        <n-button icon-placement="right" color="#2F8E9C" text tag="a" @click="showMore">
                             查看更多
                             <template #icon>
                                 <n-icon>
@@ -16,6 +18,35 @@ created by JackySong@2023
                                 </n-icon>
                             </template>                          
                         </n-button>
+
+                        <n-modal v-model:show="showKKSMini"
+                        >
+
+                            <n-card
+                                style="width: 480px; height:480px"
+                                title="请到小程序查看更多内容"
+                                header-style="text-align: center;"
+                                :bordered="true"
+                                size="huge"
+                                >
+                           
+                                <template #cover>
+                                    <div style="width: 100%;text-align: end;">
+                                        <n-button text style="font-size: 32px; padding:15px" @click="showKKSMini=false">
+                                        <template #icon>
+                                            <n-icon :component="CloseCircleTwotone" size="32"></n-icon>
+                                        </template>
+                                        </n-button>
+                                    </div>
+                               
+                                    <div style ="width:100%; height:366px; display:flex; justify-content: center; align-items: center" >
+
+                                        <img src="/img/kks_mini_ys.jpg" style="height: 266px; width:266px">
+                                    </div>
+                                </template>
+                              
+                                </n-card>
+                        </n-modal>
                     </div>
                 </div>
             </div>
@@ -79,9 +110,10 @@ created by JackySong@2023
 </template>
 
 <script setup lang="ts">
-import { NCard,NButton,NIcon,NEmpty,NSkeleton,NSpace } from 'naive-ui';
+import { NButton,NIcon,NEmpty,NSkeleton,NSpace,NModal,NCard } from 'naive-ui';
 import { pageSectionData } from 'utils/models';
 import type { PropType } from 'vue'
+import {CloseCircleTwotone} from '@vicons/antd'
 
 const props = defineProps({
     cfg:{
@@ -107,6 +139,7 @@ let pageStatus =0;
 const moveDistance = props.cfg.gpWidth;
 const gpMaxItemNum = props.cfg.gpMaxItemNum; 
 const showButton = ref(false);
+const showKKSMini = ref(false);
 
 const styleMove = reactive({
     transform: "translate3d("+curPosX()+"px, 0, 0)",
@@ -191,6 +224,9 @@ function mouseLeave(){
     showButton.value=false;
 }
 
+function showMore(){
+    showKKSMini.value = true;
+}
 
 </script>
 <style scoped>

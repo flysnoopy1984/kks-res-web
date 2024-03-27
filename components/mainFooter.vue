@@ -2,8 +2,8 @@
     <div class="footer-style">
         <footer class="ftco-footer">
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-12 col-md-12" style="display: flex; align-items: flex-end;">
+		<div class="row" style="justify-content: center;">
+			<div class="col-sm-12 col-md-12" style="display: flex; align-items: flex-end; justify-content: center;">
 				<div class="ftco-footer-widget">
 					<h2 class="ftco-heading-2">联系我们</h2>
 					<ul>
@@ -15,10 +15,10 @@
 				<div class="img_kks_cc" style="margin-left: 80px; align-self: center;"></div>
 				
 			</div>
-			<div style="margin-left: 40px; justify-self: flex-end;">
-					<p class="mb-0">
+			<div style="justify-self: flex-end;">
+					<div style="font-size: 10px;">
 						<a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备17005547号</a>
-					</p>
+					</div>
 				</div>
 		
 	

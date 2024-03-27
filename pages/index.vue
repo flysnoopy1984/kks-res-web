@@ -1,20 +1,23 @@
 <template>
     <div>
         <HomeCalendarLine @select-event="selectEvent"></HomeCalendarLine>
-        <div>
+         <div v-if="!pageLoading">
           <HomeBarSlider ref="calBarSlider" :sec-data="secCalendar" style="padding-bottom: 40px;"></HomeBarSlider>  
-          <HomeBarSlider v-for="sec in sdList" :sec-data="sec" style="padding-bottom: 60px;">            
-          </HomeBarSlider>  
-          <!-- <template v-if="secMap.size>0">
-            
-          </template>       -->
+          <LazyHomeBarSlider v-for="sec in sdList" :sec-data="sec" style="padding-bottom: 60px;">            
+          </LazyHomeBarSlider>   
         </div>
-      
+ 
+        <n-spin v-else :style="{height:`${pageContentHeight}px`}" class="loadingPage">
+          <template #description>
+            数据马上来咯
+          </template>
+        </n-spin>
+
     </div>
 </template>
 
 <script setup lang="ts">
-import {useMessage,NButton } from 'naive-ui'
+import {useMessage,NSpin } from 'naive-ui'
 import apiWebData from '@/zfApi/apiWebData';
 import apiPoster from '@/zfApi/apiPoster';
 import {pageSectionData,pageEventPoster,ResComm,pageSectionEvent} from '@/utils/models'
@@ -32,20 +35,35 @@ let secCalendar = reactive<pageSectionData>({
 
 
 const calBarSlider= ref();
+const pageLoading = ref(true);
+const pageContentHeight = ref(400);
 
 
 const message = useMessage();
 const pageData = usePageCommData().value;
 
 
+
 let eventCodes:string[] = []; // 当获取好Section所有事件后，获取首页需要最先显示的海报事件Codes
 const secMap = new Map<string,pageSectionEvent[]>();
+
+//客户端计算页面加载时，留白高度
+// if(process.client){
+ 
+// }
+
+onMounted(()=>{
+  // console.log("document.body.clientHeight:",document.body.clientHeight);
+  // console.log("window.screen.availHeight:",window.screen.availHeight);
+
+  const h = window.screen.availHeight;
+  pageContentHeight.value = h-80-216.5-71-80-200;
+})
 
 initPage();
 
 async function  initPage(){
-//Section Events
-
+//日历节点查询
 let res = await apiWebData.querySectionEvents(tools.currentYear());
 // debugger
 if(res != undefined){
@@ -88,6 +106,7 @@ if(res != undefined){
       //设置State
       pageData.pageSectionEvent = secMap;
 
+      //获取到需要的日历后开始查询报表
       queryHomePoster();
 
    //    pageData.pageSectionData = sdList.value;
@@ -136,17 +155,23 @@ function addSectionData(item:pageSectionEvent){
 async function queryHomePoster() {
   // debugger
 
-  const res = await apiWebData.queryHomePoster(eventCodes);
-  if(res!=undefined){
-    handlePosterData(res as ResComm<pageEventPoster[]>);
+  try{
+    const res = await apiWebData.queryHomePoster(eventCodes);
+    if(res!=undefined){
+      handlePosterData(res as ResComm<pageEventPoster[]>);
+    }
   }
+  finally{
+    pageLoading.value = false;
+  }
+ 
  //console.log("queryHomePoster:",res);
  
 }
 
 function handlePosterData(res:ResComm<pageEventPoster[]>){
 
-  console.log("queryHomePoster:",res);
+ // console.log("queryHomePoster:",res);
   const secMap = new Map<String,pageSectionData>();
 
   if(res.code == 200){
@@ -158,7 +183,7 @@ function handlePosterData(res:ResComm<pageEventPoster[]>){
           //日历事件
           if(item.defaultEvent == secCalendar.curEvCode){
             secCalendar.posterDatas.push(item);
-            console.log("item", item);
+        //    console.log("item", item);
           }
           else{
             if(sec == undefined){
@@ -242,7 +267,6 @@ async function selectEvent(evCode:string){
  
    calBarSlider.value.changePageState(0);
   }
-   
   
 }
 
@@ -254,5 +278,8 @@ async function selectEvent(evCode:string){
   align-items: center; /*垂直方向居中*/
   justify-content: center;  /*水平方向居中*/
 
+}
+.loadingPage{
+  width:100%
 }
 </style>

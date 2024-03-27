@@ -38,6 +38,7 @@
 	font-family: 'aliHealth';
 	margin-left: 10px;margin-right: 10px;
 	font-size: 22px;
+	height: 22px;
 	color: #4441A9;
 
 }
@@ -47,6 +48,7 @@
 	font-size: 14px;
 	margin-left: 10px;margin-right: 10px;
 	color: #61a9b9;
+	padding-top: 6px;
 }
 @font-face{
 	font-family: 'aliHealth';

@@ -17,7 +17,7 @@ body
     background-color: var(--main-button-color);
 }
 .container{
-    margin:20px;
+    /* margin:20px; */
     display: flex;
     flex-direction: column;
 }
