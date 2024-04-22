@@ -81,7 +81,9 @@ export interface pageEventPoster{
     defaultEvent:string,
     defaultYear:number,
     favCount:number,
-    likeCount:number
+    likeCount:number,
+    //240422 添加小程序码二维码地址
+    miniQrUrl:string, 
 }
 
 export interface ResComm<T> {

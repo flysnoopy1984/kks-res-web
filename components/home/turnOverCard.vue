@@ -7,8 +7,12 @@
             </n-card>
         </div>
     <div v-show="!cardShow" class="n-card cardback" @click="turnOver()">
-       
-
+        <n-card title="请用微信扫一扫访问">
+                <template #cover>
+                    <img @error="errorImg" v-lazy="poster.miniQrUrl">
+                </template>
+        </n-card>
+        
     </div>
     <!-- <n-card :title="poster.title">
             <template #cover>
@@ -43,7 +47,7 @@ function turnOver(){
 </script>
 <style scoped>
 .cardback{
-    background: #7cb7fe;
+    /* background: #7cb7fe; */
     width: 220px;
     height: 350px; 
 }
