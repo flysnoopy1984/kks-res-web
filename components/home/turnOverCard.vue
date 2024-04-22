@@ -1,15 +1,15 @@
 <template>
     <div v-show="cardShow" @click="turnOver()">        
-            <n-card :title="poster.title">
+            <n-card :title="poster.title" >
                 <template #cover>
-                    <img @error="errorImg" v-lazy="poster.url">
+                    <n-image @error="errorImg" :src=poster.url :lazy="true"  :preview-disabled="true"  />
                 </template>
             </n-card>
         </div>
     <div v-show="!cardShow"  @click="turnOver()">
         <n-card title="请用微信扫一扫访问">
                 <template #cover>
-                    <img @error="errorImg" v-lazy="poster.miniQrUrl">
+                    <n-image @error="errorImg" :src=poster.miniQrUrl :preview-disabled="true" :lazy="true" />
                 </template>
         </n-card>
         
@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { pageEventPoster } from 'utils/models';
 import type { PropType } from 'vue'
-import { NCard} from 'naive-ui';
+import { NCard,NImage} from 'naive-ui';
 const props = defineProps({
     poster:{
         type: Object as PropType<pageEventPoster>,
