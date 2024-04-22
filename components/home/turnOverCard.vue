@@ -6,7 +6,7 @@
                 </template>
             </n-card>
         </div>
-    <div v-show="!cardShow" class="n-card cardback" @click="turnOver()">
+    <div v-show="!cardShow"  @click="turnOver()">
         <n-card title="请用微信扫一扫访问">
                 <template #cover>
                     <img @error="errorImg" v-lazy="poster.miniQrUrl">
@@ -32,7 +32,10 @@ const props = defineProps({
     }
  
 })
+
 const cardShow = ref(true);
+
+
 /*图片错误处理 */
 function errorImg(e:any){
     console.log("error:",e);
