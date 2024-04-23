@@ -49,7 +49,7 @@ created by JackySong@2023
 
 <script setup lang="ts">
 import {pageSectionEvent} from '@/utils/models'
-
+import apiWebData from '@/zfApi/apiWebData';
 //import { provide } from 'vue'
 
 //const selectEvCode = inject('selectEvCode') as string;
@@ -78,24 +78,32 @@ const styleMove = reactive({
 let curEventIndex = -1;
 let eventsPageCount =0;
 
-const secEvents = pageData.pageSectionEvent.get(props.secCodeKey) as pageSectionEvent[];
-if(secEvents != undefined){
 
-    //根据数据计算出，事件最多右滑多少次，数据长度除与5（5为页面显示事件的数量）
-    eventsPageCount = Math.ceil((secEvents.length)/cfg.maxEventNum)-1;
 
-    //初始化当前选中的事件,获取当前选中事件的Index
-    curEventIndex = pageData.curCalendarEventIndex;
+ const secEvents = pageData.pageSectionEvent.get(props.secCodeKey) as pageSectionEvent[];
+// if(secEvents != undefined){
 
-    //eventItemSelected(curEventIndex);
+//     //根据数据计算出，事件最多右滑多少次，数据长度除与5（5为页面显示事件的数量）
+//     eventsPageCount = Math.ceil((secEvents.length)/cfg.maxEventNum)-1;
 
-    //根据当前index,决定当前滑动到哪个位置
-    if(curEventIndex>-1){
-        const rollNum = Math.floor(curEventIndex/cfg.maxEventNum);
-        curPosX = 0-moveDistance*rollNum;
-        styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";    
-    }
+//     //初始化当前选中的事件,获取当前选中事件的Index
+//     curEventIndex = pageData.curCalendarEventIndex;
 
+//     //eventItemSelected(curEventIndex);
+
+//     //根据当前index,决定当前滑动到哪个位置
+//     if(curEventIndex>-1){
+//         const rollNum = Math.floor(curEventIndex/cfg.maxEventNum);
+//         curPosX = 0-moveDistance*rollNum;
+//         styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";    
+//     }
+
+// }
+const evCalendarList =  useEventCalendarList().value;
+async function init(){
+   if(evCalendarList.currentEventIndex == -1){
+  //  apiWebData.
+   }
 }
 
 

@@ -1,7 +1,7 @@
 <template>
     <div>
         <HomeCalendarLine @select-event="selectEvent"></HomeCalendarLine>
-         <div v-if="!pageLoading">
+         <!-- <div v-if="!pageLoading">
           <HomeBarSlider ref="calBarSlider" :sec-data="secCalendar" style="padding-bottom: 40px;"></HomeBarSlider>  
           <LazyHomeBarSlider v-for="sec in sdList" :sec-data="sec" style="padding-bottom: 60px;">            
           </LazyHomeBarSlider>   
@@ -11,7 +11,7 @@
           <template #description>
             数据马上来咯
           </template>
-        </n-spin>
+        </n-spin> -->
 
     </div>
 </template>
@@ -60,7 +60,7 @@ onMounted(()=>{
   pageContentHeight.value = h-80-216.5-71-80-200;
 })
 
-initPage();
+//initPage();
 
 async function  initPage(){
 //日历节点查询
@@ -153,7 +153,6 @@ function addSectionData(item:pageSectionEvent){
 
 //获取首页的Event Poster 
 async function queryHomePoster() {
-  // debugger
 
   try{
     const res = await apiWebData.queryHomePoster(eventCodes);

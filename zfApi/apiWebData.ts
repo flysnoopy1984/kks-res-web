@@ -1,8 +1,9 @@
-import {pageSectionEvent,pageEventPoster} from '@/utils/models'
+import {pageSectionEvent,pageEventPoster,eventCalendarList} from '@/utils/models'
 import zfhttp from '@/utils/zfhttp';
 
 const apiWebData =  class apiWebData extends zfhttp{
 
+    //马上要废弃，内部不计算
     public querySectionEvents(year:number){
 
         //new :/event/querySectionEvent
@@ -15,6 +16,16 @@ const apiWebData =  class apiWebData extends zfhttp{
                     }
                 )
             },
+            {"content-Type": "application/json"}   
+        );
+
+    }
+
+    //获取日历事件
+    public queryEventCalendarList(year:number){
+
+        //new :/event/querySectionEvent
+        return this.post<eventCalendarList>("/event/queryEventCalendarList/"+year,{},
             {"content-Type": "application/json"}   
         );
     }

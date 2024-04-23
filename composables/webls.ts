@@ -5,7 +5,8 @@ export const lsKeys = {
     userTokenExpireDate:"userTokenExpireDate",
     userInfo :"userInfo",
     pageCommData :"pageCommData",
-    lastPage:"lastPage"
+    lastPage:"lastPage",
+    eventCalendarList:"eventCalendarList"
 
 }
 

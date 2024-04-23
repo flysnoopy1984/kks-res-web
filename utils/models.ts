@@ -53,6 +53,8 @@ export interface pageSectionData{
   //  loadstatus:number;  //数据加载状态 0完成 1 加载中
 }
 
+
+
 export interface pageSectionEvent{
     secName:string,
     secCode:string,
@@ -69,6 +71,23 @@ export interface pageSectionEvent{
     diffNow:number  //距离今天几天
     selected:boolean//是否选中
 
+}
+
+//日历列表
+export interface eventCalendarList{
+    currentEventIndex:number,
+    calendarEventList:eventCalendar[]
+}
+//日历列表中的-日历事件
+export interface eventCalendar{
+    evCode:string,
+    evName:string,
+    ecStartDate:string,
+    ecEndDate:string,
+    weekDay:string,
+    diffNow:number  //距离今天几天
+    eventDayDesc:string,
+    selected:boolean//是否选中
 }
 
 export interface pageEventPoster{

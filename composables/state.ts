@@ -1,5 +1,5 @@
 import { useState, useCookie } from "nuxt/app";
-import {userToken,userInfo,pageCommData,pageSectionEvent,pageEventPoster} from '@/utils/models'
+import {userToken,userInfo,pageCommData,pageSectionEvent,pageEventPoster,eventCalendarList} from '@/utils/models'
 
 //userInfo
 export const useUserInfo = () =>{
@@ -33,6 +33,17 @@ export const usePageCommData = ()=>{
   return useState<pageCommData>(lsKeys.pageCommData, () => {
       return cd;
   });
+}
+
+export const useEventCalendarList=()=>{
+
+  return useState<eventCalendarList>(lsKeys.eventCalendarList,()=>{
+      const data:eventCalendarList = {
+        currentEventIndex:-1,
+        calendarEventList:[]
+      }
+      return data;
+  })
 }
 
 
