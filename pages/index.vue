@@ -3,7 +3,7 @@
       <HomeCalendarLine @select-event="selectEvent"></HomeCalendarLine>
       
       <HomeBarSlider  ref="calBarSlider" :sec-data="secCalendar" style="padding-bottom: 40px;"></HomeBarSlider>  
-      <HomeBarSlider v-for="sec in sdList" :sec-data="sec" style="padding-bottom: 60px;">            
+      <HomeBarSlider v-for="sec in sdList" :sec-data="sec" :has-loaded=true style="padding-bottom: 60px;">            
       </HomeBarSlider>   
       <!-- <HomeBarSlider ref="calBarSlider" :sec-data="secCalendar" style="padding-bottom: 40px;"></HomeBarSlider>   -->
       <!-- <client-only>
@@ -57,6 +57,8 @@ const message = useMessage();
 
 let eventCodes:string[] = []; // 当获取好Section所有事件后，获取首页需要最先显示的海报事件Codes
 const secMap = new Map<string,pageSectionEvent[]>();
+
+initSectionPoster();
 
 //客户端计算页面加载时，留白高度
 // if(process.client){
@@ -293,7 +295,8 @@ if(useSectionData().value.length ==0){
  
           sdList.push(sd);
         })
-        useSectionData().value =sdList;
+        if(process.client)
+          useSectionData().value =sdList;
     }
 }
 else

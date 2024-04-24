@@ -135,6 +135,10 @@ const props = defineProps({
         type: Object as PropType<pageSectionData>,
         required: true
     },
+    hasLoaded:{
+        type:Boolean,
+        default:false,
+    }
 })
 
 /*配置 */
@@ -160,10 +164,7 @@ defineExpose({
     changePageState
 })
 
-function isLoading(){
-
-}
-
+if(props.hasLoaded) pageStatus = 0;
 
 
 function changePageState(status:number){

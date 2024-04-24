@@ -10,6 +10,7 @@ const apiPoster =  class apiPoster extends zfhttp{
                 "body":JSON.stringify(
                     {
                         "eventCode":evCode,
+                        "needMiniQr":true,
                         "pageIndex":pageIndex,
                         "pageSize":pageSize,
                     }

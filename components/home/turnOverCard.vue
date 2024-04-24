@@ -154,7 +154,7 @@ function turnOver(){
 .brief-works-item .cover .cover-label.limited-vip-can-read-label::before {
 	font-size: 20px
 }
-
+*/
 img[lazy=error]{
     background-image: url('/assets/img/error.svg');
     background-position: center center;
@@ -170,5 +170,5 @@ img[lazy=loading]{
     background-repeat: no-repeat;
     opacity: 0.1;
     height: 370px;
-} */
+} 
 </style>
