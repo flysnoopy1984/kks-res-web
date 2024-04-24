@@ -1,5 +1,6 @@
 // 参考 https://yezipi.net/article/detail/10095
 import { hash } from 'ohash'
+
 import {ResComm} from '@/utils/models'
 
 /**
@@ -15,6 +16,7 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
    // console.log("reqUrl:",reqUrl);
    // 设置key
     const key = hash(options + url)
+    console.log("key:",key);
     // 可以设置默认headers例如，token的获取最好用useState返回一个useCookie
 
     const customHeaders = { token:  useApiToken().value.token, ...headers }
@@ -28,7 +30,7 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
       data :undefined
     };
     try {
-    
+      console.log("req:",reqUrl);
       const { data, error } = await useFetch(reqUrl,op);
       if(error.value){
         web.showGlobeError(error.value.data.error,error.value.statusCode);

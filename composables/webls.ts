@@ -4,9 +4,12 @@ export const lsKeys = {
     userOpenId :"userOpenId",
     userTokenExpireDate:"userTokenExpireDate",
     userInfo :"userInfo",
-    pageCommData :"pageCommData",
+    // pageCommData :"pageCommData",
     lastPage:"lastPage",
-    eventCalendarList:"eventCalendarList"
+    eventCalendarList:"eventCalendarList",
+    sectionData:"sectionData",
+    posterDataByEvent:"posterDataByEvent"
+
 
 }
 

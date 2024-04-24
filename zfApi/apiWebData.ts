@@ -25,7 +25,7 @@ const apiWebData =  class apiWebData extends zfhttp{
     public queryEventCalendarList(year:number){
 
         //new :/event/querySectionEvent
-        return this.post<eventCalendarList>("/event/queryEventCalendarList/"+year,{},
+        return this.post<eventCalendarList>("/event/queryCalendarList/"+year,{},
             {"content-Type": "application/json"}   
         );
     }
@@ -40,6 +40,14 @@ const apiWebData =  class apiWebData extends zfhttp{
                     }
                 )
             },
+            {"content-Type": "application/json"}   
+        )
+    }
+
+    /**不包含日历栏目和事件 */
+    public queryHomeData(){
+        return this.post<pageEventPoster[]>("/homeData",
+            { },
             {"content-Type": "application/json"}   
         )
     }

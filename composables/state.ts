@@ -1,5 +1,7 @@
 import { useState, useCookie } from "nuxt/app";
-import {userToken,userInfo,pageCommData,pageSectionEvent,pageEventPoster,eventCalendarList} from '@/utils/models'
+import { hash } from "ohash";
+
+import {userToken,userInfo,pageSectionData,eventCalendarList} from '@/utils/models'
 
 //userInfo
 export const useUserInfo = () =>{
@@ -20,20 +22,20 @@ export const useApiToken = () =>{
   return useState(lsKeys.userToken, () =>  lsVal);
 }
 
-// //pageCommData
-export const usePageCommData = ()=>{
-  let cd:pageCommData = {
-    // pageSectionData:[] as pageSectionData[],
+// // //pageCommData
+// export const usePageCommData = ()=>{
+//   let cd:pageCommData = {
+//     // pageSectionData:[] as pageSectionData[],
 
-    pageSectionEvent:new Map<string,pageSectionEvent[]>(),
-    pageEventPoster:new Map<string,pageEventPoster[]>(),
-    curCalendarEventIndex : -1,
-  };
+//     pageSectionEvent:new Map<string,pageSectionEvent[]>(),
+//     pageEventPoster:new Map<string,pageEventPoster[]>(),
+//     curCalendarEventIndex : -1,
+//   };
   
-  return useState<pageCommData>(lsKeys.pageCommData, () => {
-      return cd;
-  });
-}
+//   return useState<pageCommData>(lsKeys.pageCommData, () => {
+//       return cd;
+//   });
+// }
 
 export const useEventCalendarList=()=>{
 
@@ -44,6 +46,20 @@ export const useEventCalendarList=()=>{
       }
       return data;
   })
+}
+
+export const useSectionData=()=>{
+  return useState<pageSectionData[]>(lsKeys.sectionData,()=>{
+    return [];
+  })
+}
+
+export const usePosterData=()=>{
+    const h = hash({});
+    useState(lsKeys.posterDataByEvent,()=>{
+      return h;
+    })
+
 }
 
 

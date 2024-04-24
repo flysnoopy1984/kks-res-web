@@ -46,8 +46,8 @@ export interface pageCommData{
 export interface pageSectionData{
     secName:string,
     secCode:string,
-    isCalendar:boolean,
-    curEvCode:string,
+    isCalendar?:boolean,
+    curEvCode?:string,
     evGroup: [pageEventPoster[]], //将Poser进行分组
     posterDatas:pageEventPoster[],
   //  loadstatus:number;  //数据加载状态 0完成 1 加载中
@@ -88,6 +88,12 @@ export interface eventCalendar{
     diffNow:number  //距离今天几天
     eventDayDesc:string,
     selected:boolean//是否选中
+}
+//homeData
+export interface homeData{
+    sectionName:string,
+    sectionCode:string,
+    posterList:pageEventPoster[],
 }
 
 export interface pageEventPoster{

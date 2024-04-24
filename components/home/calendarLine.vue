@@ -3,7 +3,8 @@ created by JackySong@2023
 -->
 <template>
     <div class="lineContainer">
-        <div class="calSlider" v-if="secEvents!=undefined">
+        <!-- {{ isLoading }} -->
+        <div class="calSlider" v-if="!isLoading">
             <div class="calLineData">
                 <Transition name="btn-left">
                 <button @click="moveLeft" class="calLine_prev fill-current-color" style="display: block;">
@@ -13,7 +14,7 @@ created by JackySong@2023
                 </button>
                 </Transition>
                 <div class="lineTrack" style="opacity: 1;" :style="styleMove">
-                    <div v-for="(ev,index) in secEvents" @click="eventItemSelected(index)" :key="ev.evCode">
+                    <div v-for="(ev,index) in evCalendarData.calendarEventList" @click="eventItemSelected(index)" :key="ev.evCode">
                         <div  class="calItem" :class="{selEventItem:ev.selected}">
                             <div>
                                 <div class="eventName" :class="{selEventText1:ev.selected}">  {{ ev.evName }}</div>
@@ -43,13 +44,23 @@ created by JackySong@2023
                 </Transition>   
             </div>          
         </div>
+        <!-- <div v-else class="loadingArea">
+        <n-spin>
+  
+            <template #description>
+                数据加载中
+            </template>
+        </n-spin>
+        </div> -->
     </div>
    
 </template>
 
 <script setup lang="ts">
-import {pageSectionEvent} from '@/utils/models'
 import apiWebData from '@/zfApi/apiWebData';
+import {ResComm,eventCalendarList,eventCalendar} from '@/utils/models'
+import {NSpin } from 'naive-ui'
+
 //import { provide } from 'vue'
 
 //const selectEvCode = inject('selectEvCode') as string;
@@ -66,8 +77,8 @@ const cfg = {
     maxEventNum:5
 }
 
-//事件数据
-const pageData = usePageCommData().value;
+
+// const pageData = usePageCommData().value;
 //动画相关
 let curPosX = 0;
 const moveDistance = 1200;
@@ -75,35 +86,51 @@ const styleMove = reactive({
     transform: "translate3d("+curPosX+"px, 0, 0)",
     transition: "all .5s ease",
 });
-let curEventIndex = -1;
+//组件显示
 let eventsPageCount =0;
 
+const isLoading = ref(true);
+//事件数据
+let evCalendarData = useEventCalendarList().value;
 
 
- const secEvents = pageData.pageSectionEvent.get(props.secCodeKey) as pageSectionEvent[];
-// if(secEvents != undefined){
+//组件加载
+init();
 
-//     //根据数据计算出，事件最多右滑多少次，数据长度除与5（5为页面显示事件的数量）
-//     eventsPageCount = Math.ceil((secEvents.length)/cfg.maxEventNum)-1;
-
-//     //初始化当前选中的事件,获取当前选中事件的Index
-//     curEventIndex = pageData.curCalendarEventIndex;
-
-//     //eventItemSelected(curEventIndex);
-
-//     //根据当前index,决定当前滑动到哪个位置
-//     if(curEventIndex>-1){
-//         const rollNum = Math.floor(curEventIndex/cfg.maxEventNum);
-//         curPosX = 0-moveDistance*rollNum;
-//         styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";    
-//     }
-
-// }
-const evCalendarList =  useEventCalendarList().value;
 async function init(){
-   if(evCalendarList.currentEventIndex == -1){
-  //  apiWebData.
+
+   if(evCalendarData.currentEventIndex == -1){
+        try{
+            isLoading.value  =true;
+            const res = await apiWebData.queryEventCalendarList(tools.currentYear()) as ResComm<eventCalendarList>;
+                // debugger
+            if(res.code == 200){
+                evCalendarData = res.data as eventCalendarList;
+                if(process.client)
+                    useEventCalendarList().value = evCalendarData;
+
+                //根据数据计算出，事件最多右滑多少次，数据长度除与5（5为页面显示事件的数量）
+                eventsPageCount = Math.ceil((evCalendarData.calendarEventList.length)/cfg.maxEventNum)-1;
+                //根据当前index,决定当前滑动到哪个位置
+                if(evCalendarData.currentEventIndex>-1){
+                    const rollNum = Math.floor(evCalendarData.currentEventIndex/cfg.maxEventNum);
+                    curPosX = 0-moveDistance*rollNum;
+                    styleMove.transform = "translate3d("+curPosX+"px, 0, 0)";    
+
+
+                    eventItemSelected(evCalendarData.currentEventIndex);
+                }
+                
+                
+            }
+        }
+        finally{
+            isLoading.value  =false;
+        }
+       
    }
+   else
+        eventItemSelected(evCalendarData.currentEventIndex);
 }
 
 
@@ -123,21 +150,15 @@ function moveRight(){
 
 function eventItemSelected(index:number){
    
-    if(curEventIndex>=0){
-        secEvents[curEventIndex].selected = false;
+    if(evCalendarData.currentEventIndex >0){
+        evCalendarData.calendarEventList[evCalendarData.currentEventIndex].selected =false;
     }
-    secEvents[index].selected = true;
-    curEventIndex = index;
-    emit("selectEvent",secEvents[index].evCode);
-    //提供数据给其他组件
-   // provide('selectEvCode', secEvents[index].evCode);
+    evCalendarData.currentEventIndex = index;
+    evCalendarData.calendarEventList[index].selected = true;
+    emit("selectEvent",evCalendarData.calendarEventList[index].evCode);
+
 }
-// const test = () => {
-//     console.log("test In");
-//   }
-//   defineExpose({
-//    test
-//   })
+
 </script>
 <style scoped>
 .calSlider{
@@ -269,6 +290,11 @@ function eventItemSelected(index:number){
     margin-bottom: 40px;  
     margin-left: auto;
     margin-right: auto;    
+}
+.loadingArea{
+    width:100vw;
+    display: flex;
+    justify-content: center;
 }
 
 

@@ -60,7 +60,7 @@ created by JackySong@2023
                             </svg>
                         </button>
                     </Transition>
-                    <div v-if="secData.evGroup[0].length == 0" class="noDatas">
+                    <div v-if="secData.evGroup[0].length == 0 && pageStatus ==0" class="noDatas">
                         <n-empty size="huge" description="暂时没有数据">
                             <template #icon>
                                 <n-icon>
@@ -73,9 +73,14 @@ created by JackySong@2023
                     <div v-else class="slick-list">    
                         <div class="slick-track" style="opacity: 1;" :style="styleMove">  
                             <n-space v-if="pageStatus == 1">
-                                <div class="brief-works-item" v-for="n in gpMaxItemNum">
+                                <n-spin size="large"  class="loadingArea">
+                                    <template #description>
+                                        数据马上来咯
+                                    </template>
+                                </n-spin> 
+                                <!-- <div class="brief-works-item" v-for="n in gpMaxItemNum">
                                     <n-skeleton width="190px" height="250px" :sharp="false" />
-                                </div>
+                                </div> -->
                             </n-space>
                             
                             <div v-else :aria-label="gp[0].title" v-for="(gp,index) in secData.evGroup" :key="index" class="slick-slide slick-active" style="outline: none;" :style="gpStyle">
@@ -110,7 +115,7 @@ created by JackySong@2023
 </template>
 
 <script setup lang="ts">
-import { NButton,NIcon,NEmpty,NSkeleton,NSpace,NModal,NCard } from 'naive-ui';
+import { NButton,NIcon,NEmpty,NSkeleton,NSpace,NSpin,NModal,NCard } from 'naive-ui';
 import { pageSectionData } from 'utils/models';
 import type { PropType } from 'vue'
 import {CloseCircleTwotone} from '@vicons/antd'
@@ -135,7 +140,7 @@ const props = defineProps({
 /*配置 */
 
 let gpNo = props.secData.evGroup.length ==1?0:-1;
-let pageStatus =0;
+let pageStatus =1;
 const moveDistance = props.cfg.gpWidth;
 const gpMaxItemNum = props.cfg.gpMaxItemNum; 
 const showButton = ref(false);
@@ -154,6 +159,10 @@ const gpStyle = {
 defineExpose({
     changePageState
 })
+
+function isLoading(){
+
+}
 
 
 
@@ -293,6 +302,13 @@ function showMore(){
   padding-top: 30px;
 }
 
+.loadingArea{
+    width: 1200px;
+    display: flex;
+    height: 150px;
+
+    justify-content: center;
+}
 
 
 </style>
