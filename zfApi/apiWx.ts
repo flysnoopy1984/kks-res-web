@@ -18,6 +18,8 @@ const apiWx =  class apiWx extends zfhttp{
     public getUserInfo(){
         return this.get<wxUserInfo>("/wx/userinfo");
     }
+
+
 }
 
 export default new apiWx;

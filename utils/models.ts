@@ -111,6 +111,14 @@ export interface pageEventPoster{
     miniQrUrl:string, 
 }
 
+//小程序调用结果
+export interface resultGenSchemeVo{
+    errcode:string,
+    errmsg:string,
+    origjson:string,
+    openlink:string
+}
+
 export interface ResComm<T> {
     data?: T
     code: number

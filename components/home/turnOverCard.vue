@@ -30,7 +30,7 @@
                 </template>
                 <template #default>
                     <view class="content">
-                        请用微信扫一扫访问
+                        微信扫一扫发送给朋友
                     </view>     
                 </template>
         </n-card>

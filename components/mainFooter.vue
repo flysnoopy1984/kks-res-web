@@ -16,12 +16,10 @@
 				
 			</div>
 			<div style="justify-self: flex-end;">
-					<div style="font-size: 10px;">
-						<a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备17005547号</a>
-					</div>
+				<div style="font-size: 10px;">
+					<a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备17005547号</a>
 				</div>
-		
-	
+			</div>
 		</div>
 	</div>
 		<!--<div class="row mb-5 justify-content-between">

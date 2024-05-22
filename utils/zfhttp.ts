@@ -30,6 +30,7 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
       data :undefined
     };
     try {
+      // debugger
       console.log("req:",reqUrl);
       const { data, error } = await useFetch(reqUrl,op);
       if(error.value){
