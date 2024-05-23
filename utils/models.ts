@@ -119,6 +119,12 @@ export interface resultGenSchemeVo{
     openlink:string
 }
 
+export interface resultUrlLinkVo{
+    errcode:string,
+    errmsg:string,
+    url_link:string
+}
+
 export interface ResComm<T> {
     data?: T
     code: number

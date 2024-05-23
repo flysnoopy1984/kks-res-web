@@ -1,6 +1,6 @@
 
 import zfhttp from '@/utils/zfhttp';
-import {resultGenSchemeVo} from '@/utils/models'
+import {resultGenSchemeVo,resultUrlLinkVo} from '@/utils/models'
 
 const apiMini =  class apiMini extends zfhttp{
     public genUrlScheme(req:any){
@@ -10,6 +10,12 @@ const apiMini =  class apiMini extends zfhttp{
      
     }
 
+    public genUrlUrl(req:any){
+        return this.post<resultUrlLinkVo>("/mini/genUrlLink",{
+            "body":req
+        });
+     
+    }
 
 
 }
