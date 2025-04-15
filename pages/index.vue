@@ -13,7 +13,7 @@
 import {useMessage } from 'naive-ui'
 import apiWebData from '@/zfApi/apiWebData';
 import apiPoster from '@/zfApi/apiPoster';
-import {pageSectionData,pageEventPoster,ResComm,pageSectionEvent,homeData} from '@/utils/models'
+import type {pageSectionData,pageEventPoster,ResComm,pageSectionEvent,homeData} from '@/utils/models'
 
 let sdList = reactive<pageSectionData[]>([]);
 

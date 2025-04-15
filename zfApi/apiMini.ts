@@ -1,6 +1,6 @@
 
 import zfhttp from '@/utils/zfhttp';
-import {resultGenSchemeVo,resultUrlLinkVo} from '@/utils/models'
+import type {resultGenSchemeVo,resultUrlLinkVo} from '@/utils/models'
 
 const apiMini =  class apiMini extends zfhttp{
     public genUrlScheme(req:any){

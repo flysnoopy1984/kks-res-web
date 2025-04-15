@@ -1,4 +1,4 @@
-import {pageSectionEvent,pageEventPoster,eventCalendarList} from '@/utils/models'
+import type {pageSectionEvent,pageEventPoster,eventCalendarList} from '@/utils/models'
 import zfhttp from '@/utils/zfhttp';
 
 const apiWebData =  class apiWebData extends zfhttp{

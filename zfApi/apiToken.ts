@@ -1,4 +1,4 @@
-import {userToken} from '@/utils/models'
+import type {userToken} from '@/utils/models'
 import zfhttp from '@/utils/zfhttp';
 
 const apiToken =  class apiToken extends zfhttp{

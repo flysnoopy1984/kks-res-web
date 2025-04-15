@@ -116,7 +116,7 @@ created by JackySong@2023
 
 <script setup lang="ts">
 import { NButton,NIcon,NEmpty,NSkeleton,NSpace,NSpin,NModal,NCard } from 'naive-ui';
-import { pageSectionData } from 'utils/models';
+import type { pageSectionData } from '@/utils/models';
 import type { PropType } from 'vue'
 import {CloseCircleTwotone} from '@vicons/antd'
 

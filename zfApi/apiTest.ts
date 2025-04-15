@@ -1,4 +1,4 @@
-import {wxLogin} from '@/utils/models'
+import type {wxLogin} from '@/utils/models'
 import zfhttp from '@/utils/zfhttp';
 
 const apiTest =  class apiTest extends zfhttp{

@@ -1,7 +1,7 @@
 // 参考 https://yezipi.net/article/detail/10095
 import { hash } from 'ohash'
 
-import {ResComm} from '@/utils/models'
+import type {ResComm} from '@/utils/models'
 
 /**
  * api请求封装

@@ -1,4 +1,4 @@
-import {pageEventPoster} from '@/utils/models'
+import type {pageEventPoster} from '@/utils/models'
 import zfhttp from '@/utils/zfhttp';
 
 const apiPoster =  class apiPoster extends zfhttp{

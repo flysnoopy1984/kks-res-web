@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-
 export default defineNuxtConfig({
   app:{
     head:{
@@ -11,16 +10,17 @@ export default defineNuxtConfig({
       ],
     },
   },
-  plugins: [{
-    src: '@/plugins/vue-lazyload',
-    ssr: false
-  }],
+
+  plugins: [
+    {
+      src: '@/plugins/vue-lazyload',
+      ssr: false
+    }
+  ],
+
   css:[
     '@/assets/css/main.css'
   ],
-  // experimental: {
-  //   componentIslands: true
-  // },
 
   runtimeConfig: {
     // Private keys are only available on the server
@@ -34,29 +34,38 @@ export default defineNuxtConfig({
   },
 
   devtools: { enabled: true },
+
   build: {
-    transpile:
-     // 设置naive-UI
-      process.env.NODE_ENV === 'production'
-        ? [
-            'naive-ui',
-            'vueuc',
-            '@css-render/vue3-ssr',
-            '@juggle/resize-observer',
-          ]
-        : ['@juggle/resize-observer']
+    transpile: [
+      'naive-ui',
+      'vueuc',
+      '@css-render/vue3-ssr',
+      '@juggle/resize-observer',
+      /^@css-render\/.*/,
+      'date-fns',
+      'date-fns-tz'
+    ]
   },
 
   vite: {
-    optimizeDeps: {
-      include:
-       // 设置naive-UI
-        process.env.NODE_ENV === 'development'
-          ? ['naive-ui', 'vueuc', 'date-fns-tz/formatInTimeZone']
-          : []
+    define: {
+      'process.env.VSCODE_TEXTMATE_DEBUG': 'false'
     },
+    optimizeDeps: {
+      include: [
+        '@css-render/vue3-ssr',
+        'naive-ui',
+        'vueuc',
+        'date-fns-tz/formatInTimeZone',
+        '@juggle/resize-observer',
+        'date-fns',
+        'date-fns-tz'
+      ],
+      exclude: ['date-fns/_lib/cloneObject']
+    }
   },
-  // modules: ['nuxt-swiper'],
+
+  ssr: false,
   
- 
+  compatibilityDate: '2025-04-15',
 })

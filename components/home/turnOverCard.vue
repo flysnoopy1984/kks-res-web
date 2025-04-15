@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { pageEventPoster } from 'utils/models';
+import type { pageEventPoster } from '@/utils/models';
 import type { PropType } from 'vue'
 import { NCard,NImage,NButton,NIcon} from 'naive-ui';
 import { ScanOutlined as LogInIcon} from '@vicons/antd'
