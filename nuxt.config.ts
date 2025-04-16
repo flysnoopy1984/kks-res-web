@@ -15,7 +15,8 @@ export default defineNuxtConfig({
     {
       src: '@/plugins/vue-lazyload',
       ssr: false
-    }
+    },
+    '@/plugins/resize-observer-fix'
   ],
 
   css:[
@@ -23,10 +24,7 @@ export default defineNuxtConfig({
   ],
 
   runtimeConfig: {
-    // Private keys are only available on the server
     apiSecret: 'zfWeb',
-
-    // Public keys that are exposed to the client
     public: {
       Api_ZfHost: process.env.NUXT_ZF_API_HOST || '/api',
       WxState: process.env.NUXT_WX_STATE 
@@ -35,16 +33,10 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
+  modules: ['nuxtjs-naive-ui'],
+  
   build: {
-    transpile: [
-      'naive-ui',
-      'vueuc',
-      '@css-render/vue3-ssr',
-      '@juggle/resize-observer',
-      /^@css-render\/.*/,
-      'date-fns',
-      'date-fns-tz'
-    ]
+    transpile: ['naive-ui', '@juggle/resize-observer']
   },
 
   vite: {
@@ -52,20 +44,14 @@ export default defineNuxtConfig({
       'process.env.VSCODE_TEXTMATE_DEBUG': 'false'
     },
     optimizeDeps: {
-      include: [
-        '@css-render/vue3-ssr',
-        'naive-ui',
-        'vueuc',
-        'date-fns-tz/formatInTimeZone',
-        '@juggle/resize-observer',
-        'date-fns',
-        'date-fns-tz'
-      ],
-      exclude: ['date-fns/_lib/cloneObject']
+      include: ['naive-ui', '@css-render/vue3-ssr', '@juggle/resize-observer']
+    },
+    ssr: {
+      noExternal: ['@juggle/resize-observer'],
     }
   },
 
-  ssr: false,
+  ssr: true,
   
   compatibilityDate: '2025-04-15',
 })
