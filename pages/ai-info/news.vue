@@ -33,6 +33,7 @@ import { ref, onMounted } from 'vue'
 import apiAiInfo from '@/zfApi/apiAiInfo'
 import type { PushNewsLatest } from '@/zfApi/apiAiInfo'
 import type { ResComm } from '@/utils/models'
+import { de } from 'date-fns/locale'
 
 const newsList = ref<PushNewsLatest[]>([])
 const loading = ref(true)
@@ -42,7 +43,12 @@ const error = ref('')
 const fetchLatestNews = async () => {
   try {
     loading.value = true
-    const res = await apiAiInfo.queryLatestPushNews() as ResComm<PushNewsLatest[]>
+
+
+
+    const res =  await apiAiInfo.queryLatestPushNews() as ResComm<PushNewsLatest[]>
+
+
     if (res && res.code === 200 && Array.isArray(res.data)) {
       newsList.value = res.data
     } else {
@@ -88,7 +94,8 @@ const openNews = (url: string) => {
 }
 
 onMounted(() => {
-  fetchLatestNews()
+
+    fetchLatestNews()
 })
 </script>
 

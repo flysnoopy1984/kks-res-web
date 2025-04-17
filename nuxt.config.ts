@@ -16,7 +16,11 @@ export default defineNuxtConfig({
       src: '@/plugins/vue-lazyload',
       ssr: false
     },
-    '@/plugins/resize-observer-fix'
+    '@/plugins/resize-observer-fix',
+    {
+      src: '@/plugins/resize-observer',
+      ssr: false
+    }
   ],
 
   css:[
@@ -36,7 +40,7 @@ export default defineNuxtConfig({
   modules: ['nuxtjs-naive-ui'],
   
   build: {
-    transpile: ['naive-ui', '@juggle/resize-observer']
+    transpile: ['naive-ui']
   },
 
   vite: {
@@ -44,10 +48,10 @@ export default defineNuxtConfig({
       'process.env.VSCODE_TEXTMATE_DEBUG': 'false'
     },
     optimizeDeps: {
-      include: ['naive-ui', '@css-render/vue3-ssr', '@juggle/resize-observer']
+      include: ['naive-ui', '@css-render/vue3-ssr']
     },
     ssr: {
-      noExternal: ['@juggle/resize-observer'],
+      noExternal: [],
     }
   },
 

@@ -1,6 +1,7 @@
 // 参考 https://yezipi.net/article/detail/10095
 import { hash } from 'ohash'
-
+import { nav } from '@/utils/nav'
+import { web } from '@/utils/web'
 import type {ResComm} from '@/utils/models'
 
 /**
@@ -30,28 +31,21 @@ const zfnet = async <T>(url:String,options?:any,headers?:any)=>{
       data :undefined
     };
     try {
-      // debugger
       console.log("req:",reqUrl);
-      const { data, error } = await useFetch(reqUrl,op);
-      if(error.value){
-        web.showGlobeError(error.value.data.error,error.value.statusCode);
-      }
-      else{
-        result = data.value as ResComm<T>;
-
-        if(result.code !== 200) {
-       // 处理token失效的情况
+      result = await $fetch<ResComm<T>>(reqUrl, op)
+  
+      if(result.code !== 200) {
+        // 处理token失效的情况
         if (result.code == 401) {
           useApiToken().value.token = '';
           return nav.toWxLogin();
-         }
-
-          web.showGlobeError(result.msg,result.code);
         }
-      
+
+        web.showGlobeError(result.msg || '未知错误', result.code);
       }
-  
     }
+  
+
     catch (ex) {
       web.showGlobeError("服务器内部错误",1500);
     }
