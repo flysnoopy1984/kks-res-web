@@ -1,12 +1,6 @@
 name = "kks-res-web"
 compatibility_date = "2025-04-15"
-
-build.command = "npm ci --legacy-peer-deps --no-optional && npm run generate"
-pages_build_output_dir = ".output/public"
-
-[build.environment]
-NODE_VERSION = "23"
-NODE_OPTIONS = "--max-old-space-size=4096"
+compatibility_flags = ["nodejs_compat"]
 
 [env.production]
 NUXT_ZF_API_HOST = "https://mn.iqianba.cn/kksWeb"
