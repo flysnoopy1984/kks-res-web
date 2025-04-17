@@ -11,6 +11,7 @@ node_modules
 # Logs
 logs
 *.log
+npm-debug.log*
 
 # Misc
 .DS_Store
@@ -22,7 +23,19 @@ logs
 .env.*
 !.env.example
 
-# other
+# Build artifacts
 *.zip
+dist
+.output
+.nuxt
+.wrangler
 
+# IDE
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Runtime
 项目相关命令.md
