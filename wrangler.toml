@@ -2,7 +2,6 @@ name = "kks-res-web"
 compatibility_date = "2025-04-15"
 compatibility_flags = ["nodejs_compat"]
 
-build.command = "yarn install --frozen-lockfile && yarn build"
 pages_build_output_dir = ".output/server"
 
 [env.production]
