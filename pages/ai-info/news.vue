@@ -1,14 +1,15 @@
 <template>
   <div class="news-container">
+    <n-back-top :bottom="20" />
     <h1 class="page-title">最新推送新闻</h1>
-    <div v-if="loading" class="loading">
+    <div v-if="status === 'pending'" class="loading">
       <div class="spinner"></div>
       <span>加载中...</span>
     </div>
     <div v-else-if="error" class="error-message">
       {{ error }}
     </div>
-    <div v-else-if="newsList.length === 0" class="empty-message">
+    <div v-else-if="newsList?.length === 0" class="empty-message">
       暂无最新推送新闻
     </div>
     <div v-else class="news-list">
@@ -33,41 +34,27 @@ import { ref, onMounted } from 'vue'
 import apiAiInfo from '@/zfApi/apiAiInfo'
 import type { PushNewsLatest } from '@/zfApi/apiAiInfo'
 import type { ResComm } from '@/utils/models'
-import { de } from 'date-fns/locale'
+import { NBackTop } from 'naive-ui'
 
-const newsList = ref<PushNewsLatest[]>([])
-const loading = ref(true)
-const error = ref('')
 
 // 获取最新推送新闻
-const fetchLatestNews = async () => {
-  try {
-    loading.value = true
-
-
-
-    const res =  await apiAiInfo.queryLatestPushNews() as ResComm<PushNewsLatest[]>
-
-
-    if (res && res.code === 200 && Array.isArray(res.data)) {
-      newsList.value = res.data
-    } else {
-      newsList.value = []
-      if (res && res.code !== 200) {
-        error.value = res.msg || '获取数据失败'
-        console.error('API返回错误:', res)
-      } else {
-        error.value = '获取数据失败'
-        console.error('数据格式不正确:', res)
+// 使用useAsyncData进行数据获取
+const { data: newsList, status, error, refresh } = await useAsyncData(
+  'news',
+  async () => {
+    try {
+      const res = await apiAiInfo.queryLatestPushNews() as ResComm<PushNewsLatest[]>
+      if (res && res.code === 200 && Array.isArray(res.data)) {
+    
+        return res.data
       }
+      throw new Error(res?.msg || '获取数据失败')
+    } catch (err) {
+      throw new Error('获取最新推送新闻失败，请稍后重试')
     }
-  } catch (err) {
-    error.value = '获取最新推送新闻失败，请稍后重试'
-    console.error('获取最新推送新闻失败:', err)
-  } finally {
-    loading.value = false
   }
-}
+)
+
 
 // 格式化时间
 const formatTime = (dateTimeStr: string) => {
@@ -93,10 +80,10 @@ const openNews = (url: string) => {
   }
 }
 
-onMounted(() => {
+// onMounted(() => {
 
-    fetchLatestNews()
-})
+//     fetchLatestNews()
+// })
 </script>
 
 <style scoped>
