@@ -1,5 +1,6 @@
 name = "kks-res-web"
 compatibility_date = "2025-04-15"
+main = "./.output/server/index.mjs"
 
 [build]
 command = "npm ci --legacy-peer-deps --no-optional && npm run generate"
@@ -15,3 +16,11 @@ vars = { NUXT_ZF_API_HOST = "https://mn.iqianba.cn/kksWeb", NUXT_WX_STATE = "iqi
 
 [site]
 bucket = ".output/public"
+
+[site.static]
+exclude = [
+  "**/*.js.map",
+  "**/*.css.map",
+  "_nuxt/_redirects",
+  "_nuxt/_headers"
+]

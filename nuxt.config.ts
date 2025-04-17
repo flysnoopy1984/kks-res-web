@@ -3,7 +3,13 @@
 export default defineNuxtConfig({
   nitro: {
     preset: 'cloudflare-pages',
-    minify: true
+    minify: true,
+    prerender: {
+      crawlLinks: true,
+      routes: [
+        '/'
+      ]
+    }
   },
   app:{
     head:{
@@ -59,7 +65,7 @@ export default defineNuxtConfig({
     }
   },
 
-  ssr: true,
+  ssr: false,
   
   compatibilityDate: '2025-04-15',
 })
