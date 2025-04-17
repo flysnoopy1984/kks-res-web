@@ -10,6 +10,10 @@ export default defineNuxtConfig({
       ],
     },
   },
+  // 添加Cloudflare Pages支持
+  nitro: {
+    preset: 'cloudflare-pages'
+  },
 
   plugins: [
     {
