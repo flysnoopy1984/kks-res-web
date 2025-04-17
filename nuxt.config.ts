@@ -65,7 +65,7 @@ export default defineNuxtConfig({
     }
   },
 
-  ssr: false,
+  ssr: true,
   
   compatibilityDate: '2025-04-15',
 })
