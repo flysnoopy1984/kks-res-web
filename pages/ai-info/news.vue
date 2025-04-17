@@ -1,7 +1,37 @@
 <template>
   <div class="news-container">
     <n-back-top :bottom="20" />
-    <h1 class="page-title">最新推送新闻</h1>
+    <n-affix>
+      <div class="header-container">
+        <h1 class="page-title">最新推送新闻</h1>
+        <n-space vertical>
+          <div class="filter-section">
+            <n-select
+              v-model:value="selectedTags"
+              multiple
+              placeholder="选择新闻来源筛选"
+              :options="sources.map(source => ({
+                label: source,
+                value: source
+              }))"
+            />
+          </div>
+          <div class="selected-tags">
+            <n-space>
+              <n-tag
+                v-for="tag in selectedTags"
+                :key="tag"
+                closable
+                :color="{ color: getSourceColor(tag), textColor: '#fff' }"
+                @close="selectedTags = selectedTags.filter(t => t !== tag)"
+              >
+                {{ tag }}
+              </n-tag>
+            </n-space>
+          </div>
+        </n-space>
+      </div>
+    </n-affix>
     <div v-if="status === 'pending'" class="loading">
       <div class="spinner"></div>
       <span>加载中...</span>
@@ -14,14 +44,16 @@
     </div>
     <div v-else class="news-list">
       <div 
-        v-for="(item, index) in newsList" 
+        v-for="item in filteredNewsList" 
         :key="item.newsInfoId" 
         class="news-item"
         @click="openNews(item.url)"
       >
         <div class="news-content">
           <div class="news-title">{{ item.title }}</div>
-          <div class="news-tag">{{ item.sourceName }}</div>
+          <n-tag :color="{ color: getSourceColor(item.sourceName), textColor: '#fff' }">
+            {{ item.sourceName }}
+          </n-tag>
         </div>
         <div class="news-time">{{ formatTime(item.createDateTime) }}</div>
       </div>
@@ -30,11 +62,51 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import apiAiInfo from '@/zfApi/apiAiInfo'
 import type { PushNewsLatest } from '@/zfApi/apiAiInfo'
 import type { ResComm } from '@/utils/models'
-import { NBackTop } from 'naive-ui'
+import { NBackTop, NTag, NSpace, NAffix, NSelect } from 'naive-ui'
+import NewsTagColorManager from '@/utils/news_tagColors'
+
+// 获取所有unique的sources
+const sources = computed(() => {
+  if (!newsList.value) return []
+  const uniqueSources = new Set(newsList.value.map(item => item.sourceName))
+  return Array.from(uniqueSources)
+})
+
+// 选中的标签
+const selectedTags = ref<string[]>([])
+
+// 从cookie中获取已保存的标签
+const savedTags = useCookie('kks_news_tags', {
+  maxAge: 3600 * 24 * 30 // 30天有效期
+})
+
+// 初始化选中的标签
+const savedTagsStr = savedTags.value?.toString() ?? ''
+if (savedTagsStr) {
+  selectedTags.value = savedTagsStr.split(',').filter(Boolean)
+}
+
+// 监听标签变化并保存到cookie
+watch(selectedTags, (newVal) => {
+  // 将数组转换为逗号分隔的字符串
+  savedTags.value = newVal.join(',') || null
+}, { deep: true })
+
+// 根据sourceName获取颜色
+const getSourceColor = (sourceName: string) => {
+  return NewsTagColorManager.getColorByName(sourceName)
+}
+
+// 过滤新闻列表
+const filteredNewsList = computed(() => {
+  if (!newsList.value) return []
+  if (selectedTags.value.length === 0) return newsList.value
+  return newsList.value.filter(item => selectedTags.value.includes(item.sourceName))
+})
 
 
 // 获取最新推送新闻
@@ -91,6 +163,23 @@ const openNews = (url: string) => {
   padding: 16px;
   max-width: 800px;
   margin: 0 auto;
+}
+
+.header-container {
+  background: #fff;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+
+.filter-section {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.selected-tags {
+  margin-top: 8px;
+  min-height: 32px;
 }
 
 .page-title {
