@@ -56,4 +56,10 @@ export default defineNuxtConfig({
   ssr: true,
   
   compatibilityDate: '2025-04-15',
+
+  vite: {
+    build: {
+      sourcemap: false // 禁用生产环境的源码映射，避免 Tailwind CSS 源码映射警告
+    }
+  },
 })

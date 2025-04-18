@@ -6,15 +6,17 @@
         <h1 class="page-title">最新推送新闻</h1>
         <div class="filter-section">
           <div class="mb-4">
-            <USelect
-              v-model="selectedTags"
-              :items="sources.map(source => ({
-                label: source,
-                value: source
-              }))"
-              multiple
-              placeholder="选择新闻来源筛选"
-            />
+            <ClientOnly>
+              <USelect
+                v-model="selectedTags"
+                :items="sources.map(source => ({
+                  label: source,
+                  value: source
+                }))"
+                multiple
+                placeholder="选择新闻来源筛选"
+              />
+            </ClientOnly>
           </div>
           <div class="selected-tags">
             <div class="flex gap-2 flex-wrap">
@@ -33,34 +35,43 @@
         </div>
       </div>
     </div>
-    <div v-if="status === 'pending'" class="loading">
-      <div class="spinner"></div>
-      <span>加载中...</span>
-    </div>
-    <div v-else-if="error" class="error-message">
-      {{ error }}
-    </div>
-    <div v-else-if="newsList?.length === 0" class="empty-message">
-      暂无最新推送新闻
-    </div>
-    <div v-else class="news-list">
-      <div 
-        v-for="item in filteredNewsList" 
-        :key="item.newsInfoId" 
-        class="news-item"
-        @click="openNews(item.url)"
-      >
-        <div class="news-content">
-          <div class="news-title">{{ item.title }}</div>
-          <kks-tag
-            :color="NewsTagColorManager.getColorByName(item.sourceName)"
-          >
-            {{ item.sourceName }}
-          </kks-tag>
-        </div>
-        <div class="news-time">{{ formatTime(item.createDateTime) }}</div>
+    <!-- 使用 ClientOnly 组件避免SSR水合不匹配问题 -->
+    <ClientOnly>
+      <div v-if="status === 'pending'" class="loading">
+        <div class="spinner"></div>
+        <span>加载中...</span>
       </div>
-    </div>
+      <div v-else-if="error" class="error-message">
+        {{ error }}
+      </div>
+      <div v-else-if="newsList?.length === 0" class="empty-message">
+        暂无最新推送新闻
+      </div>
+      <div v-else class="news-list">
+        <div 
+          v-for="item in filteredNewsList" 
+          :key="item.newsInfoId" 
+          class="news-item"
+          @click="openNews(item.url)"
+        >
+          <div class="news-content">
+            <div class="news-title">{{ item.title }}</div>
+            <kks-tag
+              :color="NewsTagColorManager.getColorByName(item.sourceName)"
+            >
+              {{ item.sourceName }}
+            </kks-tag>
+          </div>
+          <div class="news-time">{{ formatTime(item.createDateTime) }}</div>
+        </div>
+      </div>
+      <template #fallback>
+        <div class="loading">
+          <div class="spinner"></div>
+          <span>加载中...</span>
+        </div>
+      </template>
+    </ClientOnly>
   </div>
 </template>
 
@@ -71,33 +82,21 @@ import type { PushNewsLatest } from '@/zfApi/apiAiInfo'
 import type { ResComm } from '@/utils/models'
 import NewsTagColorManager from '@/utils/news_tagColors'
 
-// 选中的标签
-const selectedTags = ref<string[]>([]);
-// const newsList = ref<PushNewsLatest[]>([]);
-// 获取最新推送新闻
-// const { data: newsList, status, error, refresh } = await useAsyncData(
-//   'news',
-//   async () => {
-//     try {
-//       const res = await apiAiInfo.queryLatestPushNews() as ResComm<PushNewsLatest[]>
-//       if (res && res.code === 200 && Array.isArray(res.data)) {
-//         return res.data
-//       }
-//       throw new Error(res?.msg || '获取数据失败')
-//     } catch (err) {
-//       throw new Error('获取最新推送新闻失败，请稍后重试')
-//     }
-//   }
-// )
-// 获取最新推送新闻
-const response = await apiAiInfo.queryLatestPushNews();
-const newsList = computed(() => response?.data?.value?.data || []);
-const error = computed(() => {
-  if (!response?.data?.value) return '获取数据失败';
-  if (response.data.value.code !== 200) return response.data.value.msg || '获取数据失败';
-  return null;
+// 使用 useState 确保 SSR 状态一致性
+const selectedTags = useState<string[]>('news-selected-tags', () => []);
+
+// 直接使用 apiAiInfo.queryLatestPushNews()，它内部已经封装了 useFetch
+const { data, error, status } = await apiAiInfo.queryLatestPushNews();
+
+// 确保 newsList 在 SSR 和客户端渲染中保持一致
+const newsList = useState<PushNewsLatest[]>('news-list', () => []);
+
+// 当数据返回时更新 newsList
+watchEffect(() => {
+  if (data.value && data.value.code === 200 && Array.isArray(data.value.data)) {
+    newsList.value = data.value.data as PushNewsLatest[];
+  }
 });
-const status = response?.status?.value || 'pending';
 
 
 // 获取所有unique的sources
@@ -109,7 +108,7 @@ const sources = computed(() => {
 
 // 调试日志，查看sources的值
 watch(sources, (newVal) => {
-  console.log('新闻来源列表:', newVal)
+  // console.log('新闻来源列表:', newVal)
 }, { immediate: true })
 
 

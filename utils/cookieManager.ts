@@ -1,4 +1,5 @@
-import {userToken,userInfo} from './models'
+import type {userToken, userInfo} from './models'
+import { lsKeys } from '../composables/webls'
 
 export class cookieManager {
 
