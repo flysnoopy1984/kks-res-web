@@ -1,37 +1,38 @@
 <template>
   <div class="news-container">
-    <n-back-top :bottom="20" />
-    <n-affix>
+    <kks-to-top :threshold="300" />
+    <div class="sticky-header">
       <div class="header-container">
         <h1 class="page-title">最新推送新闻</h1>
-        <n-space vertical>
-          <div class="filter-section">
-            <n-select
-              v-model:value="selectedTags"
-              multiple
-              placeholder="选择新闻来源筛选"
-              :options="sources.map(source => ({
+        <div class="filter-section">
+          <div class="mb-4">
+            <USelect
+              v-model="selectedTags"
+              :items="sources.map(source => ({
                 label: source,
                 value: source
               }))"
+              multiple
+              placeholder="选择新闻来源筛选"
             />
           </div>
           <div class="selected-tags">
-            <n-space>
-              <n-tag
+            <div class="flex gap-2 flex-wrap">
+              <kks-tag
                 v-for="tag in selectedTags"
                 :key="tag"
+                :color="NewsTagColorManager.getColorByName(tag)"
                 closable
-                :color="{ color: getSourceColor(tag), textColor: '#fff' }"
+                class="mr-1 mb-1 cursor-pointer"
                 @close="selectedTags = selectedTags.filter(t => t !== tag)"
               >
                 {{ tag }}
-              </n-tag>
-            </n-space>
+              </kks-tag>
+            </div>
           </div>
-        </n-space>
+        </div>
       </div>
-    </n-affix>
+    </div>
     <div v-if="status === 'pending'" class="loading">
       <div class="spinner"></div>
       <span>加载中...</span>
@@ -51,9 +52,11 @@
       >
         <div class="news-content">
           <div class="news-title">{{ item.title }}</div>
-          <n-tag :color="{ color: getSourceColor(item.sourceName), textColor: '#fff' }">
+          <kks-tag
+            :color="NewsTagColorManager.getColorByName(item.sourceName)"
+          >
             {{ item.sourceName }}
-          </n-tag>
+          </kks-tag>
         </div>
         <div class="news-time">{{ formatTime(item.createDateTime) }}</div>
       </div>
@@ -66,18 +69,40 @@ import { ref, onMounted, computed } from 'vue'
 import apiAiInfo from '@/zfApi/apiAiInfo'
 import type { PushNewsLatest } from '@/zfApi/apiAiInfo'
 import type { ResComm } from '@/utils/models'
-import { NBackTop, NTag, NSpace, NAffix, NSelect } from 'naive-ui'
 import NewsTagColorManager from '@/utils/news_tagColors'
-
-// 获取所有unique的sources
-const sources = computed(() => {
-  if (!newsList.value) return []
-  const uniqueSources = new Set(newsList.value.map(item => item.sourceName))
-  return Array.from(uniqueSources)
-})
 
 // 选中的标签
 const selectedTags = ref<string[]>([])
+
+// 获取最新推送新闻
+const { data: newsList, status, error, refresh } = await useAsyncData(
+  'news',
+  async () => {
+    try {
+      const res = await apiAiInfo.queryLatestPushNews() as ResComm<PushNewsLatest[]>
+      if (res && res.code === 200 && Array.isArray(res.data)) {
+        return res.data
+      }
+      throw new Error(res?.msg || '获取数据失败')
+    } catch (err) {
+      throw new Error('获取最新推送新闻失败，请稍后重试')
+    }
+  }
+)
+
+// 获取所有unique的sources
+const sources = computed(() => {
+  if (!newsList.value || !Array.isArray(newsList.value)) return []
+  const uniqueSources = new Set(newsList.value.filter(item => item && item.sourceName).map(item => item.sourceName))
+  return Array.from(uniqueSources)
+})
+
+// 调试日志，查看sources的值
+watch(sources, (newVal) => {
+  console.log('新闻来源列表:', newVal)
+}, { immediate: true })
+
+
 
 // 从cookie中获取已保存的标签
 const savedTags = useCookie('kks_news_tags', {
@@ -96,37 +121,12 @@ watch(selectedTags, (newVal) => {
   savedTags.value = newVal.join(',') || null
 }, { deep: true })
 
-// 根据sourceName获取颜色
-const getSourceColor = (sourceName: string) => {
-  return NewsTagColorManager.getColorByName(sourceName)
-}
-
 // 过滤新闻列表
 const filteredNewsList = computed(() => {
   if (!newsList.value) return []
   if (selectedTags.value.length === 0) return newsList.value
   return newsList.value.filter(item => selectedTags.value.includes(item.sourceName))
 })
-
-
-// 获取最新推送新闻
-// 使用useAsyncData进行数据获取
-const { data: newsList, status, error, refresh } = await useAsyncData(
-  'news',
-  async () => {
-    try {
-      const res = await apiAiInfo.queryLatestPushNews() as ResComm<PushNewsLatest[]>
-      if (res && res.code === 200 && Array.isArray(res.data)) {
-    
-        return res.data
-      }
-      throw new Error(res?.msg || '获取数据失败')
-    } catch (err) {
-      throw new Error('获取最新推送新闻失败，请稍后重试')
-    }
-  }
-)
-
 
 // 格式化时间
 const formatTime = (dateTimeStr: string) => {
@@ -180,6 +180,13 @@ const openNews = (url: string) => {
 .selected-tags {
   margin-top: 8px;
   min-height: 32px;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
 }
 
 .page-title {

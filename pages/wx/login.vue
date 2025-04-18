@@ -16,7 +16,7 @@ created by JackySong@2023
                          <div v-else>{{ pageMsg }}</div>
                     </div>
                     <div class=signFooter>
-                      <n-button type="primary" @click="nav.toHome()">返回主页</n-button>
+                      <UButton color="primary" @click="nav.toHome()">返回主页</UButton>
                     </div>
             </div>
         </div>
@@ -28,8 +28,6 @@ created by JackySong@2023
 <script setup>
 
 import apiWx from '@/zfApi/apiWx'
-import { NButton } from 'naive-ui'
-
 definePageMeta({
   layout: 'blank',
 });

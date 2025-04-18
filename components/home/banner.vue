@@ -1,24 +1,18 @@
 <template>
     <div>
     
-    <n-carousel
-    :show-dots="false" 
-      autoplay    
+    <UCarousel
+      :show-arrows="false"
+      autoplay
       style="width: 100%; height: 240px"
     >
-      <img
-        class="carousel-img"
-        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel1.jpeg"
-      >
-      <img
-        class="carousel-img"
-        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg"
-      >
-      <img
-        class="carousel-img"
-        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel3.jpeg"
-      >
-    </n-carousel>
+      <UCarouselItem v-for="(img, index) in images" :key="index">
+        <img
+          class="carousel-img"
+          :src="img"
+        >
+      </UCarouselItem>
+    </UCarousel>
     </div>
   
   </template>
@@ -43,5 +37,11 @@
   </style>
 
 <script setup>
-import { NCarousel } from 'naive-ui'
+// import { NCarousel } from 'naive-ui'
+
+const images = [
+  "https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel1.jpeg",
+  "https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg",
+  "https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel3.jpeg"
+]
 </script>

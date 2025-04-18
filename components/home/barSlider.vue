@@ -1,52 +1,32 @@
-<!--
-created by JackySong@2023
--->
-
 <template>
-
     <div class="barSliderContainer" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
         <div class="dataContainer">
             <div class="hd" v-if="props.secData!=null">
                 <div class="title-section">
                     <h2 class="widget-title">{{props.secData.secName}}</h2>
                     <div class="links">
-                        <n-button icon-placement="right" color="#2F8E9C" text tag="a" @click="showMore">
+                        <UButton color="#2F8E9C" variant="link" @click="showMore">
                             查看更多
-                            <template #icon>
-                                <n-icon>
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M5 3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2.05a2.512 2.512 0 0 1 0-1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v9.5a2.49 2.49 0 0 1 1-.45V5a2 2 0 0 0-2-2H5zm11 13.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 0 0-3 0zm-1.085-.5a1.497 1.497 0 0 1 0 1a1.5 1.5 0 1 1 0-1zM11 16.5A1.497 1.497 0 0 0 9.5 15a1.5 1.5 0 1 0 1.5 1.5zM6.5 6a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7zM6 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-.1-3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" fill="currentColor"></path></g></svg>
-                                </n-icon>
-                            </template>                          
-                        </n-button>
+                            <UIcon name="i-heroicons-document" class="ml-1" />
+                        </UButton>
 
-                        <n-modal v-model:show="showKKSMini"
-                        >
-
-                            <n-card
-                                style="width: 480px; height:480px"
-                                title="请到小程序查看更多内容"
-                                header-style="text-align: center;"
-                                :bordered="true"
-                                size="huge"
-                                >
-                           
-                                <template #cover>
-                                    <div style="width: 100%;text-align: end;">
-                                        <n-button text style="font-size: 32px; padding:15px" @click="showKKSMini=false">
-                                        <template #icon>
-                                            <n-icon :component="CloseCircleTwotone" size="32"></n-icon>
-                                        </template>
-                                        </n-button>
-                                    </div>
-                               
-                                    <div style ="width:100%; height:366px; display:flex; justify-content: center; align-items: center" >
-
-                                        <img src="/img/kks_mini_ys.jpg" style="height: 266px; width:266px">
+                        <UModal v-model="showKKSMini">
+                            <UCard
+                                class="w-120 h-120"
+                                :ui="{ header: { padding: 'text-center' } }"
+                                title="请到小程序查看更多内容">
+                                <template #header-icon>
+                                    <div class="text-right">
+                                        <UButton variant="ghost" class="text-3xl p-4" @click="showKKSMini=false">
+                                            <UIcon name="i-heroicons-x-circle" class="text-3xl"/>
+                                        </UButton>
                                     </div>
                                 </template>
-                              
-                                </n-card>
-                        </n-modal>
+                                <div class="w-full h-[366px] flex justify-center items-center">
+                                    <img src="/img/kks_mini_ys.jpg" class="h-[266px] w-[266px]">
+                                </div>
+                            </UCard>
+                        </UModal>
                     </div>
                 </div>
             </div>
@@ -61,27 +41,18 @@ created by JackySong@2023
                         </button>
                     </Transition>
                     <div v-if="secData.evGroup[0].length == 0 && pageStatus ==0" class="noDatas">
-                        <n-empty size="huge" description="暂时没有数据">
-                            <template #icon>
-                                <n-icon>
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M10 2c2.817 0 4.415 1.923 4.647 4.246h.07C16.532 6.246 18 7.758 18 9.623c0 .095-.004.19-.011.283A5.75 5.75 0 0 0 7.772 13h-2.49C3.469 13 2 11.488 2 9.623c0-1.865 1.47-3.377 3.282-3.377h.071C5.587 3.908 7.183 2 10 2zm8 11.5a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0zm-2.646-1.146a.5.5 0 0 0-.708-.708L13.5 12.793l-1.146-1.147a.5.5 0 0 0-.708.708l1.147 1.146l-1.147 1.146a.5.5 0 0 0 .708.708l1.146-1.147l1.146 1.147a.5.5 0 0 0 .708-.708L14.207 13.5l1.147-1.146z" fill="currentColor"></path></g></svg>
-                                </n-icon>
-                            </template>
-                        </n-empty>
+                        <UEmpty icon="i-heroicons-cloud-x" size="lg" description="暂时没有数据" />
                     </div>
 
                     <div v-else class="slick-list">    
                         <div class="slick-track" style="opacity: 1;" :style="styleMove">  
-                            <n-space v-if="pageStatus == 1">
-                                <n-spin size="large"  class="loadingArea">
+                            <div v-if="pageStatus == 1" class="flex">
+                                <USkeleton size="lg" class="loadingArea">
                                     <template #description>
                                         数据马上来咯
                                     </template>
-                                </n-spin> 
-                                <!-- <div class="brief-works-item" v-for="n in gpMaxItemNum">
-                                    <n-skeleton width="190px" height="250px" :sharp="false" />
-                                </div> -->
-                            </n-space>
+                                </USkeleton> 
+                            </div>
                             
                             <div v-else :aria-label="gp[0].title" v-for="(gp,index) in secData.evGroup" :key="index" class="slick-slide slick-active" style="outline: none;" :style="gpStyle">
                                 <div> 
@@ -89,13 +60,6 @@ created by JackySong@2023
                                     <div class="brief-works-item" v-for="poster in gp">
                                         <HomeTurnOverCard :poster="poster"></HomeTurnOverCard>
                                     </div> 
-                                    <!-- <div class="brief-works-item" v-for="poster in gp" @click="turnOver(poster.title)">        
-                                        <n-card :title="poster.title">
-                                            <template #cover>
-                                                <img @error="errorImg" v-lazy="poster.url">
-                                            </template>
-                                        </n-card>
-                                    </div> -->
                                 </div>  
                             </div>                          
                         </div>                            
@@ -115,10 +79,8 @@ created by JackySong@2023
 </template>
 
 <script setup lang="ts">
-import { NButton,NIcon,NEmpty,NSkeleton,NSpace,NSpin,NModal,NCard } from 'naive-ui';
 import type { pageSectionData } from '@/utils/models';
-import type { PropType } from 'vue'
-import {CloseCircleTwotone} from '@vicons/antd'
+import type { PropType } from 'vue';
 
 const props = defineProps({
     cfg:{

@@ -10,26 +10,14 @@ export default defineNuxtConfig({
       ],
     },
   },
-  // 添加Cloudflare Pages支持
-  nitro: {
-    preset: 'cloudflare-pages'
-  },
 
   plugins: [
     {
       src: '@/plugins/vue-lazyload',
-      ssr: false
-    },
-    '@/plugins/resize-observer-fix',
-    {
-      src: '@/plugins/resize-observer',
-      ssr: false
+      mode: 'client'
     }
   ],
 
-  css:[
-    '@/assets/css/main.css'
-  ],
 
   runtimeConfig: {
     apiSecret: 'zfWeb',
@@ -41,21 +29,13 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
-  modules: ['nuxtjs-naive-ui'],
-  
-  build: {
-    transpile: ['naive-ui']
-  },
-
-  vite: {
-    define: {
-      'process.env.VSCODE_TEXTMATE_DEBUG': 'false'
-    },
-    optimizeDeps: {
-      include: ['naive-ui', '@css-render/vue3-ssr']
-    },
-    ssr: {
-      noExternal: [],
+  modules: ['@nuxt/ui'],
+  css: ['~/assets/css/nuxtUImain.css'],
+  ui: {
+    fonts: false,
+    colorMode: false,
+    theme: {
+      transitions: false
     }
   },
 

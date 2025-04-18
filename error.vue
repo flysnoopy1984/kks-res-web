@@ -9,13 +9,13 @@ created by JackySong@2023
         <h2> {{ err.message }}</h2>
         
         <div>
-            <n-button type="primary" @click="nav.toHome()">返回主页</n-button>
+            <UButton color="primary" @click="nav.toHome()">返回主页</UButton>
         </div>
     </div>
 </template>
 
 <script setup>
-import { NButton } from 'naive-ui'
+// import { NButton } from 'naive-ui'
  const err = useError();
 </script>
 <style scoped>

@@ -1,7 +1,7 @@
 <template>
     <div v-show="cardShow" @click="turnOver()">        
-            <n-card content-style="padding:0; max-height:60px">
-                <template #cover>
+            <UCard class="card-container" :ui="{ body: { padding: 0 } }">
+                <template #header>
                     <view class="imgWrapper">
                         <img @error="errorImg" v-lazy="poster.url">
                         <!-- <n-image @error="errorImg" width="198px" object-fit="fill" :src=showData.imgUrl :lazy="true"  :preview-disabled="true"  /> -->
@@ -10,20 +10,18 @@
                 <template #default>
                     <view class="content">
                         {{poster.title}}
-                        <n-button type="primary" size="small"  class="btnImg">
-                            <n-icon>
-                                <log-in-icon />
-                            </n-icon>
-                        </n-button>
+                        <UButton color="primary" size="sm" class="btnImg">
+                            <UIcon name="i-heroicons-login" />
+                        </UButton>
                     </view>     
                 </template>
-            </n-card>
+            </UCard>
         </div>
     <div v-show="!cardShow"  @click="turnOver()">
-        <n-card content-style="padding:0; max-height:60px">
-                <template #cover>
+        <UCard class="card-container" :ui="{ body: { padding: 0 } }">
+                <template #header>
                     <view class="imgWrapper qrWrapper"> 
-                        <n-button type="info" class="btnQrBack">返回</n-button>
+                        <UButton color="info" class="btnQrBack">返回</UButton>
                         <img @error="errorImg" :src="poster.miniQrUrl">
                         <!-- <n-image @error="errorImg" :src=poster.miniQrUrl :preview-disabled="true" :lazy="true" /> -->
                     </view>
@@ -33,7 +31,7 @@
                         微信扫一扫发送给朋友
                     </view>     
                 </template>
-        </n-card>
+        </UCard>
     </div>
     <!-- <n-card :title="poster.title">
             <template #cover>
@@ -45,8 +43,8 @@
 <script setup lang="ts">
 import type { pageEventPoster } from '@/utils/models';
 import type { PropType } from 'vue'
-import { NCard,NImage,NButton,NIcon} from 'naive-ui';
-import { ScanOutlined as LogInIcon} from '@vicons/antd'
+// import { NCard,NImage,NButton,NIcon} from 'naive-ui';
+// import { ScanOutlined as LogInIcon} from '@vicons/antd'
 const props = defineProps({
     poster:{
         type: Object as PropType<pageEventPoster>,
@@ -82,7 +80,7 @@ function turnOver(){
     width: 200px;
     height: 350px; 
 }
-.n-card {
+.card-container {
   max-width: 200px;
   max-height: 350px;  
   border-radius: 8px;  

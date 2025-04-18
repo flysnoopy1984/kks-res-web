@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import {useMessage } from 'naive-ui'
+// import {useMessage } from 'naive-ui'
 import apiWebData from '@/zfApi/apiWebData';
 import apiPoster from '@/zfApi/apiPoster';
 import type {pageSectionData,pageEventPoster,ResComm,pageSectionEvent,homeData} from '@/utils/models'
@@ -28,7 +28,8 @@ let secCalendar = reactive<pageSectionData>({
 
 
 const calBarSlider= ref();
-const message = useMessage();
+// 不使用toast，直接移除原来的message变量
+// const toast = useToast();
 let eventCodes:string[] = []; // 当获取好Section所有事件后，获取首页需要最先显示的海报事件Codes
 const secMap = new Map<string,pageSectionEvent[]>();
 
