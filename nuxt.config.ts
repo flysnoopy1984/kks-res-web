@@ -1,16 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
-  nitro: {
-    preset: 'cloudflare-pages',
-    minify: true,
-    prerender: {
-      crawlLinks: true,
-      routes: [
-        '/'
-      ]
-    }
-  },
+  // nitro: {
+  //   preset: 'cloudflare-pages',
+  //   minify: true,
+  //   prerender: {
+  //     crawlLinks: true,
+  //     routes: [
+  //       '/'
+  //     ]
+  //   }
+  // },
   app:{
     head:{
       "script": [
@@ -40,7 +40,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: ['@nuxt/ui'],
-  css: ['~/assets/css/nuxtUImain.css'],
+  css: [
+    '~/assets/css/tailwind-import.css',  // 首先加载Tailwind CSS和Nuxt UI
+    '~/assets/css/main.css',            // 然后加载基础自定义样式
+    '~/assets/css/nuxtUImain.css'       // 最后加载专门用于覆盖Tailwind冲突的样式
+  ],
   ui: {
     fonts: false,
     colorMode: false,

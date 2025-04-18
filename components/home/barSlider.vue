@@ -5,15 +5,14 @@
                 <div class="title-section">
                     <h2 class="widget-title">{{props.secData.secName}}</h2>
                     <div class="links">
-                        <UButton color="#2F8E9C" variant="link" @click="showMore">
+                        <UButton color="info" variant="link" @click="showMore">
                             查看更多
                             <UIcon name="i-heroicons-document" class="ml-1" />
                         </UButton>
 
                         <UModal v-model="showKKSMini">
                             <UCard
-                                class="w-120 h-120"
-                                :ui="{ header: { padding: 'text-center' } }"
+                                class="w-120 h-120 custom-card"
                                 title="请到小程序查看更多内容">
                                 <template #header-icon>
                                     <div class="text-right">
@@ -112,8 +111,11 @@ const gpMaxItemNum = props.cfg.gpMaxItemNum;
 const showButton = ref(false);
 const showKKSMini = ref(false);
 
+// 计算初始位置
+const initialPosX = gpNo * moveDistance;
+
 const styleMove = reactive({
-    transform: "translate3d("+curPosX()+"px, 0, 0)",
+    transform: "translate3d(" + initialPosX + "px, 0, 0)",
     transition: props.cfg.trans,
     width: props.cfg.totalwidth+"px",
 });
@@ -269,8 +271,12 @@ function showMore(){
     width: 1200px;
     display: flex;
     height: 150px;
-
     justify-content: center;
+}
+
+.custom-card :deep(.u-card-header) {
+    padding: 1rem;
+    text-align: center;
 }
 
 

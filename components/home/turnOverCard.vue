@@ -1,35 +1,35 @@
 <template>
     <div v-show="cardShow" @click="turnOver()">        
-            <UCard class="card-container" :ui="{ body: { padding: 0 } }">
+            <UCard class="card-container card-padding-zero">
                 <template #header>
-                    <view class="imgWrapper">
+                    <div class="imgWrapper">
                         <img @error="errorImg" v-lazy="poster.url">
                         <!-- <n-image @error="errorImg" width="198px" object-fit="fill" :src=showData.imgUrl :lazy="true"  :preview-disabled="true"  /> -->
-                    </view>   
+                    </div>   
                 </template>
                 <template #default>
-                    <view class="content">
+                    <div class="content">
                         {{poster.title}}
                         <UButton color="primary" size="sm" class="btnImg">
                             <UIcon name="i-heroicons-login" />
                         </UButton>
-                    </view>     
+                    </div>     
                 </template>
             </UCard>
         </div>
     <div v-show="!cardShow"  @click="turnOver()">
-        <UCard class="card-container" :ui="{ body: { padding: 0 } }">
+        <UCard class="card-container card-padding-zero">
                 <template #header>
-                    <view class="imgWrapper qrWrapper"> 
+                    <div class="imgWrapper qrWrapper"> 
                         <UButton color="info" class="btnQrBack">返回</UButton>
                         <img @error="errorImg" :src="poster.miniQrUrl">
                         <!-- <n-image @error="errorImg" :src=poster.miniQrUrl :preview-disabled="true" :lazy="true" /> -->
-                    </view>
+                    </div>
                 </template>
                 <template #default>
-                    <view class="content">
+                    <div class="content">
                         微信扫一扫发送给朋友
-                    </view>     
+                    </div>     
                 </template>
         </UCard>
     </div>
@@ -123,6 +123,10 @@ function turnOver(){
     right:10px;
     z-index:999;
     box-shadow: 3px 2px 4px 0px rgba(79, 79, 79, 0.5);
+}
+
+.card-padding-zero :deep(.u-card-body) {
+    padding: 0;
 }
 /* .brief-works-item {
 	display: inline-flex;

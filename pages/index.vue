@@ -2,9 +2,9 @@
     <div>
       <HomeCalendarLine @select-event="selectEvent"></HomeCalendarLine>
       
-      <HomeBarSlider  ref="calBarSlider" :sec-data="secCalendar" style="padding-bottom: 40px;"></HomeBarSlider>  
+      <!-- <HomeBarSlider  ref="calBarSlider" :sec-data="secCalendar" style="padding-bottom: 40px;"></HomeBarSlider>  
       <HomeBarSlider v-for="sec in sdList" :sec-data="sec" :has-loaded=true style="padding-bottom: 60px;">            
-      </HomeBarSlider>   
+      </HomeBarSlider>    -->
      
     </div>
 </template>

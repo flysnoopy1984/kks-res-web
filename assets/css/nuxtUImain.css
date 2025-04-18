@@ -1,2 +1,12 @@
-@import "tailwindcss";
-@import "@nuxt/ui";
+/* 用于修复Tailwind CSS冲突的自定义样式 */
+
+/* 覆盖Tailwind的container类 */
+.container {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* 确保主题色和按钮样式不被覆盖 */
+.button-main-style {
+  background-color: var(--main-button-color) !important;
+}

@@ -3,8 +3,8 @@ created by JackySong@2023
 -->
 <template>
     <div class="lineContainer">
-        <!-- {{ isLoading }} -->
-        <div class="calSlider" v-if="!isLoading">
+        <!-- {{ isLoading }} -->  
+          <div class="calSlider">
             <div class="calLineData">
                 <Transition name="btn-left">
                 <button @click="moveLeft" class="calLine_prev fill-current-color" style="display: block;">
@@ -44,13 +44,10 @@ created by JackySong@2023
                 </Transition>   
             </div>          
         </div>
+      
         <!-- <div v-else class="loadingArea">
-        <n-spin>
-  
-            <template #description>
-                数据加载中
-            </template>
-        </n-spin>
+            <div class="spinner"></div>
+            <span>加载中...</span>
         </div> -->
     </div>
    
@@ -59,11 +56,6 @@ created by JackySong@2023
 <script setup lang="ts">
 import apiWebData from '@/zfApi/apiWebData';
 import type {ResComm,eventCalendarList,eventCalendar} from '@/utils/models'
-// import {NSpin } from 'naive-ui'
-
-//import { provide } from 'vue'
-
-//const selectEvCode = inject('selectEvCode') as string;
 
 const emit = defineEmits(['selectEvent']);
 
@@ -93,9 +85,9 @@ const isLoading = ref(true);
 //事件数据
 let evCalendarData = useEventCalendarList().value;
 
-
+init()
 //组件加载
-init();
+
 
 async function init(){
 
@@ -106,7 +98,7 @@ async function init(){
                 // debugger
             if(res.code == 200){
                 evCalendarData = res.data as eventCalendarList;
-                if(process.client)
+                if(import.meta.client)
                     useEventCalendarList().value = evCalendarData;
 
                 //根据数据计算出，事件最多右滑多少次，数据长度除与5（5为页面显示事件的数量）
@@ -180,8 +172,8 @@ function eventItemSelected(index:number){
 
 } 
 .calItem{
-    width: 175px;
-    height: 45px;
+    width: 241px;
+    height: 71px;
     padding: 12px 20px;
     border: 1px solid var(--main-border-line);
     background-color: var(--main-border-bk);
@@ -294,7 +286,24 @@ function eventItemSelected(index:number){
 .loadingArea{
     width:100vw;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    margin-top: 50px;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #0066cc;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 
