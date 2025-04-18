@@ -72,27 +72,37 @@ import type { ResComm } from '@/utils/models'
 import NewsTagColorManager from '@/utils/news_tagColors'
 
 // 选中的标签
-const selectedTags = ref<string[]>([])
-
+const selectedTags = ref<string[]>([]);
+// const newsList = ref<PushNewsLatest[]>([]);
 // 获取最新推送新闻
-const { data: newsList, status, error, refresh } = await useAsyncData(
-  'news',
-  async () => {
-    try {
-      const res = await apiAiInfo.queryLatestPushNews() as ResComm<PushNewsLatest[]>
-      if (res && res.code === 200 && Array.isArray(res.data)) {
-        return res.data
-      }
-      throw new Error(res?.msg || '获取数据失败')
-    } catch (err) {
-      throw new Error('获取最新推送新闻失败，请稍后重试')
-    }
-  }
-)
+// const { data: newsList, status, error, refresh } = await useAsyncData(
+//   'news',
+//   async () => {
+//     try {
+//       const res = await apiAiInfo.queryLatestPushNews() as ResComm<PushNewsLatest[]>
+//       if (res && res.code === 200 && Array.isArray(res.data)) {
+//         return res.data
+//       }
+//       throw new Error(res?.msg || '获取数据失败')
+//     } catch (err) {
+//       throw new Error('获取最新推送新闻失败，请稍后重试')
+//     }
+//   }
+// )
+// 获取最新推送新闻
+const response = await apiAiInfo.queryLatestPushNews();
+const newsList = computed(() => response?.data?.value?.data || []);
+const error = computed(() => {
+  if (!response?.data?.value) return '获取数据失败';
+  if (response.data.value.code !== 200) return response.data.value.msg || '获取数据失败';
+  return null;
+});
+const status = response?.status?.value || 'pending';
+
 
 // 获取所有unique的sources
 const sources = computed(() => {
-  if (!newsList.value || !Array.isArray(newsList.value)) return []
+  if (!Array.isArray(newsList.value)) return []
   const uniqueSources = new Set(newsList.value.filter(item => item && item.sourceName).map(item => item.sourceName))
   return Array.from(uniqueSources)
 })
@@ -123,9 +133,9 @@ watch(selectedTags, (newVal) => {
 
 // 过滤新闻列表
 const filteredNewsList = computed(() => {
-  if (!newsList.value) return []
+  if (!Array.isArray(newsList.value)) return []
   if (selectedTags.value.length === 0) return newsList.value
-  return newsList.value.filter(item => selectedTags.value.includes(item.sourceName))
+  return newsList.value.filter(item => item && item.sourceName && selectedTags.value.includes(item.sourceName))
 })
 
 // 格式化时间

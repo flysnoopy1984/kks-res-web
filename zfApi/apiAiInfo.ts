@@ -20,7 +20,7 @@ const apiAiInfo = class apiAiInfo extends zfhttp {
      * 数据按创建时间排序，并有10分钟缓存
      */
     public queryLatestPushNews() {
-        return this.post<PushNewsLatest[]>("/aiInfo/push/news", 
+        return   this.post<PushNewsLatest[]>("/aiInfo/push/news", 
             {}, 
             {"content-Type": "application/json"}
         );
